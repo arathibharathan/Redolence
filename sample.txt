@@ -1,0 +1,8 @@
+                                    <div class="form-floating form-floating-outline form-floating-select2 pt-2">
+                                        <div class="position-relative"><label for="product-status" class="errMsgSignup">Select Product Status</label><select name="productOption" id="product-status" class="select2 form-select select2-hidden-accessible" data-placeholder="Select product status" >
+                                            
+                                            <option value="true" <%= productData.is_listed === true ? 'selected' : '' %>>Listed</option>
+                                            <option value="false" <%= productData.is_listed === false ? 'selected' : '' %>>Unlisted</option>
+                                        </select>
+                                        </div>
+                                    </div>
