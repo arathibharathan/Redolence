@@ -138,7 +138,7 @@
                     </a>
                   </li>
                 </ul>
-              </li>    
+              </li>
               <li class="menu-item">
                 <a href="javascript:void(0);" class="menu-link menu-toggle">
                   <div data-i18n="Users">Users</div>
@@ -163,7 +163,7 @@
       <div class="layout-page">
         <div class="container-xxl flex-grow-1 container-p-y">
           <div class="app-ecommerce-category">
-            
+
             <!-- Category List Table -->
             <div class="card">
               <div class="card-datatable table-responsive">
@@ -199,18 +199,18 @@
 
                         <td><%= category[i].description %></td>
 
-                        
+
                         <td>
                           <!-- Edit Button -->
                           <button class="btn btn-warning btn-sm" style="background-color: #8c57ff; color: white;" onclick="openEditCategoryModal('<%= category[i]._id.toString() %>')">Edit</button>
                         </td>
                         <td class="  dt-checkboxes-cell">
                           <% if (category[i].status === 'unlisted') { %>
-                            <button onclick="blockCategory(this,'<%= category[i]._id %>')" class="btn btn-success">List</button>
+                          <button onclick="blockCategory(this,'<%= category[i]._id %>')" class="btn btn-success">List</button>
                           <% } else { %>
-                            <button onclick="blockCategory(this,'<%= category[i]._id %>')" class="btn btn-danger">Unlist</button>
+                          <button onclick="blockCategory(this,'<%= category[i]._id %>')" class="btn btn-danger">Unlist</button>
                           <% } %>
-                       </td>
+                        </td>
                       </tr>
                       <%}%>
                     </tbody>

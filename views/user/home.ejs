@@ -3,65 +3,66 @@
 
 
 <!-- Redolence/index-18.html  22 Nov 2019 10:00:41 GMT -->
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Redolence - Bootstrap eCommerce Template</title>
-    <meta name="keywords" content="HTML5 Template">
-    <meta name="description" content="Redolence - Bootstrap eCommerce Template">
-    <meta name="author" content="p-themes">
-    <!-- Favicon -->
-    <link rel="apple-touch-icon" sizes="180x180" href="/user/assets/images/icons/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/user/assets/images/icons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/user/assets/images/icons/favicon-16x16.png">
-    <link rel="manifest" href="/user/assets/images/icons/site.html">
-    <link rel="mask-icon" href="/user/assets/images/icons/safari-pinned-tab.svg" color="#666666">
-    <link rel="shortcut icon" href="/user/assets/images/icons/favicon.ico">
-    <meta name="apple-mobile-web-app-title" content="Redolence">
-    <meta name="application-name" content="Redolence">
-    <meta name="msapplication-TileColor" content="#cc9966">
-    <meta name="msapplication-config" content="/user/assets/images/icons/browserconfig.xml">
-    <meta name="theme-color" content="#ffffff">
-    <!-- Plugins CSS File -->
-    <link rel="stylesheet" href="/user/assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/user/assets/css/plugins/owl-carousel/owl.carousel.css">
-    <link rel="stylesheet" href="/user/assets/css/plugins/magnific-popup/magnific-popup.css">
-    <!-- Main CSS File -->
-    <link rel="stylesheet" href="/user/assets/css/style.css">
-    <link rel="stylesheet" href="/user/assets/css/demos/demo-18.css">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Redolence - Bootstrap eCommerce Template</title>
+  <meta name="keywords" content="HTML5 Template">
+  <meta name="description" content="Redolence - Bootstrap eCommerce Template">
+  <meta name="author" content="p-themes">
+  <!-- Favicon -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/user/assets/images/icons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/user/assets/images/icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/user/assets/images/icons/favicon-16x16.png">
+  <link rel="manifest" href="/user/assets/images/icons/site.html">
+  <link rel="mask-icon" href="/user/assets/images/icons/safari-pinned-tab.svg" color="#666666">
+  <link rel="shortcut icon" href="/user/assets/images/icons/favicon.ico">
+  <meta name="apple-mobile-web-app-title" content="Redolence">
+  <meta name="application-name" content="Redolence">
+  <meta name="msapplication-TileColor" content="#cc9966">
+  <meta name="msapplication-config" content="/user/assets/images/icons/browserconfig.xml">
+  <meta name="theme-color" content="#ffffff">
+  <!-- Plugins CSS File -->
+  <link rel="stylesheet" href="/user/assets/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/user/assets/css/plugins/owl-carousel/owl.carousel.css">
+  <link rel="stylesheet" href="/user/assets/css/plugins/magnific-popup/magnific-popup.css">
+  <!-- Main CSS File -->
+  <link rel="stylesheet" href="/user/assets/css/style.css">
+  <link rel="stylesheet" href="/user/assets/css/demos/demo-18.css">
 </head>
 
 <body>
-    <div class="page-wrapper">
-        <header class="header header-11">
-            <div class="header-middle sticky-header">
-                <div class="container">
-                    <div class="header-left">
-                        <nav class="main-nav">
-                            <ul class="menu sf-arrows">
-                                <li class="megamenu-container active">
-                                    <a href="" class="">Home</a>
-                                </li>
-                                <li>
-                                    <a href="/shop" class="">Product</a>
-                                </li>
-                                <li>
-                                    <%if(User){%>
-                                        <a href="/dashboard" class=""><%= User[0].name%></a>
+  <div class="page-wrapper">
+    <header class="header header-11">
+      <div class="header-middle sticky-header">
+        <div class="container">
+          <div class="header-left">
+            <nav class="main-nav">
+              <ul class="menu sf-arrows">
+                <li class="megamenu-container active">
+                  <a href="" class="">Home</a>
+                </li>
+                <li>
+                  <a href="/shop" class="">Product</a>
+                </li>
+                <li>
+                  <%if(User){%>
+                  <a href="/dashboard" class=""><%= User[0].name%></a>
 
-                                    <%}else{%>
-                                        <a href="/login" class="">Login</a>
+                  <%}else{%>
+                  <a href="/login" class="">Login</a>
 
-                                        <%}%>
+                  <%}%>
                                     
                                 </li>
                                 <li>
-                                    <%if(User){%>   
-                                    <a href="/logout" class="">Logout</a>
-                                    <%}else{%>
-                                    <a href="/register" class="">Register</a>
-                                    <%}%>
+                                    <%if(User){%>
+                  <a href="/logout" class="">Logout</a>
+                  <%}else{%>
+                  <a href="/register" class="">Register</a>
+                  <%}%>
                                 </li>
 
                             </ul><!-- End .menu -->
@@ -97,66 +98,10 @@
                         </a>
 
                         <div class="dropdown cart-dropdown">
-                            <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
+                            <a href="/cart" class="dropdown-toggle" role="button" >
                                 <i class="icon-shopping-cart"></i>
-                                <span class="cart-count">2</span>
                             </a>
-
-                            <div class="dropdown-menu dropdown-menu-right">
-                                <div class="dropdown-cart-products">
-                                    <div class="product">
-                                        <div class="product-cart-details">
-                                            <h4 class="product-title">
-                                                <a href="product.html">Beige knitted elastic runner shoes</a>
-                                            </h4>
-
-                                            <span class="cart-product-info">
-                                                <span class="cart-product-qty">1</span>
-                                                x $84.00
-                                            </span>
-                                        </div><!-- End .product-cart-details -->
-
-                                        <figure class="product-image-container">
-                                            <a href="product.html" class="product-image">
-                                                <img src="/user/assets/images/products/cart/product-1.jpg" alt="product">
-                                            </a>
-                                        </figure>
-                                        <a href="#" class="btn-remove" title="Remove Product"><i class="icon-close"></i></a>
-                                    </div><!-- End .product -->
-
-                                    <div class="product">
-                                        <div class="product-cart-details">
-                                            <h4 class="product-title">
-                                                <a href="product.html">Blue utility pinafore denim dress</a>
-                                            </h4>
-
-                                            <span class="cart-product-info">
-                                                <span class="cart-product-qty">1</span>
-                                                x $76.00
-                                            </span>
-                                        </div><!-- End .product-cart-details -->
-
-                                        <figure class="product-image-container">
-                                            <a href="product.html" class="product-image">
-                                                <img src="/user/assets/images/products/cart/product-2.jpg" alt="product">
-                                            </a>
-                                        </figure>
-                                        <a href="#" class="btn-remove" title="Remove Product"><i class="icon-close"></i></a>
-                                    </div><!-- End .product -->
-                                </div><!-- End .cart-product -->
-
-                                <div class="dropdown-cart-total">
-                                    <span>Total</span>
-
-                                    <span class="cart-total-price">$160.00</span>
-                                </div><!-- End .dropdown-cart-total -->
-
-                                <div class="dropdown-cart-action">
-                                    <a href="cart.html" class="btn btn-primary">View Cart</a>
-                                    <a href="checkout.html" class="btn btn-outline-primary-2"><span>Checkout</span><i class="icon-long-arrow-right"></i></a>
-                                </div><!-- End .dropdown-cart-total -->
-                            </div><!-- End .dropdown-menu -->
-                        </div><!-- End .cart-dropdown -->
+                        </div>End .cart-dropdown
                     </div><!-- End .header-right -->
                 </div><!-- End .container -->
             </div><!-- End .header-middle -->
@@ -168,8 +113,8 @@
                     <div class="intro-slide" style="background-image: url(/user/assets/images/demos/demo-18/slider/slide-1.jpg);">
                         <div class="container">
                             <div class="intro-content text-center">
-                                <h3 class="intro-subtitle cross-txt text-primary">SEASONAL PICKS</h3><!-- End .h3 intro-subtitle -->
-                                <h1 class="intro-title text-white">Summer Sale</h1><!-- End .intro-title -->
+                                <h3 class="intro-subtitle cross-txt text-primary">SEASONAL PICKS</h3>End .h3 intro-subtitle
+                                <h1 class="intro-title text-white">Redolence</h1><!-- End .intro-title -->
                                 <div class="intro-text text-white">up to 70% off</div><!-- End .intro-text -->
                                 <div class="intro-action cross-txt">
                                     <a href="category.html" class="btn btn-outline-white">

@@ -84,7 +84,16 @@ userRouter.post('/address', auth.isLogin, userController.saveAddress);
 
 //cart
 userRouter.get('/cart', auth.isLogin,userController.cart);
-userRouter.post('/shop',auth.isLogin,userController.addcart)
+userRouter.post('/cart',auth.isLogin,userController.addcart)
+userRouter.post('/cart/update', auth.isLogin, userController.updateCartQuantity);
+userRouter.post('/cart/remove', auth.isLogin, userController.removeProductFromCart);
+
+
+
+
+//checkout
+userRouter.get('/checkout',userController.checkout)
+userRouter.post('/save-address', userController.addressSave);
 
 
 

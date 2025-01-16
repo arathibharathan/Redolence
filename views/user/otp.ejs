@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -65,6 +66,7 @@
       cursor: pointer;
       font-size: 14px;
     }
+
     .btn1 {
       background-color: #1e932a;
       color: #fff;
@@ -102,6 +104,7 @@
     }
   </style>
 </head>
+
 <body>
   <div class="otp-container">
     <h2>OTP Verification</h2>
@@ -120,163 +123,166 @@
       </div>
       <div id="errorMessage" class="error-message"></div>
       <button type="submit" class="btn1">Verify OTP</button>
-      
-  <a class="btn btn-primary" href="#" id="resendOtp">Resend OTP</a>
-  <span id="resendTimer"></span>
+
+      <a class="btn btn-primary" href="#" id="resendOtp">Resend OTP</a>
+      <span id="resendTimer"></span>
     </form>
   </div>
 
 
   <script>
-     function moveNext(current, nextId) {
-        if (current.value.trim() !== "" && nextId) {
-            const next = document.getElementById(nextId);
-            if (next) {
-                next.focus();
-            }
+    function moveNext(current, nextId) {
+      if (current.value.trim() !== "" && nextId) {
+        const next = document.getElementById(nextId);
+        if (next) {
+          next.focus();
         }
+      }
     }
 
     // Loop to attach event listeners
     for (let i = 1; i <= 6; i++) {
-        const currentId = `id${i}`;
-        const nextId = i < 6 ? `id${i + 1}` : null;
+      const currentId = `id${i}`;
+      const nextId = i < 6 ? `id${i + 1}` : null;
 
-        const currentInput = document.getElementById(currentId);
-        if (currentInput) {
-            currentInput.addEventListener("input", () => moveNext(currentInput, nextId));
+      const currentInput = document.getElementById(currentId);
+      if (currentInput) {
+        currentInput.addEventListener("input", () => moveNext(currentInput, nextId));
 
-            // Handle backspace to move to the previous field
-            currentInput.addEventListener("keydown", (event) => {
-                if (event.key === "Backspace" && currentInput.value === "" && i > 1) {
-                    const prevId = `id${i - 1}`;
-                    const prevInput = document.getElementById(prevId);
-                    if (prevInput) {
-                        prevInput.focus();
-                    }
-                }
-            });
-        }
+        // Handle backspace to move to the previous field
+        currentInput.addEventListener("keydown", (event) => {
+          if (event.key === "Backspace" && currentInput.value === "" && i > 1) {
+            const prevId = `id${i - 1}`;
+            const prevInput = document.getElementById(prevId);
+            if (prevInput) {
+              prevInput.focus();
+            }
+          }
+        });
+      }
     }
-    
+
 
     const form = document.getElementById("otpForm")
-    form.addEventListener('submit',async function (event) {
+    form.addEventListener('submit', async function(event) {
       event.preventDefault()
-   
+
       const otp = [
-         document.getElementById('id1').value.trim(),
-         document.getElementById('id2').value.trim(),
-         document.getElementById('id3').value.trim(),
-         document.getElementById('id4').value.trim(),
-         document.getElementById('id5').value.trim(), 
-         document.getElementById('id6').value.trim()
-    ].join("")
-    email=document.getElementById('emailInput').value.trim(),
-      console.log("form data is ." ,email,otp);
-      
-      const result = await fetch("/verifyOtp",{
+        document.getElementById('id1').value.trim(),
+        document.getElementById('id2').value.trim(),
+        document.getElementById('id3').value.trim(),
+        document.getElementById('id4').value.trim(),
+        document.getElementById('id5').value.trim(),
+        document.getElementById('id6').value.trim()
+      ].join("")
+      email = document.getElementById('emailInput').value.trim(),
+        console.log("form data is .", email, otp);
+
+      const result = await fetch("/verifyOtp", {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({otp,email }) // Wrap in an object  
-        }).then(response => response.json())
-        // console.log(result.message);
-        if(result.success === true){
-          window.location.href = '/login'
+        body: JSON.stringify({
+          otp,
+          email
+        }) // Wrap in an object  
+      }).then(response => response.json())
+      // console.log(result.message);
+      if (result.success === true) {
+        window.location.href = '/login'
 
-        }else{
-          document.getElementById("informationlabel").innerHTML =result.message
-        }
+      } else {
+        document.getElementById("informationlabel").innerHTML = result.message
+      }
     })
-
-
   </script>
 
 
 
-<script>
+  <script>
+    const resendOtpBtn = document.getElementById('resendOtp');
+    const resendTimerSpan = document.getElementById('resendTimer');
+    console.log(resendTimerSpan)
+    console.log(resendOtpBtn)
+    let resendCooldown = false;
+    let resendTimer = null;
 
-  const resendOtpBtn = document.getElementById('resendOtp');
-  const resendTimerSpan = document.getElementById('resendTimer');
-  console.log(resendTimerSpan)
-  console.log(resendOtpBtn)
-  let resendCooldown = false;
-  let resendTimer = null;
+    startResendCooldown();
 
-  startResendCooldown();
+    function startResendCooldown() {
+      if (resendCooldown) return;
 
-  function startResendCooldown() {
-    if (resendCooldown) return;
+      resendCooldown = true;
+      resendOtpBtn.classList.add('btn-disabled');
+      resendOtpBtn.style.pointerEvents = 'none';
 
-    resendCooldown = true;
-    resendOtpBtn.classList.add('btn-disabled');
-    resendOtpBtn.style.pointerEvents = 'none';
-
-    let timeLeft = 30;
-    resendTimerSpan.textContent = `(${timeLeft}s)`;
-
-    resendTimer = setInterval(() => {
-      timeLeft--;
+      let timeLeft = 30;
       resendTimerSpan.textContent = `(${timeLeft}s)`;
 
-      if (timeLeft <= 0) {
+      resendTimer = setInterval(() => {
+        timeLeft--;
+        resendTimerSpan.textContent = `(${timeLeft}s)`;
+
+        if (timeLeft <= 0) {
+          clearInterval(resendTimer);
+          resendOtpBtn.classList.remove('btn-disabled');
+          resendOtpBtn.style.pointerEvents = 'auto';
+          resendTimerSpan.textContent = '';
+          resendCooldown = false;
+        }
+      }, 1000);
+    }
+
+    document.getElementById('resendOtp').addEventListener('click', async function(event) {
+      event.preventDefault();
+
+      // Check if already in cooldown
+      if (resendCooldown) return;
+
+      const email = document.getElementById('emailInput').value.trim();
+
+      try {
+        console.log('otp resopnce send')
+        const response = await fetch(`/resendOtp/${email}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            email
+          })
+        });
+        console.log(response)
+        console.log('before sucess')
+        const informationLabel = document.getElementById('informationlabel');
+        if (response.ok) {
+          const result = await response.json();
+          console.log(result)
+          informationLabel.innerText = result.message;
+          console.log('logged....!')
+          startResendCooldown();
+        } else {
+          informationLabel.innerText = result.message;
+        }
+      } catch (error) {
+        console.error('Error resending OTP:', error);
+        const informationLabel = document.getElementById('informationlabel');
+        informationLabel.innerText = 'An error occurred. Please try again.';
+      }
+    });
+
+    // Prevent multiple timer instances
+    window.addEventListener('beforeunload', () => {
+      if (resendTimer) {
         clearInterval(resendTimer);
-        resendOtpBtn.classList.remove('btn-disabled');
-        resendOtpBtn.style.pointerEvents = 'auto';
-        resendTimerSpan.textContent = '';
-        resendCooldown = false;
       }
-    }, 1000);
-  }
-
-  document.getElementById('resendOtp').addEventListener('click', async function (event) {
-    event.preventDefault();
-
-    // Check if already in cooldown
-    if (resendCooldown) return;
-
-    const email = document.getElementById('emailInput').value.trim();
-
-    try {
-      console.log('otp resopnce send')
-      const response = await fetch(`/resendOtp/${email}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email })
-      });
-      console.log(response)
-      console.log('before sucess')
-      const informationLabel = document.getElementById('informationlabel');
-      if (response.ok) {
-        const result = await response.json();
-        console.log(result)
-        informationLabel.innerText = result.message;
-        console.log('logged....!')
-        startResendCooldown();
-      } else {
-        informationLabel.innerText = result.message;
-      }
-    } catch (error) {
-      console.error('Error resending OTP:', error);
-      const informationLabel = document.getElementById('informationlabel');
-      informationLabel.innerText = 'An error occurred. Please try again.';
-    }
-  });
-
-  // Prevent multiple timer instances
-  window.addEventListener('beforeunload', () => {
-    if (resendTimer) {
-      clearInterval(resendTimer);
-    }
-  });
-
-  
-</script>
+    });
+  </script>
 
 
 
 
 </body>
+
 </html>
