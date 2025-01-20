@@ -30,6 +30,7 @@
     "passport-google-oauth2": "^0.2.0",
     "passport-google-oauth20": "^2.0.0",
     "sweetalert": "^2.1.2",
-    "sweetalert2": "^11.15.2"
+    "sweetalert2": "^11.15.2",
+    "uuid": "^11.0.5"
   }
 }

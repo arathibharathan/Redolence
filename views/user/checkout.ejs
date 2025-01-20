@@ -89,7 +89,7 @@
 
             <nav class="main-nav">
               <ul class="menu sf-arrows">
-                <li class="megamenu-container active">
+                <li >
                   <a href="/" class="">Home</a>
 
 
@@ -101,6 +101,11 @@
                 <li>
                   <a href="/cart" class="">Cart</a>
                 </li>
+
+                <li>
+                  <a class="megamenu-container active" href="/checkout" class="">Checkout</a>
+                </li>
+
 
               </ul><!-- End .menu -->
             </nav>
@@ -141,65 +146,11 @@
             </div><!-- End .compare-dropdown -->
 
             <div class="dropdown cart-dropdown">
-              <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
+              <a href="cart" class="dropdown-toggle">
                 <i class="icon-shopping-cart"></i>
-                <span class="cart-count">2</span>
               </a>
 
-              <div class="dropdown-menu dropdown-menu-right">
-                <div class="dropdown-cart-products">
-                  <div class="product">
-                    <div class="product-cart-details">
-                      <h4 class="product-title">
-                        <a href="product.html">Beige knitted elastic runner shoes</a>
-                      </h4>
-
-                      <span class="cart-product-info">
-                        <span class="cart-product-qty">1</span>
-                        x $84.00
-                      </span>
-                    </div><!-- End .product-cart-details -->
-
-                    <figure class="product-image-container">
-                      <a href="product.html" class="product-image">
-                        <img src="user/assets/images/products/cart/product-1.jpg" alt="product">
-                      </a>
-                    </figure>
-                    <a href="#" class="btn-remove" title="Remove Product"><i class="icon-close"></i></a>
-                  </div><!-- End .product -->
-
-                  <div class="product">
-                    <div class="product-cart-details">
-                      <h4 class="product-title">
-                        <a href="product.html">Blue utility pinafore denim dress</a>
-                      </h4>
-
-                      <span class="cart-product-info">
-                        <span class="cart-product-qty">1</span>
-                        x $76.00
-                      </span>
-                    </div><!-- End .product-cart-details -->
-
-                    <figure class="product-image-container">
-                      <a href="product.html" class="product-image">
-                        <img src="user/assets/images/products/cart/product-2.jpg" alt="product">
-                      </a>
-                    </figure>
-                    <a href="#" class="btn-remove" title="Remove Product"><i class="icon-close"></i></a>
-                  </div><!-- End .product -->
-                </div><!-- End .cart-product -->
-
-                <div class="dropdown-cart-total">
-                  <span>Total</span>
-
-                  <span class="cart-total-price">$160.00</span>
-                </div><!-- End .dropdown-cart-total -->
-
-                <div class="dropdown-cart-action">
-                  <a href="cart.html" class="btn btn-primary">View Cart</a>
-                  <a href="checkout.html" class="btn btn-outline-primary-2"><span>Checkout</span><i class="icon-long-arrow-right"></i></a>
-                </div><!-- End .dropdown-cart-total -->
-              </div><!-- End .dropdown-menu -->
+              
             </div><!-- End .cart-dropdown -->
           </div><!-- End .header-right -->
         </div><!-- End .container -->
@@ -227,21 +178,35 @@
           <div class="container">
             <div class="checkout-discount">
             </div><!-- End .checkout-discount -->
-            <form action="#">
+            <form id="add-new-address">
               <div class="row">
                 <div class="col-lg-9">
                   <h2>Checkout Form</h2>
 
-                  <!-- <div class="form-group">
-                                        <button type="button" class="btn btn-primary btn-sm btn-block" id="show-coupon">
-                                          Show Coupon
-                                        </button>
-                                      </div> -->
-                  <!-- Include Font Awesome in your project -->
+                  <div class="existing-addresses">
+                    <h3>Select Shipping Address</h3>
+                    <div id="addressList">
+                      <% if (existingAddresses && existingAddresses.length > 0) { %>
+                        <% existingAddresses.forEach((addr, index) => { %>
+                          <div class="address-item" data-index="<%= index %>">
+                            <input  type="radio" name="selectedAddress" value="<%= addr._id %>" id="address<%= index %>" required>
+                            <label for="address<%= index %>">
+                              <strong><%= addr.name %></strong><br>
+                              <%= addr.streetAddress %>, <%= addr.city %><br>
+                              <%= addr.state %> - <%= addr.pinCode %><br>
+                              Mobile: <%= addr.mobile %>
+                            </label>
+                          </div>
+                        <% }); %>
+                      <% } else { %>
+                        <p id="no-addresses">No saved addresses. Please add a new address.</p>
+                      <% } %>
+                    </div>
+                  </div>
+                  
                   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-
                   <div class="form-group">
-                    <button type="button" class="btn btn-secondary btn-sm btn-block" id="add-new-address">
+                    <button type="button" class="btn btn-secondary btn-sm btn-block" id="addAddressBtn">
                       <i class="fas fa-plus"></i> Add New Address
                     </button>
                   </div>
@@ -251,7 +216,7 @@
                       <div class="modal-content">
                         <div class="modal-header">
                           <h5 class="modal-title" id="addAddressModalLabel">Add New Address</h5>
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <button type="submit" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                           </button>
                         </div>
@@ -334,27 +299,10 @@
                     <h3 class="summary-title">Your Order</h3><!-- End .summary-title -->
 
                     <table class="table table-summary">
-                      <thead>
-                        <tr>
-                          <th>Product</th>
-                          <th>Total</th>
-                        </tr>
-                      </thead>
+                     
 
                       <tbody>
-                        <tr>
-                          <td><a href="#">Beige knitted elastic runner shoes</a></td>
-                          <td>$84.00</td>
-                        </tr>
-
-                        <tr>
-                          <td><a href="#">Blue utility pinafore denim dress</a></td>
-                          <td>$76.00</td>
-                        </tr>
-                        <tr class="summary-subtotal">
-                          <td>Subtotal:</td>
-                          <td>$160.00</td>
-                        </tr><!-- End .summary-subtotal -->
+                     
                         <tr>
                           <td>Shipping:</td>
                           <td>Free shipping</td>
@@ -369,10 +317,9 @@
                     <div class="accordion-summary" id="accordion-payment">
                       <!-- Payment options here -->
                     </div><!-- End .accordion -->
-
-                    <button type="submit" class="btn btn-outline-primary-2 btn-order btn-block">
+                    <button id="placeOrderBtn" class="btn btn-outline-primary-2 btn-order btn-block">
                       <span class="btn-text">Place Order</span>
-                      <span class="btn-hover-text">Proceed to Checkout</span>
+                      <span class="btn-hover-text">Place Order</span>
                     </button>
                   </div><!-- End .summary -->
                 </aside><!-- End .col-lg-3 -->
@@ -755,58 +702,165 @@
   <script src="user/assets/js/owl.carousel.min.js"></script>
   <!-- Main JS File -->
   <script src="user/assets/js/main.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  
 
+  //modal script
   <script>
-    document.getElementById('add-new-address').addEventListener('click', function() {
-        $('#addAddressModal').modal('show');
-    });
-    
-    document.getElementById('saveAddress').addEventListener('click', function() {
-        // Clear previous error messages
-        const errorFields = document.querySelectorAll('.invalid-feedback');
-        errorFields.forEach(field => field.textContent = '');
-    
+    document.getElementById('addAddressBtn').addEventListener('click', function () {
+      // Show the modal
+      $('#addAddressModal').modal('show');
+      
+      // Clear previous error messages
+      const errorFields = document.querySelectorAll('.invalid-feedback');
+      errorFields.forEach(field => field.textContent = '');
+  
+      // Add event listener to the Save Address button
+      document.getElementById('saveAddress').addEventListener('click', function () {
         // Collect form data
         const formData = {
-            name: document.getElementById('name').value,
-            mobile: document.getElementById('mobile').value,
-            streetAddress: document.getElementById('streetAddress').value,
-            city: document.getElementById('city').value,
-            landmark: document.getElementById('landmark').value,
-            state: document.getElementById('state').value,
-            pinCode: document.getElementById('pinCode').value
+          name: document.getElementById('name').value,
+          mobileNumber: document.getElementById('mobile').value,
+          streetAddress: document.getElementById('streetAddress').value,
+          city: document.getElementById('city').value,
+          landmark: document.getElementById('landmark').value,
+          state: document.getElementById('state').value,
+          pinCode: document.getElementById('pinCode').value
         };
-    
+  
         // Send AJAX request
         fetch('/save-address', {
-        method: 'POST',
-        headers: {
+          method: 'POST',
+          headers: {
             'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-    })
-        .then((response) => response.json()) // Parse server response as JSON
-        .then((result) => {
-            if (result.success === true) {
-                $('#addAddressModal').modal('hide');
-                alert('Address saved successfully!');
-                // Optionally, refresh or update address list
-            } else {
-                // Display error message
-                document.getElementById('informationlabel').textContent = result.message;
-            }
+          },
+          body: JSON.stringify(formData),
         })
-        .catch((error) => {
+          .then(response => response.json()) // Parse server response as JSON
+          .then(result => {
+            if (result.success === true) {
+              $('#addAddressModal').modal('hide');
+              Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: 'Address saved successfully!',
+              });
+
+              
+            } else {
+              // Display error message
+              document.getElementById('informationlabel').textContent = result.message;
+            }
+          })
+          .catch(error => {
             console.error('Error:', error);
-            alert('An unexpected error occurred. Please try again later.');
-        });
-});
-    </script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Error!',
+                text: 'An unexpected error occurred. Please try again later.',
+              });
+
+          });
+      });
+    });
+  </script>
+
+  
+  <!-- Modal for Address Selection -->
+<div class="modal fade" id="addressModal" tabindex="-1" role="dialog" aria-labelledby="addressModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addressModalLabel">No Address Selected</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Please select a shipping address to proceed with your order. You can also add a new address.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="addAddressBtn" data-dismiss="modal">Add Address</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+//placeOrder Script
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const placeOrderBtn = document.getElementById('placeOrderBtn');
     
+    placeOrderBtn.addEventListener('click', async (e) => {
+        e.preventDefault();
+
+        // Validate address selection
+        const selectedAddress = document.querySelector('input[name="selectedAddress"]:checked');
+        console.log(selectedAddress);
+        
+        const addressId = selectedAddress?.value
+        
+        console.log(addressId);
+        
+        if (selectedAddress==null) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Oops...',
+                text: 'Please select a shipping address!'
+            });
+            return;
+        }
+
+        // Prepare order dat
+        const paymentType = 'COD'
+
+
+        try {
+            const response = await fetch('/place-order', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({addressId,paymentType})
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Order Placed!',
+                    text: `Your order ${result.orderId} has been placed successfully.`,
+                    confirmButtonText: 'View Orders'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = '/orders';
+                    }
+                });
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Order Failed',
+                    text: result.error || 'Failed to place order'
+                });
+            }
+        } catch (error) {
+            console.error('Order placement error:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Something went wrong. Please try again.'
+            });
+        }
+    });
+});
+</script>
+
+
 
 </body>
-
-
 
 
 </html>

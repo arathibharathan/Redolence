@@ -13,7 +13,8 @@ const productSchema = new mongoose.Schema({
 		required: true,
 	},
 	category: {
-		type: String,
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'Category',
 	},
 	stock: {
 		type: Number,
@@ -22,7 +23,7 @@ const productSchema = new mongoose.Schema({
 	images: {
 		type: Array,
 	},
-	is_block: {
+	is_list: {
 		type: Boolean,
 	},
 	createdAt: {

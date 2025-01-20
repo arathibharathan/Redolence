@@ -1,13 +1,19 @@
 const express = require("express");
-// const path = require('path')
 const userRouter = express.Router(); 
 const userController =require('../controller/userController/userController')
+const shopController =require('../controller/userController/shopController')
+const registerController =require('../controller/userController/registerController')
+const profileController =require('../controller/userController/profileController')
+const loginController =require('../controller/userController/loginController')
+const checkoutController =require('../controller/userController/checkoutController')
+const cartController =require('../controller/userController/cartController')
 const passport = require('../passport')
 const session = require("express-session")
-
-
 const auth = require('../middleware/userAuth');
 const userCollection = require("../model/userModel");
+
+
+
 
 userRouter.use(session({
     secret:  process.env.SESSION_SECRET,
@@ -17,25 +23,29 @@ userRouter.use(session({
 
 }));
 
+//home
+userRouter.get('/', userController.home)
+
+
 //login
-userRouter.get('/login', auth.isLogout,userController.login)
-userRouter.post("/login",userController.logincheck)
+userRouter.get("/login", auth.isLogout,loginController.login)
+userRouter.post("/login", loginController.logincheck)
 
 
 //register
-userRouter.get('/register', auth.isLogout,userController.register)
-userRouter.post("/signup",userController.registerCheck)
-userRouter.get('/', userController.home)
+userRouter.get("/register", auth.isLogout,registerController.register)
+userRouter.post("/signup",registerController.registerCheck)
+
 
 //otp
-userRouter.get('/otp/:id',auth.isLogout,userController.otpSender)
-userRouter.post('/verifyOtp',userController.verifyOTP)
-userRouter.post('/resendOtp/:id',userController.resendOtp)
+userRouter.get('/otp/:id',auth.isLogout,registerController.otpSender)
+userRouter.post('/verifyOtp',registerController.verifyOTP)
+userRouter.post('/resendOtp/:id',registerController.resendOtp)
 
 
-
-userRouter.get('/shop', userController.shop)
-userRouter.get('/product', userController.product)
+//shop
+userRouter.get('/shop', shopController.shop)
+userRouter.get('/product', shopController.product)
 
 
 //googleAuthentication
@@ -65,36 +75,38 @@ userRouter.get('/auth/google/callback', auth.isLogout, (req, res, next) => {
 });
 
 
-// logout
-userRouter.get('/logout',userController.userLogout)
-
 //forgotPassword
-userRouter.get('/forgotPage',userController.forgotpage)
-userRouter.post('/forgotPage',userController.forgotpageCheck)
+userRouter.get('/forgotPage',loginController.forgotpage)
+userRouter.post('/forgotPage',loginController.forgotpageCheck)
 
-// userRouter.get('/forgotPassword',userController.forgotpassword)
+//user
+userRouter.get('/dashboard',auth.isLogin,profileController.userDetails)
+userRouter.get('/editUser',auth.isLogin,profileController.editUser)
+userRouter.post('/editUser', auth.isLogin,profileController.editUserdata)
 
-userRouter.get('/dashboard',auth.isLogin,userController.userDetails)
-userRouter.get('/editUser',auth.isLogin,userController.editUser)
-userRouter.post('/editUser', auth.isLogin,userController.editUserdata)
-
-userRouter.get('/address', auth.isLogin,userController.address)
-userRouter.post('/address', auth.isLogin, userController.saveAddress);
+//Address
+userRouter.get('/address', auth.isLogin,profileController.address)
+userRouter.post('/address', auth.isLogin, profileController.saveAddress);
 
 
 //cart
-userRouter.get('/cart', auth.isLogin,userController.cart);
-userRouter.post('/cart',auth.isLogin,userController.addcart)
-userRouter.post('/cart/update', auth.isLogin, userController.updateCartQuantity);
-userRouter.post('/cart/remove', auth.isLogin, userController.removeProductFromCart);
-
-
+userRouter.get('/cart', auth.isLogin,cartController.cart);
+userRouter.post('/cart',auth.isLogin,cartController.addcart)
+userRouter.post('/cart/update', auth.isLogin, cartController.updateCartQuantity);
+userRouter.post('/cart/remove', auth.isLogin, cartController.removeProductFromCart);
 
 
 //checkout
-userRouter.get('/checkout',userController.checkout)
-userRouter.post('/save-address', userController.addressSave);
+userRouter.get('/checkout',checkoutController.checkout)
+userRouter.post('/save-address', checkoutController.addressSave);
+userRouter.post('/place-order', checkoutController.placeOrder);
 
+// Order
+userRouter.get('/orders', checkoutController.orders);
+userRouter.get('/orders', checkoutController.placeOrder);
+
+// logout
+userRouter.get('/logout',loginController.userLogout)
 
 
 module.exports = userRouter 

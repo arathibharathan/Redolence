@@ -160,30 +160,6 @@
   <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container">
       <a class="navbar-brand" href="index.html">Redolence</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="oi oi-menu"></span> Menu
-      </button>
-
-      <div class="collapse navbar-collapse" id="ftco-nav">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Shop</a>
-            <div class="dropdown-menu" aria-labelledby="dropdown04">
-              <a class="dropdown-item" href="shop.html">Shop</a>
-              <a class="dropdown-item" href="product-single.html">Single Product</a>
-              <a class="dropdown-item" href="cart.html">Cart</a>
-              <a class="dropdown-item" href="checkout.html">Checkout</a>
-            </div>
-          </li>
-          <li class="nav-item active"><a href="about.html" class="nav-link">About</a></li>
-          <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
-          <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
-          <li class="nav-item"><a style="color: orange;" href="/login" class="nav-link">login</a></li>
-          <li class="nav-item cta cta-colored"><a href="cart.html" class="nav-link"><span class="icon-shopping_cart"></span>[0]</a></li>
-
-        </ul>
-      </div>
     </div>
   </nav>
 
@@ -206,10 +182,6 @@
       <a href="/login">Already have an account?</a>
     </div>
   </div>
-
-
-  <!-- <div class="background-image"></div> -->
-
 
 
   <footer class="ftco-footer bg-light ftco-section">
@@ -292,31 +264,29 @@
 
   <script>
     const form = document.getElementById("signform")
-    form.addEventListener('submit', async function(event) { // if the form submit, then it works
-      event.preventDefault() // - couldn't refresh the browser
+    form.addEventListener('submit', async function(event) { 
+      event.preventDefault() 
       const formData = {
         name: document.getElementById('name').value.trim(),
         username: document.getElementById('username').value.trim(),
         email: document.getElementById('email').value.trim(),
         mobile: document.getElementById('mobile').value.trim(),
-        password: document.getElementById('password').value.trim(), // creating a object formData. collect all the data from the formm the user entering(name, username, email, mobile, password).value is used for get the value in the input. .trim() used to remove space.
+        password: document.getElementById('password').value.trim(), 
         confirmPassword: document.getElementById('confirmPassword').value.trim()
       };
-
-      console.log('data before api call :', formData)
 
       const result = await fetch('/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData), // converts object to JSON string
-      }).then(response => response.json()) //Parses server response as JSON,Allows handling server's response
+        body: JSON.stringify(formData), 
+      }).then(response => response.json()) 
       console.log('data after api call :')
       if (result.success === true) {
         window.location.href = `/otp/${result.email}`
       } else {
-        document.getElementById('informationlabel').innerHTML = result.message //Displays server's response message,Could be success or error message
+        document.getElementById('informationlabel').innerHTML = result.message 
       }
 
     })
