@@ -45,7 +45,10 @@ userRouter.post('/resendOtp/:id',registerController.resendOtp)
 
 //shop
 userRouter.get('/shop', shopController.shop)
+userRouter.get('/shop', shopController.getProducts)
+
 userRouter.get('/product', shopController.product)
+
 
 
 //googleAuthentication
@@ -87,6 +90,7 @@ userRouter.post('/editUser', auth.isLogin,profileController.editUserdata)
 //Address
 userRouter.get('/address', auth.isLogin,profileController.address)
 userRouter.post('/address', auth.isLogin, profileController.saveAddress);
+userRouter.delete('/address/:addressId', auth.isLogin, profileController.deleteAddress)
 
 
 //cart
@@ -104,7 +108,12 @@ userRouter.post('/place-order', checkoutController.placeOrder);
 // Order
 userRouter.get('/orders', checkoutController.orders);
 userRouter.get('/orders', checkoutController.placeOrder);
+userRouter.delete('/delete-address/:addressId', checkoutController.deleteAddress);
 
+// Add these routes
+userRouter.get('/get-address/:addressId', checkoutController.getAddressById);
+userRouter.put('/update-address/:addressId', checkoutController.updateAddress);
+   
 // logout
 userRouter.get('/logout',loginController.userLogout)
 

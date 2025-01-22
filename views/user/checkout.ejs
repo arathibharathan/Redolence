@@ -189,20 +189,102 @@
                       <% if (existingAddresses && existingAddresses.length > 0) { %>
                         <% existingAddresses.forEach((addr, index) => { %>
                           <div class="address-item" data-index="<%= index %>">
-                            <input  type="radio" name="selectedAddress" value="<%= addr._id %>" id="address<%= index %>" required>
+                            <input type="radio" name="selectedAddress" value="<%= addr._id %>" id="address<%= index %>" required>
                             <label for="address<%= index %>">
-                              <strong><%= addr.name %></strong><br>
-                              <%= addr.streetAddress %>, <%= addr.city %><br>
-                              <%= addr.state %> - <%= addr.pinCode %><br>
-                              Mobile: <%= addr.mobile %>
+                                <strong><%= addr.name %></strong><br>
+                                <%= addr.streetAddress %>, <%= addr.city %><br>
+                                <%= addr.state %> - <%= addr.pinCode %><br>
+                                Mobile: <%= addr.mobile %>
                             </label>
-                          </div>
+                            <button id="deleteAddress" class="btn btn-secondary btn-sm btn-block" style="background-color: #db4437; width: 100px;">Delete</button>
+                            <button id="editAddress" class="btn btn-secondary btn-sm btn-block" style="width: 100px;">Edit</button>
+
+                            <!-- Add this to your existing modal section -->
+<div class="modal fade" id="editAddressModal" tabindex="-1" role="dialog" aria-labelledby="editAddressModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editAddressModalLabel">Edit Address</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="editAddressForm" novalidate>
+          <input type="hidden" id="editAddressId" name="addressId">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="editName">Full Name *</label>
+                <input type="text" class="form-control" id="editName" name="name" required>
+                <div class="invalid-feedback" id="editName-error"></div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="editMobile">Mobile Number *</label>
+                <input type="tel" class="form-control" id="editMobile" name="mobile" required>
+                <div class="invalid-feedback" id="editMobile-error"></div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="editStreetAddress">Street Address *</label>
+            <input type="text" class="form-control" id="editStreetAddress" name="streetAddress" required>
+            <div class="invalid-feedback" id="editStreetAddress-error"></div>
+          </div>
+          
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="editCity">City *</label>
+                <input type="text" class="form-control" id="editCity" name="city" required>
+                <div class="invalid-feedback" id="editCity-error"></div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="editLandmark">Landmark *</label>
+                <input type="text" class="form-control" id="editLandmark" name="landmark" required>
+                <div class="invalid-feedback" id="editLandmark-error"></div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="editState">State *</label>
+                <input type="text" class="form-control" id="editState" name="state" required>
+                <div class="invalid-feedback" id="editState-error"></div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="editPinCode">PIN Code *</label>
+                <input type="text" class="form-control" id="editPinCode" name="pinCode" required>
+                <div class="invalid-feedback" id="editPinCode-error"></div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" id="updateAddress">Update Address</button>
+      </div>
+    </div>
+  </div>
+</div>
+                        </div>
                         <% }); %>
                       <% } else { %>
                         <p id="no-addresses">No saved addresses. Please add a new address.</p>
                       <% } %>
                     </div>
                   </div>
+                  <br>
                   
                   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
                   <div class="form-group">
@@ -704,6 +786,7 @@
   <script src="user/assets/js/main.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   
+  
 
   //modal script
   <script>
@@ -858,6 +941,371 @@
 });
 </script>
 
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // Add event listeners to all delete buttons
+    const deleteButtons = document.querySelectorAll('#deleteAddress');
+    
+    deleteButtons.forEach(button => {
+        button.addEventListener('click', async (e) => {
+            e.preventDefault();
+
+            const addressItem = e.target.closest('.address-item');
+            const addressId = addressItem.querySelector('input[name="selectedAddress"]').value;
+
+            try {
+                const response = await fetch(`/delete-address/${addressId}`, {
+                    method: 'DELETE'
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    // Remove the address from the DOM
+                    addressItem.remove();
+
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Address Deleted',
+                        text: result.message
+                    });
+
+                    // If no addresses left, show no addresses message
+                    const addressList = document.getElementById('addressList');
+                    if (addressList.children.length === 0) {
+                        const noAddressesMessage = document.createElement('p');
+                        noAddressesMessage.id = 'no-addresses';
+                        noAddressesMessage.textContent = 'No saved addresses. Please add a new address.';
+                        addressList.appendChild(noAddressesMessage);
+                    }
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Delete Failed',
+                        text: result.message
+                    });
+                }
+            } catch (error) {
+                console.error('Delete Address Error:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Something went wrong. Please try again.'
+                });
+            }
+        });
+    });
+});
+</script>
+
+
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Edit Address Functionality
+    const editButtons = document.querySelectorAll('#editAddress');
+    
+    editButtons.forEach(button => {
+        button.addEventListener('click', async (e) => {
+            e.preventDefault();
+
+            const addressItem = e.target.closest('.address-item');
+            const addressId = addressItem.querySelector('input[name="selectedAddress"]').value;
+
+            try {
+                // Fetch address details
+                const response = await fetch(`/get-address/${addressId}`);
+                const result = await response.json();
+
+                if (result.success) {
+                    // Create or update edit modal
+                    createEditAddressModal(result.address, addressId);
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Fetch Failed',
+                        text: result.message
+                    });
+                }
+            } catch (error) {
+                console.error('Edit Address Error:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Something went wrong. Please try again.'
+                });
+            }
+        });
+    });
+
+    // Function to create edit address modal
+    function createEditAddressModal(address, addressId) {
+        // Remove existing modal if any
+        const existingModal = document.getElementById('editAddressModal');
+        if (existingModal) {
+            existingModal.remove();
+        }
+
+        // Create modal HTML
+        const modalHtml = `
+            <div class="modal fade" id="editAddressModal" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Edit Address</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="editAddressForm">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="edit-name">Full Name *</label>
+                                            <input type="text" class="form-control" id="edit-name" value="${address.name}" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="edit-mobile">Mobile Number *</label>
+                                            <input type="tel" class="form-control" id="edit-mobile" value="${address.mobile}" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="edit-streetAddress">Street Address *</label>
+                                    <input type="text" class="form-control" id="edit-streetAddress" value="${address.streetAddress}" required>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="edit-city">City *</label>
+                                            <input type="text" class="form-control" id="edit-city" value="${address.city}" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="edit-landmark">Landmark *</label>
+                                            <input type="text" class="form-control" id="edit-landmark" value="${address.landmark}" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="edit-state">State *</label>
+                                            <input type="text" class="form-control" id="edit-state" value="${address.state}" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="edit-pinCode">PIN Code *</label>
+                                            <input type="text" class="form-control" id="edit-pinCode" value="${address.pinCode}" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-primary" id="saveEditedAddress" data-address-id="${addressId}">Save Changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        // Append modal to body
+        document.body.insertAdjacentHTML('beforeend', modalHtml);
+
+        // Show the modal
+        $('#editAddressModal').modal('show');
+
+        // Add event listener for save button
+        document.getElementById('saveEditedAddress').addEventListener('click', async () => {
+            const addressId = document.getElementById('saveEditedAddress').dataset.addressId;
+            
+            // Collect form data
+            const formData = {
+                name: document.getElementById('edit-name').value,
+                mobile: document.getElementById('edit-mobile').value,
+                streetAddress: document.getElementById('edit-streetAddress').value,
+                city: document.getElementById('edit-city').value,
+                landmark: document.getElementById('edit-landmark').value,
+                state: document.getElementById('edit-state').value,
+                pinCode: document.getElementById('edit-pinCode').value
+            };
+
+            try {
+                // Send update request
+                const response = await fetch(`/update-address/${addressId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    // Close modal
+                    $('#editAddressModal').modal('hide');
+
+                    // Show success message
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Address Updated',
+                        text: result.message
+                    });
+
+                    // Optionally update the address in the DOM
+                    updateAddressInDOM(addressId, result.updatedAddress);
+                } else {
+                    // Show error message
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Update Failed',
+                        text: result.message || 'Failed to update address'
+                    });
+                }
+            } catch (error) {
+                console.error('Update Address Error:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Something went wrong. Please try again.'
+                });
+            }
+        });
+    }
+
+    // Function to update address in DOM
+    function updateAddressInDOM(addressId, updatedAddress) {
+        const addressItem = document.querySelector(`.address-item input[value="${addressId}"]`).closest('.address-item');
+        
+        if (addressItem) {
+            const addressLabel = addressItem.querySelector('label');
+            addressLabel.innerHTML = `
+                <strong>${updatedAddress.name}</strong><br>
+                ${updatedAddress.streetAddress}, ${updatedAddress.city}<br>
+                ${updatedAddress.state} - ${updatedAddress.pinCode}<br>
+                Mobile: ${updatedAddress.mobile}
+            `;
+        }
+    }
+});
+</script>
+
+<script>
+
+
+$(document).ready(function() {
+  // Edit Address Button Click Handler
+  $(document).on('click', '#editAddress', function() {
+    // Get the parent address item
+    const addressItem = $(this).closest('.address-item');
+    const addressId = addressItem.find('input[name="selectedAddress"]').val();
+
+    // Fetch address details via AJAX
+    $.ajax({
+      url: `/user/get-address/${addressId}`,
+      method: 'GET',
+      success: function(response) {
+        if (response.success) {
+          const addr = response.address;
+          
+          // Populate edit modal fields
+          $('#editAddressId').val(addressId);
+          $('#editName').val(addr.name);
+          $('#editMobile').val(addr.mobile);
+          $('#editStreetAddress').val(addr.streetAddress);
+          $('#editCity').val(addr.city);
+          $('#editLandmark').val(addr.landmark);
+          $('#editState').val(addr.state);
+          $('#editPinCode').val(addr.pinCode);
+
+          // Show the edit modal
+          $('#editAddressModal').modal('show');
+        }else{
+        console.error('Error fetching address:', xhr.responseJSON);
+        Swal.fire({
+    icon: 'error',
+    title: 'Oops...',
+    text: 'Failed to fetch address details',
+    confirmButtonText: 'Try Again'
+});
+        }
+      },
+      
+    });
+  });
+
+  // Update Address Button Click Handler
+  $('#updateAddress').click(function() {
+    const addressId = $('#editAddressId').val();
+    
+    // Validate form
+    const formData = {
+      name: $('#editName').val(),
+      mobile: $('#editMobile').val(),
+      streetAddress: $('#editStreetAddress').val(),
+      city: $('#editCity').val(),
+      landmark: $('#editLandmark').val(),
+      state: $('#editState').val(),
+      pinCode: $('#editPinCode').val()
+    };
+
+    // Perform validation (you can add more robust validation)
+    const errors = [];
+    for (let key in formData) {
+      if (!formData[key]) {
+        errors.push(`${key} is required`);
+      }
+    }
+
+    if (errors.length > 0) {
+      alert(errors.join('\n'));
+      return;
+    }
+
+    // Send AJAX request to update address
+    $.ajax({
+      url: `/user/update-address/${addressId}`,
+      method: 'PUT',
+      contentType: 'application/json',
+      data: JSON.stringify(formData),
+      success: function(response) {
+        if (response.success) {
+          // Refresh the page or update the address list
+          Swal.fire({
+        icon: 'success', // Type of alert ('success', 'error', 'warning', 'info', or 'question')
+        title: 'Success!',
+        text: 'Address updated successfully',
+        confirmButtonText: 'OK'
+    });
+          location.reload(); // Or update the specific address in the list
+        }
+      },
+      error: function(xhr) {
+        console.error('Error updating address:', xhr.responseJSON);
+        Swal.fire({
+    icon: 'error',
+    title: 'Oops...',
+    text: 'Failed to update address!',
+    confirmButtonText: 'Try Again'
+  });
+      }
+    });
+  });
+});
+</script>
 
 
 </body>
