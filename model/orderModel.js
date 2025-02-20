@@ -49,7 +49,7 @@ const OrderSchema = new mongoose.Schema({
         {
             productId: {
                 type: mongoose.Schema.Types.ObjectId,
-                ref: 'product', // References the product in the order
+                ref: 'product', 
                 required: true,
             },
             name: {
@@ -70,7 +70,7 @@ const OrderSchema = new mongoose.Schema({
             },
             productStatus: {
                 type: String,
-                enum: ['Placed', 'Shipped', 'Delivered', 'Cancelled'], // Tracks the order status
+                enum: ['Placed', 'Shipped', 'Delivered', 'Cancelled'],
                 default: 'Placed',
             },
             cancellation_reason:{
@@ -84,26 +84,26 @@ const OrderSchema = new mongoose.Schema({
     },
     paymentMethod: {
         type: String,
-        enum: ['COD'], // Cash on Delivery or Online Payment
+        enum: ['COD'], 
         required: true,
     },
     paymentStatus: {
         type: String,
-        enum: ['Pending', 'Completed', 'Failed'], // Tracks the payment status
+        enum: ['Pending', 'Completed', 'Failed'], 
         default: 'Pending',
     },
     orderStatus: {
         type: String,
-        enum: ['Placed', 'Shipped', 'Delivered', 'Cancelled'], // Tracks the order status
+        enum: ['Placed', 'Shipped', 'Delivered', 'Cancelled'],
         default: 'Placed',
     },
     orderedAt: {
         type: Date,
-        default: Date.now, // Time when the order was placed
+        default: Date.now, 
     },
     deliveredAt: {
-        type: Date, // Time when the order was delivered (optional)
+        type: Date, 
     },
 });
 
-module.exports = mongoose.model('PlaceOrder', OrderSchema);
+module.exports = mongoose.model('Order', OrderSchema);

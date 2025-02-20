@@ -3,14 +3,20 @@ const adminRouter = express();
 const upload = require('../middleware/multer');
 const auth = require('../middleware/adminAuth');
 const session = require('express-session');
+const offerSchema = require('../model/offerModel')
+const productSchema = require('../model/productModel')
 
 const adminController = require('../controller/adminController/adminController');
 const categoryController = require('../controller/adminController/categoryController');
 const dashboardController = require('../controller/adminController/dashboardController');
 const productController = require('../controller/adminController/productController');
 const userController = require('../controller/adminController/userController');
+const orderController = require('../controller/adminController/orderController')
+const couponController = require('../controller/adminController/couponController')
+const offerController = require('../controller/adminController/offerController')
+const multer = require('../middleware/newMulter')
 
-
+const { body, validationResult } = require('express-validator');
 
 
 adminRouter.use(
@@ -57,7 +63,47 @@ adminRouter.post('/addProduct',upload.array('productImage', 3),productController
 adminRouter.get('/editProduct', auth.isLogin, productController.editProduct);
 adminRouter.post('/checkEditProduct', productController.checkEditProduct);
 adminRouter.get('/blockProduct', auth.isLogin, productController.blockProduct);
+adminRouter.post('/updateProduct',auth.isLogin, multer.updateImage, productController.updateProduct);
+adminRouter.get('/searchProducts', productController.searchProducts)
 
+
+//order
+adminRouter.get('/orderList',auth.isLogin, orderController.orders)
+adminRouter.get('/orderDetails/:id', auth.isLogin, orderController.orderDetails);
+adminRouter.put('/updateOrderItem', auth.isLogin, orderController.updateOrderItem);
+adminRouter.get('/salesReport', auth.isLogin, orderController.salesReport);
+adminRouter.get('/download-excel', auth.isLogin, orderController.downloadExcel);
+
+//coupon
+// Get all coupons
+adminRouter.get('/coupons', auth.isLogin, couponController.getCoupons);
+
+// Create a new coupon
+adminRouter.post('/coupons', auth.isLogin, couponController.createCoupon);
+
+// // Update a coupon
+// adminRouter.put('/coupons/:id', auth.isLogin, couponController.updateCoupon);
+
+// // Delete a coupon
+adminRouter.delete('/coupons/:id', auth.isLogin, couponController.deleteCoupon);
+
+//product Offer
+adminRouter.get('/productOffers', auth.isLogin, offerController.productOffers);
+adminRouter.get('/api/products', auth.isLogin, offerController.getProducts);
+adminRouter.post('/api/offers', auth.isLogin, offerController.createOffer);
+adminRouter.delete('/api/offers/:id', auth.isLogin, offerController.deleteOffer);
+adminRouter.get('/api/product-offers', auth.isLogin, offerController.offers)
+
+// Category offer
+adminRouter.get('/api/categories', auth.isLogin, offerController.getCategories);
+adminRouter.get('/categoryOffers', auth.isLogin, offerController.categoryOffers);
+adminRouter.get('/api/categoryOffers', auth.isLogin, offerController.getCategoryOffers);
+adminRouter.post('/api/categoryOffers', auth.isLogin, offerController.createCategoryOffer);
+adminRouter.get('/api/categoryOffers/:id', auth.isLogin, offerController.getCategoryOfferById);
+adminRouter.put('/api/categoryOffers/:id', auth.isLogin, offerController.updateCategoryOffer);
+adminRouter.delete('/api/categoryOffers/:id', auth.isLogin, offerController.deleteCategoryOffer);
+
+adminRouter.get('/referralOffers', auth.isLogin, offerController.referralOffers)
 
 
 

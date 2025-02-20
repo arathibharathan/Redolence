@@ -83,8 +83,8 @@
               <i class="icon-bars"></i>
             </button>
 
-            <a href="index.html" class="logo">
-              <img src="user/assets/images/logo.png" alt="Redolence Logo" width="105" height="25">
+            <a href="/" class="logo">
+              <img src="/Redolence logo-01.png" alt="Redole Logo" style="width:315px; height: 126px;">
             </a>
 
             <nav class="main-nav">
@@ -196,6 +196,7 @@
                                 <%= addr.state %> - <%= addr.pinCode %><br>
                                 Mobile: <%= addr.mobile %>
                             </label>
+                            <br>
                             <button id="deleteAddress" class="btn btn-secondary btn-sm btn-block" style="background-color: #db4437; width: 100px;">Delete</button>
                             <button id="editAddress" class="btn btn-secondary btn-sm btn-block" style="width: 100px;">Edit</button>
 
@@ -288,7 +289,7 @@
                   
                   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
                   <div class="form-group">
-                    <button type="button" class="btn btn-secondary btn-sm btn-block" id="addAddressBtn">
+                    <button type="button" class="btn btn-secondary btn-sm btn-block" id="addAddressBtn" style="width: 50px;">
                       <i class="fas fa-plus"></i> Add New Address
                     </button>
                   </div>
@@ -377,33 +378,67 @@
 
                 <aside class="col-lg-3">
                   <!-- Move the summary to the right -->
-                  <div class="summary">
-                    <h3 class="summary-title">Your Order</h3><!-- End .summary-title -->
+                  <!-- Update the order summary section in checkout.ejs -->
+<div class="summary" style="width: 800px; margin-left: -280px;" >
+  <h3 class="summary-title">Your Order</h3>
 
-                    <table class="table table-summary">
-                     
+  <table class="table table-summary">
+    <thead>
+      <tr>
+        <th>Product</th>
+        
+        <th>Quantity</th>
+        <th>Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% let subtotal = 0; %>
+      <% cart.productDetails.forEach(item => { %>
+        <% if (item.productId) { %>
+          <% const itemTotal = item.productId.price * item.quantity; %>
+          <% subtotal += itemTotal; %>
+          <tr>
+            <td>
+              <h4 class="product-title"><%= item.productId.name %></h4>
+              <span class="product-price">₹<%= item.productId.price %></span>
+            </td>
+            <td><%= item.quantity %></td>
+            <td>₹<%= itemTotal %></td>
+          </tr>
+        <% } %>
+      <% }); %>
 
-                      <tbody>
-                     
-                        <tr>
-                          <td>Shipping:</td>
-                          <td>Free shipping</td>
-                        </tr>
-                        <tr class="summary-total">
-                          <td>Total:</td>
-                          <td>$160.00</td>
-                        </tr><!-- End .summary-total -->
-                      </tbody>
-                    </table><!-- End .table table-summary -->
+      <tr>
+        <td>Subtotal:</td>
+        <td colspan="3" class="text-right">₹<%= subtotal %></td>
+      </tr>
+      <tr>
+        <td>Shipping:</td>
+        <td colspan="3" class="text-right">Free shipping</td>
+      </tr>
+      <tr class="summary-total">
+        <td>Total:</td>
+        <td colspan="3" class="text-right">₹<%= subtotal %></td>
+      </tr>
+    </tbody>
+  </table>
 
-                    <div class="accordion-summary" id="accordion-payment">
-                      <!-- Payment options here -->
-                    </div><!-- End .accordion -->
-                    <button id="placeOrderBtn" class="btn btn-outline-primary-2 btn-order btn-block">
-                      <span class="btn-text">Place Order</span>
-                      <span class="btn-hover-text">Place Order</span>
-                    </button>
-                  </div><!-- End .summary -->
+  <div class="accordion-summary" id="accordion-payment">
+    <div class="card">
+      <div class="card-header" id="heading-1">
+        <h2 class="card-title">
+          <input type="radio" name="paymentMethod" id="cod" value="COD" required>
+          <label for="cod">Cash On Delivery</label>
+        </h2>
+      </div>
+    </div>
+  </div>
+
+  <button id="placeOrderBtn" class="btn btn-outline-primary-2 btn-order btn-block" disabled>
+    <span class="btn-text">Place Order</span>
+    <span class="btn-hover-text">Place Order</span>
+  </button>
+</div>
                 </aside><!-- End .col-lg-3 -->
               </div><!-- End .row -->
             </form>
@@ -418,7 +453,7 @@
           <div class="row">
             <div class="col-sm-6 col-lg-3">
               <div class="widget widget-about">
-                <img src="user/assets/images/logo.png" class="footer-logo" alt="Footer Logo" width="105" height="25">
+                <img src="/Redolence logo-01.png" class="footer-logo" alt="Footer Logo" width="105" height="25">
                 <p>Praesent dapibus, neque id cursus ucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. </p>
 
                 <div class="social-icons">
@@ -874,70 +909,82 @@
 //placeOrder Script
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-    const placeOrderBtn = document.getElementById('placeOrderBtn');
+    const codRadio = document.getElementById('cod');
+  const placeOrderBtn = document.getElementById('placeOrderBtn');
     
+  codRadio.addEventListener('change', () => {
+    placeOrderBtn.disabled = !codRadio.checked;
+  });
+
     placeOrderBtn.addEventListener('click', async (e) => {
-        e.preventDefault();
+    e.preventDefault();
 
-        // Validate address selection
-        const selectedAddress = document.querySelector('input[name="selectedAddress"]:checked');
-        console.log(selectedAddress);
-        
-        const addressId = selectedAddress?.value
-        
-        console.log(addressId);
-        
-        if (selectedAddress==null) {
-            Swal.fire({
-                icon: 'warning',
-                title: 'Oops...',
-                text: 'Please select a shipping address!'
-            });
-            return;
-        }
+    // Validate address selection
+    const selectedAddress = document.querySelector('input[name="selectedAddress"]:checked');
+    
+    if (!selectedAddress) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Oops...',
+        text: 'Please select a shipping address!'
+      });
+      return;
+    }
 
-        // Prepare order dat
-        const paymentType = 'COD'
+    // Validate payment method
+    if (!codRadio.checked) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Oops...',
+        text: 'Please select Cash On Delivery payment method!'
+      });
+      return;
+    }
 
+    const addressId = selectedAddress.value;
+    const paymentType = 'COD';
 
-        try {
-            const response = await fetch('/place-order', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({addressId,paymentType})
-            });
+    try {
+      const response = await fetch('/place-order', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          addressId,
+          paymentType
+        })
+      });
 
-            const result = await response.json();
+      const result = await response.json();
 
-            if (response.ok) {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Order Placed!',
-                    text: `Your order ${result.orderId} has been placed successfully.`,
-                    confirmButtonText: 'View Orders'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        window.location.href = '/orders';
-                    }
-                });
-            } else {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Order Failed',
-                    text: result.error || 'Failed to place order'
-                });
-            }
-        } catch (error) {
-            console.error('Order placement error:', error);
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: 'Something went wrong. Please try again.'
-            });
-        }
-    });
+      if (response.ok) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Order Placed!',
+          text: `Your order ${result.orderId} has been placed successfully.`,
+          confirmButtonText: 'View Orders'
+        }).then((result1) => {
+          if (result1.isConfirmed) {
+            window.location.href = `/placeOrderInvoice/${result.id}`;
+          }
+        });
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Order Failed',
+          text: result1.error || 'Failed to place order'
+        });
+      }
+    } catch (error) {
+      console.error('Order placement error:', error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: result.error ||'Something went wrong. Please try again.'
+      });
+    }
+  });
 });
 </script>
 
@@ -1204,108 +1251,110 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 
 <script>
-
-
-$(document).ready(function() {
-  // Edit Address Button Click Handler
-  $(document).on('click', '#editAddress', function() {
-    // Get the parent address item
-    const addressItem = $(this).closest('.address-item');
-    const addressId = addressItem.find('input[name="selectedAddress"]').val();
-
-    // Fetch address details via AJAX
-    $.ajax({
-      url: `/user/get-address/${addressId}`,
-      method: 'GET',
-      success: function(response) {
-        if (response.success) {
-          const addr = response.address;
-          
-          // Populate edit modal fields
-          $('#editAddressId').val(addressId);
-          $('#editName').val(addr.name);
-          $('#editMobile').val(addr.mobile);
-          $('#editStreetAddress').val(addr.streetAddress);
-          $('#editCity').val(addr.city);
-          $('#editLandmark').val(addr.landmark);
-          $('#editState').val(addr.state);
-          $('#editPinCode').val(addr.pinCode);
-
-          // Show the edit modal
-          $('#editAddressModal').modal('show');
-        }else{
-        console.error('Error fetching address:', xhr.responseJSON);
-        Swal.fire({
-    icon: 'error',
-    title: 'Oops...',
-    text: 'Failed to fetch address details',
-    confirmButtonText: 'Try Again'
-});
-        }
-      },
-      
-    });
-  });
-
-  // Update Address Button Click Handler
-  $('#updateAddress').click(function() {
-    const addressId = $('#editAddressId').val();
+  document.addEventListener('DOMContentLoaded', function() {
     
-    // Validate form
-    const formData = {
-      name: $('#editName').val(),
-      mobile: $('#editMobile').val(),
-      streetAddress: $('#editStreetAddress').val(),
-      city: $('#editCity').val(),
-      landmark: $('#editLandmark').val(),
-      state: $('#editState').val(),
-      pinCode: $('#editPinCode').val()
-    };
-
-    // Perform validation (you can add more robust validation)
-    const errors = [];
-    for (let key in formData) {
-      if (!formData[key]) {
-        errors.push(`${key} is required`);
+    document.addEventListener('click', function(event) {
+      if (event.target.id === 'editAddress') {
+        const addressItem = event.target.closest('.address-item');
+        const addressId = addressItem.querySelector('input[name="selectedAddress"]').value;
+  
+        fetch(`/user/get-address/${addressId}`)
+          .then(response => response.json())
+          .then(data => {
+            if (data.success) {
+              const addr = data.address;
+  
+              // Populate edit modal fields
+              document.getElementById('editAddressId').value = addressId;
+              document.getElementById('editName').value = addr.name;
+              document.getElementById('editMobile').value = addr.mobile;
+              document.getElementById('editStreetAddress').value = addr.streetAddress;
+              document.getElementById('editCity').value = addr.city;
+              document.getElementById('editLandmark').value = addr.landmark;
+              document.getElementById('editState').value = addr.state;
+              document.getElementById('editPinCode').value = addr.pinCode;
+  
+              // Show the edit modal
+              $('#editAddressModal').modal('show');
+            } else {
+              console.error('Error fetching address:', data);
+              Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Failed to fetch address details',
+                confirmButtonText: 'Try Again'
+              });
+            }
+          })
+          .catch(error => {
+            console.error('Error fetching address:', error);
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Failed to fetch address details',
+              confirmButtonText: 'Try Again'
+            });
+          });
       }
-    }
-
-    if (errors.length > 0) {
-      alert(errors.join('\n'));
-      return;
-    }
-
-    // Send AJAX request to update address
-    $.ajax({
-      url: `/user/update-address/${addressId}`,
-      method: 'PUT',
-      contentType: 'application/json',
-      data: JSON.stringify(formData),
-      success: function(response) {
-        if (response.success) {
-          // Refresh the page or update the address list
-          Swal.fire({
-        icon: 'success', // Type of alert ('success', 'error', 'warning', 'info', or 'question')
-        title: 'Success!',
-        text: 'Address updated successfully',
-        confirmButtonText: 'OK'
     });
-          location.reload(); // Or update the specific address in the list
+  
+    // Update Address Button Click Handler
+    document.getElementById('updateAddress').addEventListener('click', function() {
+      const addressId = document.getElementById('editAddressId').value;
+  
+      const formData = {
+        name: document.getElementById('editName').value,
+        mobile: document.getElementById('editMobile').value,
+        streetAddress: document.getElementById('editStreetAddress').value,
+        city: document.getElementById('editCity').value,
+        landmark: document.getElementById('editLandmark').value,
+        state: document.getElementById('editState').value,
+        pinCode: document.getElementById('editPinCode').value
+      };
+  
+      const errors = [];
+      for (let key in formData) {
+        if (!formData[key]) {
+          errors.push(`${key} is required`);
         }
-      },
-      error: function(xhr) {
-        console.error('Error updating address:', xhr.responseJSON);
-        Swal.fire({
-    icon: 'error',
-    title: 'Oops...',
-    text: 'Failed to update address!',
-    confirmButtonText: 'Try Again'
-  });
       }
+  
+      if (errors.length > 0) {
+        alert(errors.join('\n'));
+        return;
+      }
+  
+      fetch(`/user/update-address/${addressId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: 'Address updated successfully',
+            confirmButtonText: 'OK'
+          });
+          location.reload(); 
+        }
+      })
+      .catch(error => {
+        console.error('Error updating address:', error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Failed to update address!',
+          confirmButtonText: 'Try Again'
+        });
+      });
     });
   });
-});
-</script>
+  </script>
 
 
 </body>

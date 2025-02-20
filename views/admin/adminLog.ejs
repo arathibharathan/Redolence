@@ -165,43 +165,6 @@
           </button>
         </form>
 
-
-        <script>
-
-          document.addEventListener("DOMContentLoaded", () => {
-    
-            const form = document.getElementById("formAuthentication");
-            form.addEventListener("submit", async function (event) {
-              event.preventDefault();                          // Prevent the default form submission
-              
-              const formData = {
-                username: document.getElementById("username").value.trim(),
-                password: document.getElementById("password").value.trim()
-              };
-    
-              console.log('data before api call:',formData);
-    
-              const result = await fetch('/admin/loginCheck',{
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData),
-              }).then(response => response.json())
-              console.log(result.message);
-              if(result.success === true){
-                window.location.href = "/admin/dashboard"
-              }else{
-                document.getElementById('informationlabel').innerHTML = result.message
-              }
-              
-              
-            });
-    
-          });
-    
-        </script>
-
         <p class="text-center">
           <span>New on our platform?</span>
           <a href="auth-register-cover.html">
@@ -265,17 +228,49 @@
 <script src="../../admin/assets/vendor/libs/%40form-validation/bootstrap5.js"></script>
 <script src="../../admin/assets/vendor/libs/%40form-validation/auto-focus.js"></script>
 
-  <!-- Main JS -->
+  
   <script src="../../admin/assets/js/main.js"></script>
   
 
-  <!-- Page JS -->
+  <script>
+
+    document.addEventListener("DOMContentLoaded", () => {
+
+      const form = document.getElementById("formAuthentication");
+      form.addEventListener("submit", async function (event) {
+        event.preventDefault();                          // Prevent the default form submission
+        
+        const formData = {
+          username: document.getElementById("username").value.trim(),
+          password: document.getElementById("password").value.trim()
+        };
+
+        console.log('data before api call:',formData);
+
+        const result = await fetch('/admin/loginCheck',{
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData),
+        }).then(response => response.json())
+        console.log(result.message);
+        if(result.success === true){
+          window.location.href = "/admin/dashboard"
+        }else{
+          document.getElementById('informationlabel').innerHTML = result.message
+        }
+        
+        
+      });
+
+    });
+
+  </script>
 
   
 </body>
 
 
-<!-- Mirrored from demos.themeselection.com/materio-bootstrap-html-admin-template/html/vertical-menu-template/auth-login-cover.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 25 Jun 2024 05:51:10 GMT -->
 </html>
 
-<!-- beautify ignore:end -->

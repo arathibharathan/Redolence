@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 
-
-<!-- Redolence/checkout.html  22 Nov 2019 09:55:06 GMT -->
-
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,6 +9,7 @@
   <meta name="keywords" content="HTML5 Template">
   <meta name="description" content="Redolence - Bootstrap eCommerce Template">
   <meta name="author" content="p-themes">
+  
   <!-- Favicon -->
   <link rel="apple-touch-icon" sizes="180x180" href="user/assets/images/icons/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="user/assets/images/icons/favicon-32x32.png">
@@ -24,10 +22,98 @@
   <meta name="msapplication-TileColor" content="#cc9966">
   <meta name="msapplication-config" content="user/assets/images/icons/browserconfig.xml">
   <meta name="theme-color" content="#ffffff">
+  
   <!-- Plugins CSS File -->
   <link rel="stylesheet" href="user/assets/css/bootstrap.min.css">
   <!-- Main CSS File -->
   <link rel="stylesheet" href="user/assets/css/style.css">
+
+  <style>
+    .order-container {
+      max-width: 830px; /* Decreased width for smaller table */
+      margin: -30px auto; /* Center the container */
+      padding: 4px;
+      background-color: #f8f9fa; /* Light background for contrast */
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .order-card {
+      background-color: #ffffff;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      margin-bottom: 11px;
+      margin-top: 0px;
+      padding: 15px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      width: 950px;
+    }
+
+    .order-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #dee2e6;
+      padding-bottom: 10px;
+      margin-bottom: 15px;
+    }
+
+    .order-status {
+      font-weight: bold;
+      padding: 5px 10px;
+      border-radius: 20px;
+      margin-left: 450px;
+    }
+
+    .status-placed {
+      background-color: #598ede;
+      color: white;
+    }
+
+    .status-shipped {
+      background-color: #1ac4e6;
+      color: white;
+    }
+
+    .status-delivered {
+      background-color: #28a745;
+      color: white;
+    }
+
+    .status-cancelled {
+      background-color: #dc3545;
+      color: white;
+    }
+
+    .order-items {
+      margin-top: 15px;
+    }
+
+    .order-items table {
+      width: 100%;
+      margin-top: 10px;
+      font-size: 0.9em; /* Smaller font size */
+    }
+
+    .order-items th,
+    .order-items td {
+      padding: 8px; /* Reduced padding */
+      text-align: left; /* Align text to the left */
+      border: 1px solid #dee2e6;
+    }
+
+    .order-items th {
+      background-color: #f1f1f1; /* Light gray background for header */
+    }
+
+    .product-image {
+      max-width: 80px; /* Smaller image size */
+      max-height: 80px;
+      object-fit: cover;
+      border-radius: 5px;
+    }
+
+  </style>
 </head>
 
 <body>
@@ -75,6 +161,63 @@
         </div><!-- End .container -->
       </div><!-- End .header-top -->
 
+      <!-- Cancel Order Reason Modal -->
+        <div class="modal fade" id="cancelOrderModal" tabindex="-1" role="dialog" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h5 class="modal-title">Cancel Order</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true"><i class="icon-close"></i></span>
+                      </button>
+                  </div>
+                  <div class="modal-body">
+                      <p>Please select a reason for cancelling your order:</p>
+                      <select id="cancelReason" class="form-control">
+                          <option value="">Select a reason</option>
+                          <option value="Changed my mind">Changed my mind</option>
+                          <option value="Found a better price">Found a better price</option>
+                          <option value="Product not as expected">Product not as expected</option>
+                          <option value="Other">Other</option>
+                      </select>
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      <button type="button" class="btn btn-danger" id="confirmCancelOrder">Cancel Order</button>
+                  </div>
+              </div>
+          </div>
+        </div>
+
+        <!-- Return Order Reason Modal -->
+        <div class="modal fade" id="returnOrderModal" tabindex="-1" role="dialog" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h5 class="modal-title">Return Order</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true"><i class="icon-close"></i></span>
+                      </button>
+                  </div>
+                  <div class="modal-body">
+                      <p>Please select a reason for returning your order:</p>
+                      <select id="returnReason" class="form-control">
+                          <option value="">Select a reason</option>
+                          <option value="Changed my mind">Changed my mind</option>
+                          <option value="Product not as expected">Product not as expected</option>
+                          <option value="Defective item">Defective item</option>
+                          <option value="Other">Other</option>
+                      </select>
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      <button type="button" class="btn btn-warning" id="confirmReturnOrder">Return Order</button>
+                  </div>
+              </div>
+          </div>
+        </div>
+
+
       <div class="header-middle sticky-header">
         <div class="container">
           <div class="header-left">
@@ -83,13 +226,13 @@
               <i class="icon-bars"></i>
             </button>
 
-            <a href="index.html" class="logo">
-              <img src="user/assets/images/logo.png" alt="Redolence Logo" width="105" height="25">
+            <a href="/" class="logo">
+              <img src="/Redolence logo-01.png" alt="Redole Logo" style="width:315px; height: 126px;">
             </a>
 
             <nav class="main-nav">
               <ul class="menu sf-arrows">
-                <li class="megamenu-container active">
+                <li >
                   <a href="/" class="">Home</a>
 
 
@@ -103,9 +246,9 @@
                 </li>
 
                 <li>
-                    <a href="/checkout" class="">Checkout</a>
-                
+                  <a class="megamenu-container active" href="/checkout" class="">Checkout</a>
                 </li>
+
 
               </ul><!-- End .menu -->
             </nav>
@@ -125,6 +268,24 @@
               <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static" title="Compare Products" aria-label="Compare Products">
                 <i class="icon-random"></i>
               </a>
+
+              <div class="dropdown-menu dropdown-menu-right">
+                <ul class="compare-products">
+                  <li class="compare-product">
+                    <a href="#" class="btn-remove" title="Remove Product"><i class="icon-close"></i></a>
+                    <h4 class="compare-product-title"><a href="product.html">Blue Night Dress</a></h4>
+                  </li>
+                  <li class="compare-product">
+                    <a href="#" class="btn-remove" title="Remove Product"><i class="icon-close"></i></a>
+                    <h4 class="compare-product-title"><a href="product.html">White Long Skirt</a></h4>
+                  </li>
+                </ul>
+
+                <div class="compare-actions">
+                  <a href="#" class="action-link">Clear All</a>
+                  <a href="#" class="btn btn-outline-primary-2"><span>Compare</span><i class="icon-long-arrow-right"></i></a>
+                </div>
+              </div><!-- End .dropdown-menu -->
             </div><!-- End .compare-dropdown -->
 
             <div class="dropdown cart-dropdown">
@@ -139,14 +300,8 @@
       </div><!-- End .header-middle -->
     </header><!-- End .header -->
 
-
-
-
-
-
-    
-
     <main class="main">
+      
       <div class="page-header text-center" style="background-image: url('user/assets/images/page-header-bg.jpg')">
         <div class="container">
           <h1 class="page-title">My Orders<span>Shop</span></h1>
@@ -155,41 +310,151 @@
       <nav aria-label="breadcrumb" class="breadcrumb-nav">
         <div class="container">
           <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/">Home</a></li>
-            <li class="breadcrumb-item"><a href="shop">Shop</a></li>
+            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+            <li class="breadcrumb-item"><a href="#">Shop</a></li>
             <li class="breadcrumb-item active" aria-current="page">Checkout</li>
-
           </ol>
         </div><!-- End .container -->
       </nav><!-- End .breadcrumb-nav -->
-
       <div class="page-content">
-        <div class="checkout">
+        <div class="dashboard">
           <div class="container">
-            <div class="checkout-discount">
-            </div><!-- End .checkout-discount -->
-            <form action="#">
-              <div class="row">
-                <div class="col-lg-9">
-                  
-                  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-                
+            <div class="row">
+              <aside class="col-md-4 col-lg-3">
+                <ul class="nav nav-dashboard flex-column mb-3 mb-md-0" role="tablist">
+                  <li class="nav-item">
+                    <a class="nav-link" id="tab-dashboard-link" href="/dashboard">My Account</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link active" id="tab-orders-link" href="/orders">Orders</a>
+                  </li>
 
-                </div><!-- End .col-lg-9 -->
-              </div><!-- End .row -->
-            </form>
-          </div><!-- End .container -->
-        </div><!-- End .checkout -->
-      </div><!-- End .page-content -->
-    </main><!-- End .main -->
- 
+                  <li class="nav-item">
+                    <a class="nav-link" id="tab-address-link" href="/address">Adresses</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="tab-account-link" href="/editUser">Account Details</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">Sign Out</a>
+                  </li>
+                </ul>
+              </aside><!-- End .col-lg-3 -->
+             
+
+      
+      <div class="page-content order-container">
+        
+        <% if (orders && orders.length > 0) { %>
+          <% orders.forEach(order => { %>
+            <div class="order-card" data-order-id="<%= order._id %>">
+              <div class="order-card-header">
+                  <h4 class="mb-0">Order #<%= order.order_id %></h4>
+                  <span class="order-status 
+                      <%= 
+                          order.orderStatus === 'Placed' ? 'status-placed' : 
+                          order.orderStatus === 'Shipped' ? 'status-shipped' : 
+                          order.orderStatus === 'Delivered' ? 'status-delivered' : 
+                          'status-cancelled'
+                      %>
+                  ">
+                      <%= order.orderStatus %>
+                  </span>
+              </div>
+            
+              <div class="order-details">
+                <div class="order-info">
+                  <p><strong>Ordered On:</strong> <%= new Date(order.orderedAt).toLocaleString() %></p>
+                  <p><strong>Payment Method:</strong> <%= order.paymentMethod %></p>
+                  <p><strong>Total Amount:</strong> ₹<%= order.totalAmount.toFixed(2) %></p>
+                </div>
+                <button class="btn btn-secondary view-details" onclick="toggleDetails(this)">View Details</button>
+                <button class="btn btn-danger" onclick="openCancelOrderModal('<%= order._id %>')" 
+                  <% if (order.orderStatus === 'Delivered') { %>
+                      style="display: none;" 
+                  <% } %>
+              >Cancel Order</button>
+              
+              <button class="btn btn-warning" onclick="openReturnOrderModal('<%= order._id %>')" 
+                  <% if (order.orderStatus !== 'Delivered') { %>
+                      style="display: none;" 
+                  <% } %>
+              >Return Order</button>
+              </div>
+            
+              <div class="order-items" style="display: none;">
+                <h5>Order Items</h5>
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th>Product Name</th>
+                      <th>Quantity</th>
+                      <th>Unit Price</th>
+                      <th>Total Price</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% order.orderItems.forEach(item => { %>
+                      <tr>
+                        <td><%= item.name %></td>
+                        <td class="text-center"><%= item.quantity %></td>
+                        <td class="text-right">₹<%= item.price.toFixed(2) %></td>
+                        <td class="text-right">₹<%= item.totalPrice.toFixed(2) %></td>
+                      </tr>
+                    <% }) %>
+                  </tbody>
+                </table>
+            
+                <% if (order.address && order.address.length > 0) { %>
+                  <h5 class="mt-4">Shipping Address</h5>
+                  <table class="table table-bordered">
+                    <thead>
+                      <tr>
+                        <th>Name</th>
+                        <th>Mobile</th>
+                        <th>Street Address</th>
+                        <th>City</th>
+                        <th>Landmark</th>
+                        <th>State</th>
+                        <th>Pin Code</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% order.address.forEach((address, index) => { %>
+                        <tr>
+                          <td><%= address.name %></td>
+                          <td><%= address.mobile %></td>
+                          <td><%= address.streetAddress %></td>
+                          <td><%= address.city %></td>
+                          <td><%= address.landmark %></td>
+                          <td><%= address.state %></td>
+                          <td><%= address.pinCode %></td>
+                        </tr>
+                      <% }) %>
+                    </tbody>
+                  </table>
+                <% } else { %>
+                  <p>No shipping address found.</p>
+                <% } %>
+              </div>
+            </div>
+          <% }) %>
+        <% } else { %>
+          <div class="alert alert-info text-center">
+            <p>You have no orders yet.</p>
+            <a href="/shop" class="btn btn-primary mt-3">Continue Shopping</a>
+          </div>
+        <% } %>
+      </div>
+    </main>
+
     <footer class="footer">
       <div class="footer-middle">
         <div class="container">
           <div class="row">
             <div class="col-sm-6 col-lg-3">
               <div class="widget widget-about">
-                <img src="user/assets/images/logo.png" class="footer-logo" alt="Footer Logo" width="105" height="25">
+                <img src="/Redolence logo-01.png" class="footer-logo" alt="Footer Logo" width="105" height="25">
                 <p>Praesent dapibus, neque id cursus ucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. </p>
 
                 <div class="social-icons">
@@ -555,9 +820,141 @@
   <script src="user/assets/js/owl.carousel.min.js"></script>
   <!-- Main JS File -->
   <script src="user/assets/js/main.js"></script>
- 
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> 
 
+  <!-- for view details -->
+  <script>
+    function toggleDetails(button) {
+      const orderItems = button.closest('.order-card').querySelector('.order-items');
+      if (orderItems.style.display === "none") {
+        orderItems.style.display = "block";
+        button.textContent = "Hide Details";
+      } else {
+        orderItems.style.display = "none";
+        button.textContent = "View Details";
+      }
+    }
+
+    async function cancelOrder(orderId) {
+    try {
+        const response = await fetch('/cancel-order', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ orderId }), // Send the orderId in the request body
+        });
+
+        const data = await response.json(); // Parse the JSON response
+
+        if (response.ok) {
+            // Update the UI to reflect the order cancellation
+            alert(data.message); // Show success message
+            
+            // Find the order card in the DOM
+            const orderCard = document.querySelector(`.order-card[data-order-id="${orderId}"]`);
+            if (orderCard) {
+                const statusSpan = orderCard.querySelector('.order-status');
+                statusSpan.textContent = data.orderState.orderStatus; // Update the status text
+                statusSpan.className = 'order-status status-cancelled'; // Update the class for styling
+
+                // Optionally, hide the cancel button or change its state
+                const cancelButton = orderCard.querySelector('button.btn-danger');
+                if (cancelButton) {
+                    cancelButton.style.display = 'none'; // Hide the cancel button
+                }
+            }
+        } else {
+            // Handle errors
+            alert(data.error || 'Failed to cancel order');
+        }
+    } catch (error) {
+        console.error('Error cancelling order:', error);
+        alert('An error occurred while cancelling the order. Please try again.');
+    }
+}
+  </script>
+
+   <!-- modal controller script -->
+
+  <script>
+    let currentOrderId = null;
+
+function openCancelOrderModal(orderId) {
+    currentOrderId = orderId; // Store the current order ID
+    $('#cancelOrderModal').modal('show'); // Show the modal
+}
+
+document.getElementById('confirmCancelOrder').addEventListener('click', async () => {
+    const reason = document.getElementById('cancelReason').value;
+    if (!reason) {
+        alert('Please select a reason for cancellation.');
+        return;
+    }
+
+    await cancelOrder(currentOrderId, reason); // Call the cancelOrder function with the reason
+    $('#cancelOrderModal').modal('hide'); // Hide the modal
+});
+  </script>
+
+  
+  <script>
+
+let currentReturnOrderId = null;
+
+function openReturnOrderModal(orderId) {
+    currentReturnOrderId = orderId; // Store the current order ID
+    $('#returnOrderModal').modal('show'); // Show the modal
+}
+
+document.getElementById('confirmReturnOrder').addEventListener('click', async () => {
+    const reason = document.getElementById('returnReason').value;
+    if (!reason) {
+        alert('Please select a reason for return.');
+        return;
+    }
+
+    await requestReturn(currentReturnOrderId, reason); // Call the requestReturn function with the reason
+    $('#returnOrderModal').modal('hide'); // Hide the modal
+});
+
+async function requestReturn(orderId, reason) {
+    try {
+        const response = await fetch('/request-return', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ orderId, reason }), // Send the orderId and reason in the request body
+        });
+
+        const data = await response.json(); // Parse the JSON response
+
+        if (response.ok) {
+            alert(data.message); // Show success message
+            
+            // Update the UI to reflect the return request
+            const orderCard = document.querySelector(`.order-card[data-order-id="${orderId}"]`);
+            if (orderCard) {
+                const statusSpan = orderCard.querySelector('.order-status');
+                statusSpan.textContent = 'Return Requested'; // Update the status text
+                statusSpan.className = 'order-status status-cancelled'; // Update the class for styling
+
+                // Optionally, hide the return button
+                const returnButton = orderCard.querySelector('button.btn-warning');
+                if (returnButton) {
+                    returnButton.style.display = 'none'; // Hide the return button
+                }
+            }
+        } else {
+            alert(data.error || 'Failed to request return');
+        }
+    } catch (error) {
+        console.error('Error requesting return:', error);
+        alert('An error occurred while requesting the return. Please try again.');
+    }
+}
+  </script>
 </body>
-
 
 </html>

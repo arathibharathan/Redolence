@@ -43,10 +43,6 @@ const logincheck = async (req, res) => {
 
 
 
-
-
-
-
 const userLogout = async (req, res) => {
 	try {
 		delete req.session.user;
@@ -95,7 +91,7 @@ const forgotpageCheck = async (req, res) => {
 module.exports = {
 	login,
 	logincheck,
-	userLogout,
 	forgotpage,
 	forgotpageCheck,
+	userLogout,
 };

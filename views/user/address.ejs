@@ -83,8 +83,8 @@
               <i class="icon-bars"></i>
             </button>
 
-            <a href="index.html" class="logo">
-              <img src="/user/assets/images/logo.png" alt="Redole Logo" width="105" height="25">
+            <a href="/" class="logo">
+              <img src="/Redolence logo-01.png" alt="Redole Logo" style="width:315px; height: 126px;">
             </a>
 
             <nav class="main-nav">
@@ -116,7 +116,7 @@
                 <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static" title="Compare Products" aria-label="Compare Products">
                   <i class="icon-random"></i>
                 </a>
-
+  
                 <div class="dropdown-menu dropdown-menu-right">
                   <ul class="compare-products">
                     <li class="compare-product">
@@ -128,74 +128,18 @@
                       <h4 class="compare-product-title"><a href="product.html">White Long Skirt</a></h4>
                     </li>
                   </ul>
-
+  
                   <div class="compare-actions">
                     <a href="#" class="action-link">Clear All</a>
                     <a href="#" class="btn btn-outline-primary-2"><span>Compare</span><i class="icon-long-arrow-right"></i></a>
                   </div>
                 </div><!-- End .dropdown-menu -->
               </div><!-- End .compare-dropdown -->
-
+  
               <div class="dropdown cart-dropdown">
-                <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
+                <a href="/cart" class="dropdown-toggle" role="button">
                   <i class="icon-shopping-cart"></i>
-                  <span class="cart-count">2</span>
                 </a>
-
-                <div class="dropdown-menu dropdown-menu-right">
-                  <div class="dropdown-cart-products">
-                    <div class="product">
-                      <div class="product-cart-details">
-                        <h4 class="product-title">
-                          <a href="product.html">Beige knitted elastic runner shoes</a>
-                        </h4>
-
-                        <span class="cart-product-info">
-                          <span class="cart-product-qty">1</span>
-                          x $84.00
-                        </span>
-                      </div><!-- End .product-cart-details -->
-
-                      <figure class="product-image-container">
-                        <a href="product.html" class="product-image">
-                          <img src="/user/assets/images/products/cart/product-1.jpg" alt="product">
-                        </a>
-                      </figure>
-                      <a href="#" class="btn-remove" title="Remove Product"><i class="icon-close"></i></a>
-                    </div><!-- End .product -->
-
-                    <div class="product">
-                      <div class="product-cart-details">
-                        <h4 class="product-title">
-                          <a href="product.html">Blue utility pinafore denim dress</a>
-                        </h4>
-
-                        <span class="cart-product-info">
-                          <span class="cart-product-qty">1</span>
-                          x $76.00
-                        </span>
-                      </div><!-- End .product-cart-details -->
-
-                      <figure class="product-image-container">
-                        <a href="product.html" class="product-image">
-                          <img src="/user/assets/images/products/cart/product-2.jpg" alt="product">
-                        </a>
-                      </figure>
-                      <a href="#" class="btn-remove" title="Remove Product"><i class="icon-close"></i></a>
-                    </div><!-- End .product -->
-                  </div><!-- End .cart-product -->
-
-                  <div class="dropdown-cart-total">
-                    <span>Total</span>
-
-                    <span class="cart-total-price">$160.00</span>
-                  </div><!-- End .dropdown-cart-total -->
-
-                  <div class="dropdown-cart-action">
-                    <a href="cart.html" class="btn btn-primary">View Cart</a>
-                    <a href="checkout.html" class="btn btn-outline-primary-2"><span>Checkout</span><i class="icon-long-arrow-right"></i></a>
-                  </div><!-- End .dropdown-cart-total -->
-                </div><!-- End .dropdown-menu -->
               </div><!-- End .cart-dropdown -->
             </div><!-- End .header-right -->
           </div><!-- End .container -->
@@ -227,7 +171,7 @@
                     <a class="nav-link" id="tab-dashboard-link" href="/dashboard">My Account</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" id="tab-orders-link" href="#tab-orders">Orders</a>
+                    <a class="nav-link" id="tab-orders-link" href="/orders">Orders</a>
                   </li>
 
                   <li class="nav-item">
@@ -262,10 +206,7 @@
                             <div class="card-body">
                               <h5 class="card-title"><%= address[i].name %>
                                 <button class="btn btn-danger btn-sm float-right delete-address" data-id="<%= address[i]._id %>">
-                                  <i class="icon-trash">Delete</i>
-                                </button>
-                                <button class="btn btn-warning btn-sm float-right edit-address" data-id="<%= address[i]._id %>">
-                                  <i class="icon-edit">Edit</i>
+                                  Delete
                                 </button>
                               </h5>
                               <p class="card-text">
@@ -326,11 +267,6 @@
                             </div>
                           </div>
                         </div>
-
-
-
-                         
-                    
                       <!-- Include Bootstrap JS and Popper.js -->
                       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>     
                 </div>
@@ -338,6 +274,56 @@
 
           </div>
         </div>
+
+        <!-- Edit Address Modal -->
+<!-- Edit Address Modal -->
+<div class="modal fade" id="editAddressModal" tabindex="-1" aria-labelledby="editAddressModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="editAddressModalLabel">Edit Address</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+              <form id="editAddressForm">
+                  <input type="hidden" id="editAddressId" name="addressId">
+                  <div class="mb-3">
+                      <label for="editName" class="form-label">Name</label>
+                      <input type="text" class="form-control" id="editName" placeholder="Enter the name" required>
+                  </div>
+                  <div class="mb-3">
+                      <label for="editStreetAddress" class="form-label">Street Address</label>
+                      <input type="text" class="form-control" id="editStreetAddress" placeholder="Enter street address" required>
+                  </div>
+                  <div class="mb-3">
+                      <label for="editMobileNumber" class="form-label">Mobile Number</label>
+                      <input type="tel" class="form-control" id="editMobileNumber" placeholder="Enter mobile number" required>
+                  </div>
+                  <div class="mb-3">
+                      <label for="editCity" class="form-label">City</label>
+                      <input type="text" class="form-control" id="editCity" placeholder="Enter city" required>
+                  </div>
+                  <div class="mb-3">
+                      <label for="editLandmark" class="form-label">Landmark</label>
+                      <input type="text" class="form-control" id="editLandmark" placeholder="Enter landmark" required>
+                  </div>
+                  <div class="mb-3">
+                      <label for="editState" class="form-label">State</label>
+                      <input type="text" class="form-control" id="editState" placeholder="Enter state" required>
+                  </div>
+                  <div class="mb-3">
+                      <label for="editPinCode" class="form-label">Pin Code</label>
+                      <input type="text" class="form-control" id="editPinCode" placeholder="Enter pin code" required>
+                  </div>
+              </form>
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary" form="editAddressForm">Save Changes</button>
+          </div>
+      </div>
+  </div>
+</div>
     </main>
 
 
@@ -348,7 +334,7 @@
           <div class="row">
             <div class="col-sm-6 col-lg-3">
               <div class="widget widget-about">
-                <img src="/user/assets/images/logo.png" class="footer-logo" alt="Footer Logo" width="105" height="25">
+                <img src="/Redolence logo-01.png" class="footer-logo" alt="Footer Logo" width="105" height="25">
                 <p>Praesent dapibus, neque id cursus ucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. </p>
 
                 <div class="social-icons">
@@ -764,7 +750,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (deleteButton) {
             event.preventDefault();
             
-            // Show confirmation dialog
             const result = await Swal.fire({
                 title: 'Are you sure?',
                 text: 'Do you want to delete this address?',
@@ -786,11 +771,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     const data = await response.json();
 
                     if (data.success) {
-                        // Remove the address from DOM
                         const addressElement = deleteButton.closest('.col-md-6');
                         addressElement.remove();
-
-                        // Show success message
                         Swal.fire({
                             icon: 'success',
                             title: 'Deleted!',
@@ -799,7 +781,6 @@ document.addEventListener('DOMContentLoaded', () => {
                             showConfirmButton: false
                         });
                     } else {
-                        // Show error message
                         Swal.fire({
                             icon: 'error',
                             title: 'Oops...',
@@ -815,6 +796,148 @@ document.addEventListener('DOMContentLoaded', () => {
                     });
                 }
             }
+        }
+    });
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const addressContainer = document.querySelector('.row[data-address-container]');
+    const editAddressForm = document.getElementById('editAddressForm');
+    
+    // Ensure Bootstrap Modal is properly initialized
+    const editAddressModal = new bootstrap.Modal(document.getElementById('editAddressModal'), {
+        keyboard: false
+    });
+
+    // Edit Address Event Listener
+    addressContainer.addEventListener('click', async (event) => {
+        const editButton = event.target.closest('.edit-address');
+           
+        if (editButton) {
+            event.preventDefault();
+            
+            // const addressId = editButton.getAttribute('data-id');
+            const addressCard = editButton.closest('.col-md-6');
+            
+            // Extract name without including delete/edit button text
+            const nameElement = addressCard.querySelector('.card-title');
+            const name = Array.from(nameElement.childNodes)
+                .filter(node => node.nodeType === Node.TEXT_NODE)
+                .map(node => node.textContent.trim())
+                .join('');
+
+            // Populate modal with existing address details
+            document.getElementById('editAddressId').value = addressId;
+            document.getElementById('editName').value = name;
+            
+            const cardTextLines = addressCard.querySelector('.card-text').innerText.split('\n');
+            const mobileText = cardTextLines[0].split(': ')[1].trim();
+            const addressText = cardTextLines[1].split(': ')[1].trim();
+            
+            document.getElementById('editMobileNumber').value = mobileText;
+            
+            // Split address text
+            const addressParts = addressText.split(', ');
+            document.getElementById('editStreetAddress').value = addressParts[0];
+            document.getElementById('editCity').value = addressParts[1];
+            document.getElementById('editLandmark').value = addressParts[2];
+            document.getElementById('editState').value = addressParts[3];
+            document.getElementById('editPinCode').value = addressParts[4];
+            
+            
+            // Show the modal
+            editAddressModal.show();
+        }
+    });
+
+    // Edit Address Form Submit
+    editAddressForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+
+        const addressId = document.getElementById('editAddressId').value;
+        const formData = {
+            name: document.getElementById('editName').value.trim(),
+            streetAddress: document.getElementById('editStreetAddress').value.trim(),
+            mobileNumber: document.getElementById('editMobileNumber').value.trim(),
+            city: document.getElementById('editCity').value.trim(),
+            landmark: document.getElementById('editLandmark').value.trim(),
+            state: document.getElementById('editState').value.trim(),
+            pinCode: document.getElementById('editPinCode').value.trim(),
+        };
+
+        console.log(formData);
+        
+        try {
+            const response = await fetch(`/address/${addressId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                // Update the address in the DOM
+                const addressCard = document.querySelector(`.col-md-6[data-address-id="${addressId}"]`);
+                
+                if (addressCard) {
+                    // Update the card content
+                    addressCard.querySelector('.card-title').innerHTML = `
+                        ${formData.name}
+                        <button class="btn btn-danger btn-sm float-right delete-address" data-id="${addressId}">
+                            Delete
+                        </button>
+                        <button class="btn btn-warning btn-sm float-right edit-address" data-id="${addressId}">
+                            Edit
+                        </button>
+                    `;
+                    
+                    addressCard.querySelector('.card-text').innerHTML = `
+                        <strong>Mobile:</strong> ${formData.mobileNumber}<br>
+                        <strong>Address:</strong> ${formData.streetAddress}, ${formData.city}, ${formData.landmark}, ${formData.state}, ${formData.pinCode}
+                    `;
+                }
+
+                // Close the modal
+                editAddressModal.hide();
+
+                // Show success message
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Address Updated!',
+                    text: result.message,
+                    timer: 2000,
+                    showConfirmButton: false
+                });
+            } else {
+                // Show error message
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: result.message || 'Failed to update address'
+                });
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Something went wrong!'
+            });
         }
     });
 });

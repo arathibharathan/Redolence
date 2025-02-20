@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<!-- =========================================================
+* Redolence - Bootstrap Material Design Admin Template | v2.0.1
+==============================================================
+
+* Product Page: https://themeselection.com/item/Redolance-bootstrap-html-admin-template/
+* Created by: ThemeSelection
+* License: You must have a valid license purchased in order to legally use the theme for your project.
+* Copyright ThemeSelection (https://themeselection.com)
+
+=========================================================
+-->
+
+<html lang="en" class="light-style layout-navbar-fixed layout-menu-fixed layout-compact" dir="ltr" data-theme="theme-default" data-assets-path="../../admin/assets/" data-template="vertical-menu-template" data-style="light">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+    <title>Order List - Pages | Redolance - Bootstrap Material Design Admin Template</title>
+    <meta name="description" content="Start your development with a Dashboard for Bootstrap 5" />
+    <meta name="keywords" content="dashboard, material, material design, bootstrap 5 dashboard, bootstrap 5 design, bootstrap 5">
+    <link rel="canonical" href="https://themeselection.com/item/Redolance-bootstrap-html-admin-template/" />
+    <link rel="icon" type="image/x-icon" href="https://demos.themeselection.com/Redolence-bootstrap-html-admin-template/admin/assets/img/favicon/favicon.ico" />
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com/" />
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="../../admin/assets/vendor/fonts/remixicon/remixicon.css" />
+    <link rel="stylesheet" href="../../admin/assets/vendor/fonts/flag-icons.css" />
+    
+    <!-- Menu waves for no-customizer fix -->
+    <link rel="stylesheet" href="../../admin/assets/vendor/libs/node-waves/node-waves.css" />
+
+    <!-- Core CSS -->
+    <link rel="stylesheet" href="../../admin/assets/vendor/css/rtl/core.css" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="../../admin/assets/vendor/css/rtl/theme-default.css" class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="../../admin/assets/css/demo.css" />
+    
+    <!-- Vendors CSS -->
+    <link rel="stylesheet" href="../../admin/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+    <link rel="stylesheet" href="../../admin/assets/vendor/libs/typeahead-js/typeahead.css" /> 
+    <link rel="stylesheet" href="../../admin/assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css" />
+    <link rel="stylesheet" href="../../admin/assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css" />
+    <link rel="stylesheet" href="../../admin/assets/vendor/libs/datatables-buttons-bs5/buttons.bootstrap5.css" />
+    <link rel="stylesheet" href="../../admin/assets/vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.css" />
+    <link rel="stylesheet" href="../../admin/assets/vendor/libs/select2/select2.css" />
+    <link rel="stylesheet" href="../../admin/assets/vendor/libs/%40form-validation/form-validation.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+
+    <!-- Helpers -->
+    <script src="../../admin/assets/vendor/js/helpers.js"></script>
+    <script src="../../admin/assets/vendor/js/template-customizer.js"></script>
+    <script src="../../admin/assets/js/config.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+
+</head>
+
+<body>
+    <noscript>
+        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5DDHKGP" height="0" width="0" style="display: none; visibility: hidden"></iframe>
+    </noscript>
+
+    <!-- Layout wrapper -->
+    <div class="layout-wrapper layout-content-navbar">
+        <div class="layout-container">
+            <!-- Menu -->
+            <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+                <div class="menu-inner-shadow"></div>
+                <ul class="menu-inner py-1">
+                    <li class="menu-item active open">
+                        <a href="javascript:void(0);" class="menu-link menu-toggle">
+                            <i class='menu-icon tf-icons ri-shopping-bag-3-line'></i>
+                            <div data-i18n="REDOLANCE">REDOLANCE</div>
+                        </a>
+                        <ul class="menu-sub">
+                            <li class="menu-item">
+                                <a href="/admin/dashboard" class="menu-link">
+                                    <div data-i18n="Dashboard">Dashboard</div>
+                                </a>
+                            </li>
+                            <li class="menu-item">
+                                <a href="javascript:void(0);" class="menu-link menu-toggle">
+                                    <div data-i18n="Products">Products</div>
+                                </a>
+                                <ul class="menu-sub">
+                                    <li class="menu-item">
+                                        <a href="/admin/productList" class="menu-link">
+                                            <div data-i18n="Product List">Product List</div>
+                                        </a>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a href="/admin/addProduct" class="menu-link">
+                                            <div data-i18n="Add Product">Add Product</div>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="menu-item">
+                                <a href="javascript:void(0);" class="menu-link menu-toggle">
+                                    <div data-i18n="Category">Category</div>
+                                </a>
+                                <ul class="menu-sub">
+                                    <li class="menu-item">
+                                        <a href="/admin/category" class="menu-link">
+                                            <div data-i18n="List all category">List all category</div>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="menu-item">
+                                <a href="javascript:void(0);" class="menu-link menu-toggle">
+                                    <div data-i18n="Users">Users</div>
+                                </a>
+                                <ul class="menu-sub">
+                                    <li class="menu-item">
+                                        <a href="/admin/userList" class="menu-link">
+                                            <div data-i18n="Users list">Users list</div>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="menu-item active">
+                                <a href="javascript:void(0);" class="menu-link menu-toggle">
+                                    <div data-i18n="Orders">Orders</div>
+                                </a>
+                                <ul class="menu-sub">
+                                    <li class="menu-item  active">
+                                        <a href="/admin/orderList" class="menu-link">
+                                            <div data-i18n="Order list">Order list</div>
+                                        </a>
+                                    </li>
+                                </ul>
+                                <ul class="menu-sub">
+                                    <li class="menu-item">
+                                        <a href="/admin/orderDetails" class="menu-link">
+                                            <div data-i18n="Order Details">Order Details</div>
+                                        </a>
+                                    </li>
+                                </ul>
+                                <li class="menu-item">
+                                    <a href="javascript:void(0);" class="menu-link menu-toggle">
+                                      <div data-i18n="Coupons Management">Coupons Management</div>
+                                    </a>
+                                    <ul class="menu-sub">
+                                      <li class="menu-item">
+                                        <a href="/admin/coupons" class="menu-link">
+                                          <div data-i18n="Coupons">Coupons</div>
+                                        </a>
+                                      </li>
+                                    </ul>
+                                    <li class="menu-item">
+                                      <a href="javascript:void(0);" class="menu-link menu-toggle">
+                                        <div data-i18n="Offers Management">Offers</div>
+                                      </a>
+                                      <ul class="menu-sub">
+                                        <li class="menu-item">
+                                            <a href="/admin/productOffers" class="menu-link">
+                                              <div data-i18n="Product Offers">Product Offers</div>
+                                            </a>
+                                          </li>
+                                          <li class="menu-item">
+                                            <a href="/admin/categoryOffers" class="menu-link">
+                                              <div data-i18n="Category Offers">Category Offers</div>
+                                            </a>
+                                          </li>
+                                          <li class="menu-item">
+                                            <a href="/admin/referralOffers" class="menu-link">
+                                              <div data-i18n="Referral Offers">Referral Offers</div>
+                                            </a>
+                                          </li>
+                            </li>
+                        </ul>
+                        <li class="menu-item">
+                            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                              <div data-i18n="Sales">Sales</div>
+                            </a>
+                            <ul class="menu-sub">
+                              <li class="menu-item">
+                                <a href="/admin/salesReport" class="menu-link">
+                                  <div data-i18n="SalesReport">SalesReport</div>
+                                </a>
+                              </li>
+                            </li>
+                    </li>
+                </ul>
+            </aside>
+            <!-- / Menu -->
+
+            <!-- Layout container -->
+            <div class="layout-page">
+                <!-- Navbar -->
+                <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme" id="layout-navbar">
+                    <div class="layout-menu-toggle navbar-nav align-items-xl-center me-4 me-xl-0 d-xl-none">
+                        <a class="nav-item nav-link px-0 me-xl-6" href="javascript:void(0)">
+                            <i class="ri-menu-fill ri-24px"></i>
+                        </a>
+                    </div>
+
+                    <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+                       
+                        <!-- /Search -->
+
+                        
+
+                        <ul class="navbar-nav flex-row align-items-center ms-auto">
+                            <!-- Language -->
+                            <li class="nav-item dropdown-language dropdown">
+                                <a class="nav-link btn btn-text-secondary rounded-pill btn-icon dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                                    <i class='ri-translate-2 ri-22px'></i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end py-2">
+                                    <li>
+                                        <a class="dropdown-item" href="javascript:void(0);" data-language="en" data-text-direction="ltr">
+                                            <span class="align-middle">English</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="javascript:void(0);" data-language="fr" data-text-direction="ltr">
+                                            <span class="align-middle">French</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="javascript:void(0);" data-language="ar" data-text-direction="rtl">
+                                            <span class="align-middle">Arabic</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="javascript:void(0);" data-language="de" data-text-direction="ltr">
+                                            <span class="align-middle">German</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <!--/ Language -->
+
+                            <!-- Style Switcher -->
+                            <li class="nav-item dropdown-style-switcher dropdown">
+                                <a class="nav-link btn btn-text-secondary rounded-pill btn-icon dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                                    <i class='ri-22px'></i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end dropdown-styles">
+                                    <li>
+                                        <a class="dropdown-item" href="javascript:void(0);" data-theme="light">
+                                            <span class="align-middle"><i class='ri-sun-line ri-22px me-3'></i>Light</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="javascript:void(0);" data-theme="dark">
+                                            <span class="align-middle"><i class="ri-moon-clear-line ri-22px me-3"></i>Dark</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="javascript:void(0);" data-theme="system">
+                                            <span class="align-middle"><i class="ri-computer-line ri-22px me-3"></i>System</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <!-- / Style Switcher -->
+
+                            <!-- Quick links -->
+                            <li class="nav-item dropdown-shortcuts navbar-dropdown dropdown">
+                                <a class="nav-link btn btn-text-secondary rounded-pill btn-icon dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                                    <i class='ri-star-smile-line ri-22px'></i>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-end py-0">
+                                    <div class="dropdown-menu-header border-bottom py-50">
+                                        <div class="dropdown-header d-flex align-items-center py-2">
+                                            <h6 class="mb-0 me-auto">Shortcuts</h6>
+                                            <a href="javascript:void(0)" class="btn btn-text-secondary rounded-pill btn-icon dropdown-shortcuts-add" data-bs-toggle="tooltip" data-bs-placement="top" title="Add shortcuts">
+                                                <i class="ri-layout-grid-line ri-24px text-heading"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="dropdown-shortcuts-list scrollable-container">
+                                        <div class="row row-bordered overflow-visible g-0">
+                                            <div class="dropdown-shortcuts-item col">
+                                                <span class="dropdown-shortcuts-icon rounded-circle mb-2">
+                                                    <i class="ri-calendar-line ri-26px text-heading"></i>
+                                                </span>
+                                                <a href="app-calendar.html" class="stretched-link">Calendar</a>
+                                                <small>Appointments</small>
+                                            </div>
+                                            <div class="dropdown-shortcuts-item col">
+                                                <span class="dropdown-shortcuts-icon rounded-circle mb-2">
+                                                    <i class="ri-file-text-line ri-26px text-heading"></i>
+                                                </span>
+                                                <a href="app-invoice-list.html" class="stretched-link">Invoice App</a>
+                                                <small>Manage Accounts</small>
+                                            </div>
+                                        </div>
+                                        <div class="row row-bordered overflow-visible g-0">
+                                            <div class="dropdown-shortcuts-item col">
+                                                <span class="dropdown-shortcuts-icon rounded-circle mb-2">
+                                                    <i class="ri-user-line ri-26px text-heading"></i>
+                                                </span>
+                                                <a href="app-user-list.html" class="stretched-link">User  App</a>
+                                                <small>Manage Users</small>
+                                            </div>
+                                            <div class="dropdown-shortcuts-item col">
+                                                <span class="dropdown-shortcuts-icon rounded-circle mb-2">
+                                                    <i class="ri-computer-line ri-26px text-heading"></i>
+                                                </span>
+                                                <a href="app-access-roles.html" class="stretched-link">Role Management</a>
+                                                <small>Permission</small>
+                                            </div>
+                                        </div>
+                                        <div class="row row-bordered overflow-visible g-0">
+                                            <div class="dropdown-shortcuts-item col">
+                                                <span class="dropdown-shortcuts-icon rounded-circle mb-2">
+                                                    <i class="ri-pie-chart-2-line ri-26px text-heading"></i>
+                                                </span>
+                                                <a href="index.html" class="stretched-link">Dashboard</a>
+                                                <small>Analytics</small>
+                                            </div>
+                                            <div class="dropdown-shortcuts-item col">
+                                                <span class="dropdown-shortcuts-icon rounded-circle mb-2">
+                                                    <i class="ri-settings-4-line ri-26px text-heading"></i>
+                                                </span>
+                                                <a href="pages-account-settings-account.html" class="stretched-link">Setting</a>
+                                                <small>Account Settings</small>
+                                            </div>
+                                        </div>
+                                        <div class="row row-bordered overflow-visible g-0">
+                                            <div class="dropdown-shortcuts-item col">
+                                                <span class="dropdown-shortcuts-icon rounded-circle mb-2">
+                                                    <i class="ri-question-line ri-26px text-heading"></i>
+                                                </span>
+                                                <a href="pages-faq.html" class="stretched-link">FAQs</a>
+                                                <small class="text-muted mb-0">FAQs & Articles</small>
+                                            </div>
+                                            <div class="dropdown-shortcuts-item col">
+                                                <span class="dropdown-shortcuts-icon rounded-circle mb-2">
+                                                    <i class="ri-tv-2-line ri-26px text-heading"></i>
+                                                </span>
+                                                <a href="modal-examples.html" class="stretched-link">Modals</a>
+                                                <small>Useful Popups</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <!-- Quick links -->
+
+                            <!-- Notification -->
+                            <li class="nav-item dropdown-notifications navbar-dropdown dropdown me-4 me-xl-1">
+                                <a class="nav-link btn btn-text-secondary rounded-pill btn-icon dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                                    <i class="ri-notification-2-line ri-22px"></i>
+                                    <span class="position-absolute top-0 start-50 translate-middle-y badge badge-dot bg-danger mt-2 border"></span>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end py-0">
+                                    <li class="dropdown-menu-header border-bottom">
+                                        <div class="dropdown-header d-flex align-items-center py-3">
+                                            <h6 class="mb-0 me-auto">Notification</h6>
+                                            <div class="d-flex align-items-center">
+                                                <span class="badge rounded-pill bg-label-primary me-2">8 New</span>
+                                                <a href="javascript:void(0)" class="btn btn-text-secondary rounded-pill btn-icon dropdown-notifications-all" data-bs-toggle="tooltip" data-bs-placement="top" title="Mark all as read">
+                                                    <i class="ri-mail-open-line ri-20px text-body"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="dropdown-notifications-list scrollable-container">
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item list-group-item-action dropdown-notifications-item">
+                                                <div class="d-flex">
+                                                    <div class="flex-shrink-0 me-3">
+                                                        <div class="avatar">
+                                                            <img src="../../admin/assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle">
+                                                        </div>
+                                                    </div>
+                                                    <div class="flex-grow-1">
+                                                        <h6 class="small mb-1">Congratulation Lettie 🎉</h6>
+                                                        <small class="mb-1 d-block text-body">Won the monthly best seller gold badge</small>
+                                                        <small class="text-muted">1h ago</small>
+                                                    </div>
+                                                    <div class="flex-shrink-0 dropdown-notifications-actions">
+                                                        <a href="javascript:void(0)" class="dropdown-notifications-read"><span class="badge badge-dot"></span></a>
+                                                        <a href="javascript:void(0)" class="dropdown-notifications-archive"><span class="ri-close-line"></span></a>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <!-- Additional notification items can be added here -->
+                                        </ul>
+                                    </li>
+                                    <li class="border-top">
+                                        <div class="d-grid p-4">
+                                            <a class="btn btn-primary btn-sm d-flex" href="javascript:void(0);">
+                                                <small class="align-middle">View all notifications</small>
+                                            </a>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+                            <!--/ Notification -->
+
+                            <!-- User -->
+                            <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                                <a class="nav-link dropdown-toggle hide-arrow p-0" href="javascript:void(0);" data-bs-toggle="dropdown">
+                                    <div class="avatar avatar-online">
+                                        <img src="../../admin/assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle">
+                                    </div>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end mt-3 py-2">
+                                    <li>
+                                        <a class="dropdown-item" href="pages-account-settings-account.html">
+                                            <div class="d-flex align-items-center">
+                                                <div class="flex-shrink-0 me-2">
+                                                    <div class="avatar avatar-online">
+                                                        <img src="../../admin/assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle">
+                                                    </div>
+                                                </div>
+                                                <div class="flex-grow-1">
+                                                    <h6 class="mb-0 small">John Doe</h6>
+                                                    <small class="text-muted">Admin</small>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <div class="dropdown-divider"></div>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="pages-profile-user.html">
+                                            <i class="ri-user-3-line ri-22px me-2"></i>
+                                            <span class="align-middle">My Profile</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="pages-account-settings-account.html">
+                                            <i class="ri-settings-4-line ri-22px me-2"></i>
+                                            <span class="align-middle">Settings</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="pages-account-settings-billing.html">
+                                            <span class="d-flex align-items-center align-middle">
+                                                <i class="flex-shrink-0 ri-file-text-line ri-22px me-2"></i>
+                                                <span class="flex-grow-1 align-middle">Billing</span>
+                                                <span class="flex-shrink-0 badge badge-center rounded-pill bg-danger h-px-20 d-flex align-items-center justify-content-center">4</span>
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <div class="dropdown-divider"></div>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="pages-pricing.html">
+                                            <i class="ri-money-dollar-circle-line ri-22px me-2"></i>
+                                            <span class="align-middle">Pricing</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="pages-faq.html">
+                                            <i class="ri-question-line ri-22px me-2"></i>
+                                            <span class="align-middle">FAQ</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <div class="d-grid px-4 pt-2 pb-1">
+                                            <a class="btn btn-danger d-flex" href="auth-login-cover.html" target="_blank">
+                                                <small class="align-middle">Logout</small>
+                                                <i class="ri-logout-box-r-line ms-2 ri-16px"></i>
+                                            </a>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+                            <!--/ User -->
+                            
+                        </ul>
+                    </div>
+
+                    <!-- Search Small Screens -->
+                    <div class="navbar-search-wrapper search-input-wrapper d-none">
+                        <input type="text" class="form-control search-input container-xxl border-0" placeholder="Search..." aria-label="Search..." />
+                        <i class="ri-close-fill search-toggler cursor-pointer"></i>
+                    </div>
+                    
+                </nav>
+                <!-- / Navbar -->
+
+                <!-- Content wrapper -->
+                <div class="content-wrapper">
+                    <!-- Content -->
+                    <div class="container-xxl flex-grow-1 container-p-y">
+                        <!-- Users List Table -->
+                        <div class="card">
+                            <div class="card-header border-bottom">
+                                <h6 class="card-title mb-0">Filters</h6>
+                                <div class="d-flex justify-content-between align-items-center row pt-4 pb-2 gap-4 gap-md-0 gx-5">
+                                    <div class="col-md-4 Order_role"></div>
+                                    <div class="col-md-4 Order_plan"></div>
+                                    <div class="col-md-4 Order_status"></div>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center row pt-4 pb-2 gap-4 gap-md-0 gx-5">
+                                <div class="col-md-4" style="padding-left: 55px;">
+                                    <label for="dateRange">Custom Date Range:</label>
+                                     <input type="date"  id="dateRange" name="expireDate" placeholder="Select date range"  class="form-control" required">
+                                </div>
+                                <div class="col-md-4">
+                                    <button class="btn btn-primary" id="filterBtn" style="margin-top: 20px; padding-top: 15px;">Filter</button>
+                                </div>
+                                <div class="col-md-4">
+                                    <button class="btn btn-secondary" id="lastDayBtn">Last 1 Day</button>
+                                    <button class="btn btn-secondary" id="lastWeekBtn">Last 1 Week</button>
+                                    <button class="btn btn-secondary" id="lastMonthBtn">Last 1 Month</button>
+                                </div>
+                            </div>
+                            <div class="card-datatable table-responsive">
+                                <table class="datatables-orders table">
+                                    <thead>
+                                        <tr>
+                                            <th>Order ID</th>
+                                            <th>Purchase Date</th>
+                                            <th>Items</th>
+                                            <th>Amount</th>
+                                            <th>Shipping Address</th>
+                                            <th>Payment Type</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% for(let i = 0; i < orders.length; i++) { %>
+                                            <tr>
+                                                <td>
+                                                    <a href="/admin/orderDetails/<%= orders[i]._id %>" class="order-id" data-order-id="<%= orders[i]._id %>">
+                                                        <%= orders[i].order_id %>
+                                                    </a>
+                                                </td>
+                                                <td><%= new Date(orders[i].orderedAt).toLocaleDateString() %></td>
+                                                <td>
+                                                    <% for(let item of orders[i].orderItems) { %>
+                                                        <div><%= item.name %> (x<%= item.quantity %>)</div>
+                                                    <% } %>
+                                                </td>
+                                                <td><%= orders[i].totalAmount %></td>
+                                                <td>
+                                                    <% if (orders[i].address.length > 0) { %>
+                                                        <div><%= orders[i].address[0].name %></div>
+                                                        <div><%= orders[i].address[0].streetAddress %>, <%= orders[i].address[0].city %></div>
+                                                        <div><%= orders[i].address[0].state %> - <%= orders[i].address[0].pinCode %></div>
+                                                    <% } %>
+                                                </td>
+                                                <td><%= orders[i].paymentMethod %></td>
+                                            </tr>
+                                        <% } %>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- / Users List Table -->
+
+                                           
+
+                        <!-- Footer -->
+                        <footer class="content-footer footer bg-footer-theme">
+                            <div class="container-xxl">
+                                <div class="footer-container d-flex align-items-center justify-content-between py-4 flex-md-row flex-column">
+                                    <div class="text-body mb-2 mb-md-0">
+                                        © <script>document.write(new Date().getFullYear())</script>, made with <span class="text-danger"><i class="tf-icons ri-heart-fill"></i></span> by <a href="https://themeselection.com/" target="_blank" class="footer-link">ThemeSelection</a>
+                                    </div>
+                                    <div class="d-none d-lg-inline-block">
+                                        <a href="https://themeselection.com/license/" class="footer-link me-4" target="_blank">License</a>
+                                        <a href="https://themeselection.com/" target="_blank" class="footer-link me-4">More Themes</a>
+                                        <a href="https://demos.themeselection.com/Redolence-bootstrap-html-admin-template/documentation/" target="_blank" class="footer-link me-4">Documentation</a>
+                                        <a href="https://themeselection.com/support/" target="_blank" class="footer-link d-none d-sm-inline-block">Support</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </footer>
+                        <!-- / Footer -->
+
+                        <div class="content-backdrop fade"></div>
+                    </div>
+                    <!-- Content wrapper -->
+                </div>
+                <!-- / Layout page -->
+            </div>
+
+            <!-- Overlay -->
+            <div class="layout-overlay layout-menu-toggle"></div>
+            <!-- Drag Target Area To SlideIn Menu On Small Screens -->
+            <div class="drag-target"></div>
+        </div>
+        <!-- / Layout wrapper -->
+
+        <!-- Core JS -->
+        <script src="../../admin/assets/vendor/libs/jquery/jquery.js"></script>
+        <script src="../../admin/assets/vendor/libs/popper/popper.js"></script>
+        <script src="../../admin/assets/vendor/js/bootstrap.js"></script>
+        <script src="../../admin/assets/vendor/libs/node-waves/node-waves.js"></script>
+        <script src="../../admin/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+        <script src="../../admin/assets/vendor/libs/hammer/hammer.js"></script>
+        <script src="../../admin/assets/vendor/libs/i18n/i18n.js"></script>
+        <script src="../../admin/assets/vendor/libs/typeahead-js/typeahead.js"></script>
+        <script src="../../admin/assets/vendor/js/menu.js"></script>
+        
+        <!-- Vendors JS -->
+        <script src="../../admin/assets/vendor/libs/moment/moment.js"></script>
+        <script src="../../admin/assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js"></script>
+        <script src="../../admin/assets/vendor/libs/select2/select2.js"></script>
+        <script src="../../admin/assets/vendor/libs/%40form-validation/popular.js"></script>
+        <script src="../../admin/assets/vendor/libs/%40form-validation/bootstrap5.js"></script>
+        <script src="../../admin/assets/vendor/libs/%40form-validation/auto-focus.js"></script>
+        <script src="../../admin/assets/vendor/libs/cleavejs/cleave.js"></script>
+        <script src="../../admin/assets/vendor/libs/cleavejs/cleave-phone.js"></script>
+
+        <!-- Main JS -->
+        <script src="../../admin/assets/js/main.js"></script>
+        
+        <!-- Page JS -->
+        <script src="../../admin/assets/js/app-order-list.js"></script>
+        <script>
+            $(document).ready(function() {
+    $('#dateRange').datepicker({
+        format: 'mm-dd-yyyy',
+        autoclose: true,
+        todayHighlight: true,
+        inputs: $('.date-range')
+    });
+});
+         </script>
+
+
+        <!-- filtering -->
+         <script>
+            document.addEventListener('DOMContentLoaded', function () {
+    const filterBtn = document.getElementById('filterBtn');
+    const lastDayBtn = document.getElementById('lastDayBtn');
+    const lastWeekBtn = document.getElementById('lastWeekBtn');
+    const lastMonthBtn = document.getElementById('lastMonthBtn');
+
+    filterBtn.addEventListener('click', function () {
+    const dateInput = document.getElementById('dateRange').value;
+    
+    if (!dateInput) {
+        alert("Please select a date range");
+        return;
+    }
+
+    const formattedDate = formatDate(dateInput); // Convert date
+
+    console.log("Formatted Date:", formattedDate);
+    
+    // Redirect to the same page with query parameters
+    window.location.href = `/admin/orderList?startDate=${formattedDate}`;
+});
+
+// Function to convert YYYY-MM-DD to MM-DD-YYYY
+function formatDate(dateString) {
+    const date = new Date(dateString);
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Get month
+    const day = String(date.getDate()).padStart(2, '0'); // Get day
+    const year = date.getFullYear(); // Get year
+    return `${month}-${day}-${year}`;
+}
+
+
+    lastDayBtn.addEventListener('click', function () {
+        const endDate = new Date();
+        const startDate = new Date();
+        startDate.setDate(endDate.getDate() - 1);
+
+        window.location.href = `/admin/orderList?startDate=${startDate.toISOString().split('T')[0]}&endDate=${endDate.toISOString().split('T')[0]}`;
+    });
+
+    lastWeekBtn.addEventListener('click', function () {
+        const endDate = new Date();
+        const startDate = new Date();
+        startDate.setDate(endDate.getDate() - 7);
+
+        window.location.href = `/admin/orderList?startDate=${startDate.toISOString().split('T')[0]}&endDate=${endDate.toISOString().split('T')[0]}`;
+    });
+
+    lastMonthBtn.addEventListener('click', function () {
+        const endDate = new Date();
+        const startDate = new Date();
+        startDate.setMonth(endDate.getMonth() - 1);
+
+        window.location.href = `/admin/orderList?startDate=${startDate.toISOString().split('T')[0]}&endDate=${endDate.toISOString().split('T')[0]}`;
+    });
+});
+
+
+         </script>
+
+    </body>
+</html>

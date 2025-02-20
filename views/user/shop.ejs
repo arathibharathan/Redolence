@@ -8,9 +8,9 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Molla - Bootstrap eCommerce Template</title>
+  <title>Redolence - Bootstrap eCommerce Template</title>
   <meta name="keywords" content="HTML5 Template">
-  <meta name="description" content="Molla - Bootstrap eCommerce Template">
+  <meta name="description" content="Redolence - Bootstrap eCommerce Template">
   <meta name="author" content="p-themes">
   <!-- Favicon -->
   <link rel="apple-touch-icon" sizes="180x180" href="/user/assets/images/icons/apple-touch-icon.png">
@@ -19,8 +19,8 @@
   <link rel="manifest" href="/user/assets/images/icons/site.html">
   <link rel="mask-icon" href="/user/assets/images/icons/safari-pinned-tab.svg" color="#666666">
   <link rel="shortcut icon" href="/user/assets/images/icons/favicon.ico">
-  <meta name="apple-mobile-web-app-title" content="Molla">
-  <meta name="application-name" content="Molla">
+  <meta name="apple-mobile-web-app-title" content="Redolence">
+  <meta name="application-name" content="Redolence">
   <meta name="msapplication-TileColor" content="#cc9966">
   <meta name="msapplication-config" content="/user/assets/images/icons/browserconfig.xml">
   <meta name="theme-color" content="#ffffff">
@@ -31,6 +31,17 @@
   <link rel="stylesheet" href="/user/assets/css/plugins/owl-carousel/owl.carousel.css">
   <link rel="stylesheet" href="/user/assets/css/plugins/magnific-popup/magnific-popup.css">
   <link rel="stylesheet" href="/user/assets/css/plugins/nouislider/nouislider.css">
+  <style>
+    .blink {
+    animation: blink-animation 1s steps(5, start) infinite;
+}
+
+@keyframes blink-animation {
+    to {
+        visibility: hidden;
+    }
+}
+  </style>
 </head>
 
 <body>
@@ -86,26 +97,66 @@
               <i class="icon-bars"></i>
             </button>
 
-            <a href="index.html" class="logo">
-              <img src="/user/assets/images/logo.png" alt="Molla Logo" width="105" height="25">
+            <a href="/" class="logo">
+              <img src="/Redolence logo-01.png" alt="Redole Logo" style="width:315px; height: 126px;">
             </a>
 
             <nav class="main-nav">
               <ul class="menu sf-arrows">
-                <li class="megamenu-container ">
-                  <a href="/" class="">Home</a>
-
-
-                </li>
                 <li>
-                  <a href="/shop" class="active">Product</a>
+                  <a href="/" class="">Home</a>
+                </li>
+                <li class="megamenu-container active">
+                  <a href="/shop">Product</a>
                 </li>
 
               </ul><!-- End .menu -->
             </nav><!-- End .main-nav -->
+            <div class="widget widget-collapsible"  style="padding-top: 67px;">
+              <h3 class="widget-title">
+                <a data-toggle="collapse" href="#widget-1" role="button" aria-expanded="true" aria-controls="widget-1">
+                  Category
+                </a>
+              </h3> 
           </div><!-- End .header-left -->
+          <div class="collapse show" id="widget-1">
+            <div class="widget-body">
+              <div class="filter-items filter-items-count">
+                <% categories.forEach(category => { %>
+                  <div class="filter-item">
+                    <div class="custom-control custom-checkbox">
+                      <input type="checkbox" class="custom-control-input" id="cat-<%= category._id %>" value="<%= category.name %>" onchange="filterProducts()">
+                      <label class="custom-control-label" for="cat-<%= category._id %>"><%= category.name %></label>
+                    </div><!-- End .custom-checkbox -->
+                    <span class="item-count"><%= category.count %></span>
+                  </div><!-- End .filter-item -->
+                <% }) %>
+              </div><!-- End .filter-items -->
+            </div><!-- End .widget-body -->
+          </div><!-- End .collapse -->
+        </div><!-- End .widget -->
 
+          
           <div class="header-right">
+            <div style="margin: 22px; margin-top: 34px;" >
+              
+              <div class="sorting-container">
+                <label for="sort-options">Sort by:</label>
+                <select id="sort-options" onchange="sortProducts()">
+                    <option value="popularity" <%= sort === 'popularity' ? 'selected' : '' %>>Popularity</option>
+                    <option value="price-asc" <%= sort === 'price-asc' ? 'selected' : '' %>>Price: Low to High</option>
+                    <option value="price-desc" <%= sort === 'price-desc' ? 'selected' : '' %>>Price: High to Low</option>
+                    <option value="average-rating" <%= sort === 'average-rating' ? 'selected' : '' %>>Average Ratings</option>
+                    <option value="featured" <%= sort === 'featured' ? 'selected' : '' %>>Featured</option>
+                    <option value="new-arrivals" <%= sort === 'new-arrivals' ? 'selected' : '' %>>New Arrivals</option>
+                    <option value="a-z" <%= sort === 'a-z' ? 'selected' : '' %>>A - Z</option>
+                    <option value="z-a" <%= sort === 'z-a' ? 'selected' : '' %>>Z - A</option>
+                </select>
+            </div>
+            </div>
+            
+            <div>
+            </div>
             <div class="header-search">
               <a href="#" class="search-toggle" role="button" title="Search"><i class="icon-search"></i></a>
               <form action="#" method="get">
@@ -116,8 +167,8 @@
               </form>
             </div><!-- End .header-search -->
             <div class="dropdown compare-dropdown">
-              <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static" title="Compare Products" aria-label="Compare Products">
-                <i class="icon-random"></i>
+              <a href="/wishlist" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static" title="Compare Products" aria-label="Compare Products">
+                <i class="icon-heart-o"></i>
               </a>
 
               <div class="dropdown-menu dropdown-menu-right">
@@ -154,36 +205,23 @@
         <div class="container">
           <h1 class="page-title">All Products<span>Shop</span></h1>
         </div><!-- End .container -->
+        
       </div><!-- End .page-header -->
+      
       <nav aria-label="breadcrumb" class="breadcrumb-nav mb-2">
         <div class="container">
           <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="/">Home</a></li>
             <li class="breadcrumb-item active"><a href="#">Shop</a></li>
             <li class="breadcrumb-item" aria-current="page">Boxed</li>
+            
           </ol>
         </div><!-- End .container -->
       </nav><!-- End .breadcrumb-nav -->
 
-      <div class="page-content">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <h2 class="title text-center mb-4">Products</h2>
-                    <div id="product-list" class="row">
-                        <!-- Product items will be dynamically inserted here -->
-                    </div>
-                    <div id="pagination" class="text-center">
-                        <button id="prev-page" class="btn btn-outline-primary" disabled>Previous</button>
-                        <span id="page-info"></span>
-                        <button id="next-page" class="btn btn-outline-primary">Next</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+      
 
-          <div class="products">
+          <div class="products" style="padding: 120px;">
             <div class="row">
               <% for(let i = 0; i < products.length; i++) { %>
               <div class="col-6 col-md-4 col-lg-4 col-xl-3">
@@ -193,17 +231,16 @@
                       <img src="../../uploads/<%= products[i].images[0]%>" alt="Product image" class="product-image">
                     </a>
                     <div class="product-action-vertical">
-                      <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
-                    </div><!-- End .product-action -->
+                      <a href="#" class="btn-product-icon btn-wishlist btn-expandable <%= products[i].isInWishlist ? 'in-wishlist' : '' %>" data-id="<%= products[i]._id %>">
+                        <span><%= products[i].isInWishlist ? 'Remove from wishlist' : 'Add to wishlist' %></span>
+                    </a>             </div><!-- End .product-action -->
                     <div class="product-action action-icon-top">
                       <button class="btn-product btn-cart" data-id="<%= products[i]._id %>"><span>add to cart</span></button>
-                      <a href="popup/quickView.html" class="btn-product btn-quickview" title="Quick view"><span>quick view</span></a>
-                      <a href="#" class="btn-product btn-compare" title="Compare"><span>compare</span></a>
                     </div><!-- End .product-action -->
                   </figure><!-- End .product-media -->
                   <div class="product-body">
                     <div class="product-cat">
-                      <a href="#"><%= products[i].category %></a>
+                      <a href="#"><% products[i].category %></a>
                     </div><!-- End .product-cat -->
                     <h3 class="product-title"><a href="/product?id=<%= products[i]._id %>"><%= products[i].name %></a></h3><!-- End .product-title -->
                     <div class="product-price">
@@ -219,15 +256,33 @@
             </div><!-- End .row -->
 
             <div class="load-more-container text-center">
-              <a href="#" class="btn btn-outline-darker btn-load-more">More Products <i class="icon-refresh"></i></a>
-            </div><!-- End .load-more-container -->
+              <form action="/renderKartByPage/<%= prevPage %>?sort=<%= sort %>" method="GET" style="display:inline;">
+                  <button style="background-color: #c96;" <% if (prevPage < 1) { %> disabled <% } %> >
+                      Prev
+                  </button>
+              </form>
+              <% for (let i = 0; i < pages; i++) { %>
+                  <form action="/renderKartByPage/<%= i + 1 %>?sort=<%= sort %>" method="GET" style="display:inline;">
+                      <button style="width: 30px; height: 31px; background-color: #c96" type="submit" <% if (i + 1 === page) { %> disabled <% } %> >
+                          <%= i + 1 %>
+                      </button>
+                  </form>
+              <% } %>
+              <form action="/renderKartByPage/<%= nextPage %>?sort=<%= sort %>" method="GET" style="display:inline;">
+                  <button style="background-color: #c96;" <% if (nextPage > pages) { %> disabled <% } %> >
+                      Next
+                  </button>
+              </form>
+          </div>
           </div><!-- End .products -->
 
 
 
 
 
-          <div class="sidebar-filter-overlay"></div><!-- End .sidebar-filter-overlay -->
+          <div class="sidebar-filter-overlay">
+          
+          </div><!-- End .sidebar-filter-overlay -->
           <aside class="sidebar-shop sidebar-filter">
             <div class="sidebar-filter-wrapper">
               <div class="widget widget-clean">
@@ -487,7 +542,7 @@
           <div class="row">
             <div class="col-sm-6 col-lg-3">
               <div class="widget widget-about">
-                <img src="/user/assets/images/logo.png" class="footer-logo" alt="Footer Logo" width="105" height="25">
+                <img src="/Redolence logo-01.png" class="footer-logo" alt="Footer Logo" width="105" height="25">
                 <p>Praesent dapibus, neque id cursus ucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. </p>
 
                 <div class="social-icons">
@@ -505,8 +560,8 @@
                 <h4 class="widget-title">Useful Links</h4><!-- End .widget-title -->
 
                 <ul class="widget-list">
-                  <li><a href="about.html">About Molla</a></li>
-                  <li><a href="#">How to shop on Molla</a></li>
+                  <li><a href="about.html">About Redolence</a></li>
+                  <li><a href="#">How to shop on Redolence</a></li>
                   <li><a href="#">FAQ</a></li>
                   <li><a href="contact.html">Contact us</a></li>
                   <li><a href="login.html">Log in</a></li>
@@ -548,7 +603,7 @@
 
       <div class="footer-bottom">
         <div class="container">
-          <p class="footer-copyright">Copyright © 2019 Molla Store. All Rights Reserved.</p><!-- End .footer-copyright -->
+          <p class="footer-copyright">Copyright © 2019 Redolence Store. All Rights Reserved.</p><!-- End .footer-copyright -->
           <figure class="footer-payments">
             <img src="/user/assets/images/payments.png" alt="Payment methods" width="272" height="20">
           </figure><!-- End .footer-payments -->
@@ -881,6 +936,8 @@
               productId
             }),
           });
+          console.log(productId);
+          
 
           const data = await response.json();
           if (response.ok) {
@@ -906,61 +963,68 @@
 
 
 <script>
-  let currentPage = 1;
-  const limit = 10; // Number of products per page
-
-  async function fetchProducts(page) {
-      try {
-          const response = await fetch(`/products?page=${page}&limit=${limit}`);
-          const data = await response.json();
-
-          if (data.success) {
-              const productList = document.getElementById('product-list');
-              productList.innerHTML = ''; // Clear existing products
-
-              data.products.forEach(product => {
-                  const productItem = `
-                      <div class="col-md-4">
-                          <div class="product">
-                              <figure class="product-media">
-                                  <img src="../../uploads/${product.images[0]}" alt="${product.name}" class="product-image">
-                              </figure>
-                              <div class="product-body">
-                                  <h3 class="product-title">${product.name}</h3>
-                                  <div class="product-price">₹${product.price}</div>
-                              </div>
-                          </div>
-                      </div>
-                  `;
-                  productList.insertAdjacentHTML('beforeend', productItem);
-              });
-
-              // Update pagination info
-              document.getElementById('page-info').innerText = `Page ${data.currentPage} of ${data.totalPages}`;
-              document.getElementById('prev-page').disabled = data.currentPage === 1;
-              document.getElementById('next-page').disabled = data.currentPage === data.totalPages;
-          }
-      } catch (error) {
-          console.error('Error fetching products:', error);
-      }
-  }
-
-  document.getElementById('prev-page').addEventListener('click', () => {
-      if (currentPage > 1) {
-          currentPage--;
-          fetchProducts(currentPage);
-      }
-  });
-
-  document.getElementById('next-page').addEventListener('click', () => {
-      currentPage++;
-      fetchProducts(currentPage);
-  });
-
-  // Initial fetch
-  fetchProducts(currentPage);
+  function sortProducts() {
+    const sortOption = document.getElementById('sort-options').value;                                                                                   
+    window.location.href = `/shop?sort=${sortOption}`;
+}
 </script>
 
+<script>
+  function filterProducts() {
+    const selectedCategories = Array.from(document.querySelectorAll('input[type="checkbox"]:checked'))
+      .map(checkbox => checkbox.value);
+    
+    const queryString = selectedCategories.length > 0 ? `?categories=${selectedCategories.join(',')}` : '';
+    window.location.href = `/shop${queryString}`;
+  }
+</script>
+
+<script>
+  const addToWishlistButtons = document.querySelectorAll('.btn-wishlist');
+
+addToWishlistButtons.forEach(button => {
+    button.addEventListener('click', async (event) => {
+        event.preventDefault();
+        const productId = button.getAttribute('data-id');
+
+        try {
+            const response = await fetch("/wishlist", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ productId }),
+            });
+
+            const data = await response.json();
+            if (response.ok) {
+                button.classList.toggle('in-wishlist');
+                button.querySelector('span').textContent = button.classList.contains('in-wishlist') ? 'Remove from wishlist' : 'Add to wishlist';
+
+                if (button.classList.contains('in-wishlist')) {
+                    button.classList.add('blink');
+                    setTimeout(() => {
+                        button.classList.remove('blink');
+                    }, 2000); 
+                }
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: data.message,
+                });
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Failed',
+                    text: data.message,
+                });
+            }
+        } catch (error) {
+            console.error('Error adding to wishlist:', error);
+        }
+    });
+});
+</script>
 </body>
 
 

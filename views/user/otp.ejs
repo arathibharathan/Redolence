@@ -140,7 +140,7 @@
       }
     }
 
-    // Loop to attach event listeners
+    //attach addevent listeners
     for (let i = 1; i <= 6; i++) {
       const currentId = `id${i}`;
       const nextId = i < 6 ? `id${i + 1}` : null;
@@ -149,7 +149,7 @@
       if (currentInput) {
         currentInput.addEventListener("input", () => moveNext(currentInput, nextId));
 
-        // Handle backspace to move to the previous field
+        // backspace to move to the previous field
         currentInput.addEventListener("keydown", (event) => {
           if (event.key === "Backspace" && currentInput.value === "" && i > 1) {
             const prevId = `id${i - 1}`;
@@ -253,14 +253,14 @@
             email
           })
         });
-        console.log(response)
-        console.log('before sucess')
+        // console.log(response)
+        // console.log('before sucess')
         const informationLabel = document.getElementById('informationlabel');
         if (response.ok) {
           const result = await response.json();
-          console.log(result)
+          // console.log(result)
           informationLabel.innerText = result.message;
-          console.log('logged....!')
+          // console.log('logged....!')
           startResendCooldown();
         } else {
           informationLabel.innerText = result.message;

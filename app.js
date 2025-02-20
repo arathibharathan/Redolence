@@ -5,6 +5,10 @@ const bodyParser = require('body-parser');
 require('dotenv').config();
 const nocahe = require('nocache');
 const passport = require('./passport');
+const methodOverride = require('method-override');
+const flash = require('connect-flash');
+
+
 
 app.use(express.json()); // For JSON data converting
 app.use(express.urlencoded({ extended: true })); // For URL-encoded data
@@ -49,6 +53,9 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.use('/', userRouter);
 app.use('/admin', adminRouter);
+app.use(methodOverride('_method')); // Allow using _method query parameter to override HTTP methods
+
+app.use(flash());// Initialize flash middleware
 
 app.listen(3000, () => {
 	console.log(`http://localhost:3000`);

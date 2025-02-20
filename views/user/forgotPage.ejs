@@ -146,8 +146,8 @@
               <i class="icon-bars"></i>
             </button>
 
-            <a href="index.html" class="logo">
-              <img src="/user/assets/images/logo.png" alt="Redolence Logo" width="105" height="25">
+            <a href="/" class="logo">
+              <img src="/Redolence logo-01.png" alt="Redole Logo" style="width:315px; height: 126px;">
             </a>
 
             <nav class="main-nav">
@@ -225,41 +225,7 @@
   </div><!-- End .container -->
   </div><!-- End .login-page section-bg -->
   </main><!-- End .main -->
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <script>
-    const form = document.getElementById("forgotForm");
-    form.addEventListener("submit", async function(event) {
-      event.preventDefault();
-
-      const formData = {
-        email: document.getElementById("email").value.trim()
-      };
-
-      console.log('data before api call:', formData);
-
-      const result = await fetch("/forgotpage", {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      }).then(response => response.json())
-      console.log(result.message);
-      if (result.success === true) {
-        Swal.fire({
-          title: "Password sent to your email successfully....!",
-          confirmButtonText: "OK",
-        }).then((result) => {
-          if (result.isConfirmed) {
-            // Redirect to the login page
-            window.location.href = '/login';
-          }
-        });
-      } else {
-        document.getElementById("informationlabel").innerHTML = result.message
-      }
-    });
-  </script>
+  
 
   <footer class="footer">
     <div class="footer-middle">
@@ -267,7 +233,7 @@
         <div class="row">
           <div class="col-sm-6 col-lg-3">
             <div class="widget widget-about">
-              <img src="/user/assets/images/logo.png" class="footer-logo" alt="Footer Logo" width="105" height="25">
+              <img src="/Redolence logo-01.png" class="footer-logo" alt="Footer Logo" width="105" height="25">
               <p>Praesent dapibus, neque id cursus ucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. </p>
 
               <div class="social-icons">
@@ -383,6 +349,43 @@
   <script src="/user/assets/js/owl.carousel.min.js"></script>
   <!-- Main JS File -->
   <script src="/user/assets/js/main.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script>
+    const form = document.getElementById("forgotForm");
+    form.addEventListener("submit", async function(event) {
+      event.preventDefault();
+
+      const formData = {
+        email: document.getElementById("email").value.trim()
+      };
+
+      console.log('data before api call:', formData);
+
+      const result = await fetch("/forgotpage", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      }).then(response => response.json())
+      console.log(result.message);
+      if (result.success === true) {
+        Swal.fire({
+          title: "Password sent to your email successfully....!",
+          confirmButtonText: "OK",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            // Redirect to the login page
+            window.location.href = '/login';
+          }
+        });
+      } else {
+        document.getElementById("informationlabel").innerHTML = result.message
+      }
+    });
+  </script>
+
 </body>
 
 
