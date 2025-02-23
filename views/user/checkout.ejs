@@ -442,18 +442,24 @@
   </button>
 </div>
 
-
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script>
 
-document.addEventListener('DOMContentLoaded', () => {
-  const placeOrderBtn = document.getElementById('placeOrderBtn')
 
-  placeOrderBtn.addEventListener('click', async (e) =>{
-    e.preventDefault()
-  
-    // check the address is select or not
+document.addEventListener('DOMContentLoaded', () => {
+  const placeOrderBtn = document.getElementById('placeOrderBtn');
+
+  if (!placeOrderBtn) {
+    console.error("Error: 'placeOrderBtn' not found in the DOM.");
+    return;
+  }
+
+  placeOrderBtn.addEventListener('click', async (e) => {
+    e.preventDefault();
+
+    // Check if an address is selected
     const selectedAddress = document.querySelector('input[name="selectedAddress"]:checked');
-    if(!selectedAddress){
+    if (!selectedAddress) {
       Swal.fire({
         icon: 'warning',
         title: 'Oops...',
@@ -461,42 +467,142 @@ document.addEventListener('DOMContentLoaded', () => {
       });
       return;
     }
-    const codRadio = document.getElementById('cod')
-    const online = document.getElementById('online')
 
-    // check the payment option is selct or not
-    if(!codRadio.checked && !online.checked){
+    const codRadio = document.getElementById('cod');
+    const online = document.getElementById('online');
+
+    // Check if a payment option is selected
+    if (!codRadio?.checked && !online?.checked) {
       Swal.fire({
         icon: 'warning',
         title: 'Oops.....',
         text: 'Please select a Payment Option!'
       });
+      return;
     }
+
     const addressId = selectedAddress.value;
-    const paymentMethod = codRadio.checked ? 'COD': 'online'
-    console.log(paymentMethod);
-    
-    const response = await fetch('/place-order', {
+    const paymentMethod = codRadio.checked ? 'COD' : 'online';
+    console.log('Selected Payment Method:', paymentMethod);
+
+    try {
+      const response = await fetch('/place-order', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body : JSON.stringify({
+        body: JSON.stringify({
           addressId,
-          paymentMethod 
-
+          paymentMethod
         })
       });
 
-      
+      console.log('HTTP Status:', response.status);
 
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
 
+      const responseData = await response.json();
+     const paymentData = {
+        totalAmount:responseData?.amount,
+        orderId:responseData?.orderId,
+        paymentID:responseData?.paymentID
+     }
 
+      if(responseData?.orderId){
+        handleRazorpayPayment(paymentData, responseData)
+      }
 
-  })
+      console.log('Response:', responseData);
+    } catch (error) {
+      console.error('Error placing order:', error);
+    }
+  });
 })
  
 
+function handleRazorpayPayment(result, bookingDetails) {
+  var options = {
+    key: "rzp_test_6damh00ndxLBqq",
+    amount: result.totalAmount*100 ,
+    currency: "INR",
+    name: "Machintko",
+    order_id: result.paymentID,
+    handler: async function (response) {
+      response.bookingDetails = bookingDetails;
+      response.order_id = result.orderId;
+      response.paymentReferance = result.paymentID
+       
+      // Handle successful payment
+       const confirmed = await confirmPayment(response);
+       
+    },
+  };
+
+  var rzp1 = new Razorpay(options);
+  rzp1.on("payment.failed",async function (response) {
+   const cancelBooking = await fetch('/cancelBooking',{method:'post',headers:{"Content-Type":"Application/json"},body:JSON.stringify(bookingDetails)})
+       .then(res=>{
+        return res.json()
+       })
+       .catch(err=>{
+        console.log(err)
+       }) 
+       console.log(bookingDetails,cancelBooking);
+       if(cancelBooking.cancelled){
+        swal({
+          title: "failed",
+          text: response,
+          icon: "error",
+          button: "OK",
+        })
+       }
+       else{
+        swal({
+          title: "failed",
+          text: response,
+          icon: "error",
+          button: "OK",
+        }).then()
+       }
+
+  });
+  rzp1.open();
+
+}
+
+
+
+
+
+async function confirmPayment(paymentDetails) {
+  // openModal();
+    const confirmPaymentResponse = await fetch("/confirmPayment", {
+      method: "post",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(paymentDetails),
+    }).then(confirmPaymentResult=>{
+      return confirmPaymentResult.json()
+    })
+    .catch((err)=>{
+      console.log(err);
+    })
+ 
+  if(confirmPaymentResponse.status){
+     
+    window.location.assign('/custom/Home');
+  }
+  else{
+    swal({
+      title: "failed",
+      text: "Payment failed please try again",
+      icon: "error",
+      button: "OK",
+    })
+ 
+  }
+}
 
 
   // document.addEventListener('DOMContentLoaded', () => {

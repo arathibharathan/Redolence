@@ -108,7 +108,10 @@ userRouter.post('/wishlist/remove', auth.isLogin, cartController.removeProductFr
 //checkout
 userRouter.get('/checkout',checkoutController.checkout);
 userRouter.post('/save-address', checkoutController.addressSave);
-userRouter.post('/place-order', checkoutController.placeOrder);
+userRouter.post('/place-order', checkoutController.placeOrder)
+userRouter.post('/confirmPayment',checkoutController.confirmPayment)
+userRouter.post('/cancelBooking',checkoutController.cancelBooking)
+userRouter.post('/cancelOrderRefundPayment',checkoutController.cancelOrderandrefundPayment)
 
 
 userRouter.post('/apply-coupon', checkoutController.applyCoupon);

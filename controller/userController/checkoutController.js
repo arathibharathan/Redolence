@@ -6,7 +6,7 @@ const OrderSchema = require('../../model/orderModel.js');
 
 
 const { v4: uuidv4 } = require('uuid');
-const { RazorCreateOrder } = require('../../razorPay/razorPay.js');
+const { RazorCreateOrder, razorMatchPayment, razorRefundPayment } = require('../../razorPay/razorPay.js');
 
 
 
@@ -182,7 +182,7 @@ const placeOrder = async (req, res) => {
     try {
         const userId = req.session.user._id;
         const { addressId, paymentMethod } = req.body;
-        console.log(paymentMethod)
+        console.log(paymentMethod,'**************************')
         const cart = await CartSchema.findOne({ userId }).populate('productDetails.productId');
 
         if (!cart || cart.productDetails.length === 0) {
@@ -252,7 +252,12 @@ const placeOrder = async (req, res) => {
 
         // Save the order
         const result = await newOrder.save();
-        const paymentID  =await  RazorCreateOrder(result.totalAmount,result?.order_id) 
+        let paymentID = ''
+        if(paymentMethod == 'online'){
+            console.log(paymentMethod,'***************<>>>>>>>>>>>>>>>>>>>')
+            paymentID  =await  RazorCreateOrder(result.totalAmount,result?.order_id) 
+        }
+          
         console.log(paymentID);
         
         
@@ -275,7 +280,9 @@ const placeOrder = async (req, res) => {
         res.status(200).json({
             message: 'Order placed successfully',
             orderId: newOrder.order_id,
-            id: newOrder._id
+            id: newOrder._id,
+            amount:newOrder?.totalAmount,
+            paymentId:paymentID
         });
 
     } catch (error) {
@@ -286,6 +293,60 @@ const placeOrder = async (req, res) => {
         });
     }
 };
+
+const confirmPayment =async  (req,res)=>{
+    try {
+
+        const data = req.body 
+        console.log(data,'implement pyment logic here ')
+
+        /*
+        api call when success full payment done , take payment referance from req.body , verify with razorpay server ,
+        if payment sucess full , update the details in the order payment ,
+        responcd with sucessfull payment details 
+        */
+
+        const payment = await razorMatchPayment(req.body.razorpay_payment_id);
+        console.log(data,'paymentDetails')
+        res.json(req.body)
+
+    } catch (error) {
+        
+    }
+}
+
+const cancelBooking = (req,res)=>{
+    try {
+        /* 
+        api will call when a payment  fails , take the details from input , cancel the order 
+        */
+        const data = req.body 
+        console.log(data,'paymentDetails')
+        res.json(req.body)
+
+    } catch (error) {
+        
+    }
+}
+
+
+const cancelOrderandrefundPayment  = async (req,res)=>{
+    try {
+        /* 
+        api will call when a order cancelled by the user , give the payment refereacne from input to the below razorpay api , 
+
+        which cancell the payment and return the object , once cancelation is done , cancel the order 
+
+        */
+        const data = req.body 
+        const  refund = await razorRefundPayment(paymentId.receiptNumber) 
+        console.log(data,'paymentDetails')
+        res.json(req.body)
+
+    } catch (error) {
+        
+    }
+}
 
 
 // apply and remove coupon
@@ -779,6 +840,7 @@ const updateAddress = async (req, res) => {
 module.exports = {
 	checkout,
 	addressSave,
+    confirmPayment,
 	placeOrder,
 	orders,
     getOrderDetails,
@@ -790,6 +852,8 @@ module.exports = {
     getAddressById,
     updateAddress,
     applyCoupon,
-    removeCoupon
+    removeCoupon,
+    cancelBooking,
+    cancelOrderandrefundPayment
     
 };

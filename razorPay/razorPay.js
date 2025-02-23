@@ -27,9 +27,7 @@ async function RazorCreateOrder(amount,invoiceNumber){
 }
 
 async function razorMatchPayment(paymentID){
-    
 try {
-  
   return await instance.payments.fetch(paymentID)
 } catch (error) {
   console.log(error);
