@@ -429,19 +429,217 @@
         <h2 class="card-title">
           <input type="radio" name="paymentMethod" id="cod" value="COD" required>
           <label for="cod">Cash On Delivery</label>
-          <input type="radio" name="paymentMethod" id="Online" value="Online " required>
-          <label for="Online">Online</label>
+          <input type="radio" name="paymentMethod" id="online" value="Online" required>
+          <label for="online">Razorpay</label>
         </h2>
-        <button id="payNow-btn">Pay Now</button>
       </div>
     </div>
   </div>
 
-  <button id="placeOrderBtn" class="btn btn-outline-primary-2 btn-order btn-block" disabled>
+  <button id="placeOrderBtn" class="btn btn-outline-primary-2 btn-order btn-block">
     <span class="btn-text">Place Order</span>
     <span class="btn-hover-text">Place Order</span>
   </button>
 </div>
+
+
+<script>
+
+document.addEventListener('DOMContentLoaded', () => {
+  const placeOrderBtn = document.getElementById('placeOrderBtn')
+
+  placeOrderBtn.addEventListener('click', async (e) =>{
+    e.preventDefault()
+  
+    // check the address is select or not
+    const selectedAddress = document.querySelector('input[name="selectedAddress"]:checked');
+    if(!selectedAddress){
+      Swal.fire({
+        icon: 'warning',
+        title: 'Oops...',
+        text: 'Please select a shipping address!'
+      });
+      return;
+    }
+    const codRadio = document.getElementById('cod')
+    const online = document.getElementById('online')
+
+    // check the payment option is selct or not
+    if(!codRadio.checked && !online.checked){
+      Swal.fire({
+        icon: 'warning',
+        title: 'Oops.....',
+        text: 'Please select a Payment Option!'
+      });
+    }
+    const addressId = selectedAddress.value;
+    const paymentMethod = codRadio.checked ? 'COD': 'online'
+    console.log(paymentMethod);
+    
+    const response = await fetch('/place-order', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body : JSON.stringify({
+          addressId,
+          paymentMethod 
+
+        })
+      });
+
+      
+
+
+
+
+  })
+})
+ 
+
+
+
+  // document.addEventListener('DOMContentLoaded', () => {
+  //   const codRadio = document.getElementById('cod');
+  //   const online = document.getElementById('online');
+  //   const placeOrderBtn = document.getElementById('placeOrderBtn');
+  //     console.log(codRadio, online)
+  //   // codRadio.addEventListener('change', () => {
+  //   //   placeOrderBtn.disabled = !codRadio.checked;
+  //   // });
+
+  //   placeOrderBtn.addEventListener('click', async (e) => {
+  //   e.preventDefault();
+
+  //   // Validate address selection
+  //   const selectedAddress = document.querySelector('input[name="selectedAddress"]:checked');
+    
+  //   if (!selectedAddress) {
+  //     Swal.fire({
+  //       icon: 'warning',
+  //       title: 'Oops...',
+  //       text: 'Please select a shipping address!'
+  //     });
+  //     return;
+  //   }
+
+  //   // Validate payment method
+  //   if (!codRadio.checked) {
+  //     Swal.fire({
+  //       icon: 'warning',
+  //       title: 'Oops...',
+  //       text: 'Please select Cash On Delivery payment method!'
+  //     });
+  //     return;
+  //   }
+
+  //   // const addressId = selectedAddress.value;
+  //   // const paymentType = ;
+
+  //   // try {
+  //   //   const response = await fetch('/place-order', {
+  //   //     method: 'POST',
+  //   //     headers: {
+  //   //       'Content-Type': 'application/json'
+  //   //     },
+  //   //     body: JSON.stringify({
+  //   //       addressId,
+  //   //       paymentType
+  //   //     })
+  //   //   });
+
+  //   //   const result = await response.json();
+
+  //   //   if (response.ok) {
+  //   //     Swal.fire({
+  //   //       icon: 'success',
+  //   //       title: 'Order Placed!',
+  //   //       text: `Your order ${result.orderId} has been placed successfully.`,
+  //   //       confirmButtonText: 'View Orders'
+  //   //     }).then((result1) => {
+  //   //       if (result1.isConfirmed) {
+  //   //         window.location.href = `/placeOrderInvoice/${result.id}`;
+  //   //       }
+  //   //     });
+  //   //   } else {
+  //   //     Swal.fire({
+  //   //       icon: 'error',
+  //   //       title: 'Order Failed',
+  //   //       text: result1.error || 'Failed to place order'
+  //   //     });
+  //   //   }
+  //   // } catch (error) {
+  //   //   console.error('Order placement error:', error);
+  //   //   Swal.fire({
+  //   //     icon: 'error',
+  //   //     title: 'Error',
+  //   //     text: result.error ||'Something went wrong. Please try again.'
+  //   //   });
+  //   // }
+  // });
+// });
+</script>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // Add event listeners to all delete buttons
+    const deleteButtons = document.querySelectorAll('#deleteAddress');
+    
+    deleteButtons.forEach(button => {
+        button.addEventListener('click', async (e) => {
+            e.preventDefault();
+
+            const addressItem = e.target.closest('.address-item');
+            const addressId = addressItem.querySelector('input[name="selectedAddress"]').value;
+
+            try {
+                const response = await fetch(`/delete-address/${addressId}`, {
+                    method: 'DELETE'
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    // Remove the address from the DOM
+                    addressItem.remove();
+
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Address Deleted',
+                        text: result.message
+                    });
+
+                    // If no addresses left, show no addresses message
+                    const addressList = document.getElementById('addressList');
+                    if (addressList.children.length === 0) {
+                        const noAddressesMessage = document.createElement('p');
+                        noAddressesMessage.id = 'no-addresses';
+                        noAddressesMessage.textContent = 'No saved addresses. Please add a new address.';
+                        addressList.appendChild(noAddressesMessage);
+                    }
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Delete Failed',
+                        text: result.message
+                    });
+                }
+            } catch (error) {
+                console.error('Delete Address Error:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Something went wrong. Please try again.'
+                });
+            }
+        });
+    });
+});
+</script>
+
+
+
                 </aside><!-- End .col-lg-3 -->
               </div><!-- End .row -->
             </form>
@@ -909,167 +1107,7 @@
 </div>
 
 
-//placeOrder Script
-<script>
-
-
-// ---------
-// handle payment 
-
-
-  document.addEventListener('DOMContentLoaded', () => {
-    const codRadio = document.getElementsByName('paymentMethod');
-  const placeOrderBtn = document.getElementById('placeOrderBtn');
-    
-  codRadio.addEventListener('click', () => {
-    console.log(codRadio,'sdsdsdssdsd')
-    placeOrderBtn.disabled = !codRadio.checked;
-  });
-
-  codRadio.addEventListener('change', () => {
-    console.log(codRadio,'sdsdsdssdsd')
-    placeOrderBtn.disabled = !codRadio.checked;
-  });
-
-    placeOrderBtn.addEventListener('click', async (e) => {
-    e.preventDefault();
-
-    // Validate address selection
-    const selectedAddress = document.querySelector('input[name="selectedAddress"]:checked');
-    
-    if (!selectedAddress) {
-      Swal.fire({
-        icon: 'warning',
-        title: 'Oops...',
-        text: 'Please select a shipping address!'
-      });
-      return;
-    }
-
-    // Validate payment method
-    // if (!codRadio.codRadio) {
-    //   Swal.fire({
-    //     icon: 'warning',
-    //     title: 'Oops...',
-    //     text: 'Please select Cash On Delivery payment method!'
-    //   });
-    //   return;
-    // }
-    Swal.fire ({
-      icon:'warning',
-      title:'dd',
-      text:codRadio.values    
-    })
-    
-    const addressId = selectedAddress.value;
-    const paymentType = codRadio.values;
-
-    try {
-      const response = await fetch('/place-order', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          addressId,
-          paymentType
-        })
-      });
-
-      const result = await response.json();
-
-      if (response.ok) {
-        Swal.fire({
-          icon: 'success',
-          title: 'Order Placed!',
-          text: `Your order ${result.orderId} has been placed successfully.`,
-          confirmButtonText: 'View Orders'
-        }).then((result1) => {
-          if (result1.isConfirmed) {
-            window.location.href = `/placeOrderInvoice/${result.id}`;
-          }
-        });
-      } else {
-        Swal.fire({
-          icon: 'error',
-          title: 'Order Failed',
-          text: result1.error || 'Failed to place order'
-        });
-      }
-    } catch (error) {
-      console.error('Order placement error:', error);
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: result.error ||'Something went wrong. Please try again.'
-      });
-    }
-  });
-});
-
-
-
-
-// -----------------
-</script>
-
-
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-    // Add event listeners to all delete buttons
-    const deleteButtons = document.querySelectorAll('#deleteAddress');
-    
-    deleteButtons.forEach(button => {
-        button.addEventListener('click', async (e) => {
-            e.preventDefault();
-
-            const addressItem = e.target.closest('.address-item');
-            const addressId = addressItem.querySelector('input[name="selectedAddress"]').value;
-
-            try {
-                const response = await fetch(`/delete-address/${addressId}`, {
-                    method: 'DELETE'
-                });
-
-                const result = await response.json();
-
-                if (result.success) {
-                    // Remove the address from the DOM
-                    addressItem.remove();
-
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Address Deleted',
-                        text: result.message
-                    });
-
-                    // If no addresses left, show no addresses message
-                    const addressList = document.getElementById('addressList');
-                    if (addressList.children.length === 0) {
-                        const noAddressesMessage = document.createElement('p');
-                        noAddressesMessage.id = 'no-addresses';
-                        noAddressesMessage.textContent = 'No saved addresses. Please add a new address.';
-                        addressList.appendChild(noAddressesMessage);
-                    }
-                } else {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Delete Failed',
-                        text: result.message
-                    });
-                }
-            } catch (error) {
-                console.error('Delete Address Error:', error);
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: 'Something went wrong. Please try again.'
-                });
-            }
-        });
-    });
-});
-</script>
+<!-- //placeOrder Script -->
 
 
 
@@ -1379,10 +1417,6 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
   });
-  </script>
-
-  <script>
-    
   </script>
 
 

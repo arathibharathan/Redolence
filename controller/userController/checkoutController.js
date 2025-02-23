@@ -146,11 +146,43 @@ const orders = async (req, res) => {
 };
 
 
+// const placeOrder = async (req,res) =>{
+//     try {
+//         const userId = req.session.user._id
+//         const { addressId, paymentMethod } =req.body
+
+//         // ---- Find the cart
+//         const cart = await CartSchema.findOne({ userId })
+
+//         if (!cart || cart.productDetails.length === 0) {
+//             return res.status(400).json({ error: 'Cart is empty' });
+//         }
+
+//         // -- User ordered Products
+//         const orderedProducts = cart.productDetails
+
+//         // --- Get the excat address
+//         const addressDoc = await addressSchema.findOne({ userId });
+//         const selectedAddressDetails = addressDoc.address.find(
+//             (x) => x._id.toString() === addressId
+//         );
+
+
+
+
+        
+//     } catch (error) {
+//         console.log(error);
+        
+//     }
+// }
+
+
 const placeOrder = async (req, res) => {
     try {
         const userId = req.session.user._id;
-        const { addressId, paymentType } = req.body;
-
+        const { addressId, paymentMethod } = req.body;
+        console.log(paymentMethod)
         const cart = await CartSchema.findOne({ userId }).populate('productDetails.productId');
 
         if (!cart || cart.productDetails.length === 0) {
@@ -213,7 +245,7 @@ const placeOrder = async (req, res) => {
             address: [selectedAddressDetails],
             orderItems,
             totalAmount,
-            paymentMethod: paymentType || 'COD',
+            paymentMethod: paymentMethod || 'COD',
             paymentStatus: 'Pending',
             orderStatus: 'Placed'
         });
