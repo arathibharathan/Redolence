@@ -7,11 +7,10 @@ const profileController =require('../controller/userController/profileController
 const loginController =require('../controller/userController/loginController');
 const checkoutController =require('../controller/userController/checkoutController');
 const cartController =require('../controller/userController/cartController');
+const walletController =require('../controller/userController/walletController')
 const passport = require('../passport');
 const session = require("express-session");
 const auth = require('../middleware/userAuth');
-const userCollection = require("../model/userModel");
-
 
 
 
@@ -47,11 +46,6 @@ userRouter.post('/resendOtp/:id',registerController.resendOtp);
 userRouter.get('/shop', shopController.shop);
 userRouter.post('/shop', shopController.getProducts);
 userRouter.get('/renderKartByPage/:page',shopController.renderKartByPage)
-// userRouter.get('/shop/getCategory', shopController.getCategories)
-userRouter.get('/shop', async (req, res) => {
-    const categories = await getCategories();
-    shopController.shop(req, res, categories);
-});
 userRouter.get('/product', shopController.product);
 
 
@@ -102,7 +96,7 @@ userRouter.put('/address/:addressId', auth.isLogin, profileController.updateAddr
 
 //cart
 userRouter.get('/cart', auth.isLogin,cartController.cart);
-userRouter.post('/cart', cartController.addcart);
+userRouter.post('/cart', auth.isLogin,cartController.addcart);
 userRouter.post('/cart/update', auth.isLogin, cartController.updateCartQuantity);
 userRouter.post('/cart/remove', auth.isLogin, cartController.removeProductFromCart);
 //wishlist
@@ -138,7 +132,10 @@ userRouter.delete('/delete-address/:addressId', checkoutController.deleteAddress
 userRouter.get('/get-address/:addressId', checkoutController.getAddressById);
 userRouter.put('/update-address/:addressId', checkoutController.updateAddress);
 
-
+// wallet
+userRouter.get('/wallet',walletController.wallet)
+// userRouter.get('/wallet/details', walletController.createWalletForUser);
+// userRouter.get('/wallet/details',walletController.getWalletDetails)
 
 
 // logout

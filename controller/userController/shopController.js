@@ -1,44 +1,67 @@
 const productSchema = require('../../model/productModel');
-
+const CategorySchema = require('../../model/categoryModel')
 
 
 const shop = async (req, res) => {
     try {
         const { page = 1 } = req.params; 
-        const { sort, categories } = req.query; 
+        const { sort, category } = req.query; 
         const skip = (page - 1) * 4;
         const limit = 4;
 
         let sortCriteria;
         switch (sort) {
-            // existing sorting logic...
+            case 'popularity':
+                sortCriteria = { popularity: -1 }; 
+                break;
+            case 'price-asc':
+                sortCriteria = { price: 1 };
+                break;
+            case 'price-desc':
+                sortCriteria = { price: -1 };
+                break;
+            case 'average-rating':
+                sortCriteria = { averageRating: -1 }; 
+                break;
+            case 'featured':
+                sortCriteria = { featured: -1 }; 
+                break;
+            case 'new-arrivals':
+                sortCriteria = { createdAt: -1 }; 
+                break;
+            case 'a-z':
+                sortCriteria = { name: 1 };
+                break;
+            case 'z-a':
+                sortCriteria = { name: -1 };
+                break;
+            default:
+                sortCriteria = { createdAt: -1 }; 
         }
 
-        let filterCriteria = {};
-        if (categories) {
-            const categoryArray = categories.split(',');
-            filterCriteria.category = { $in: categoryArray }; // Filter by selected categories
-        }
+        // Fetch categories
+        const categories = await CategorySchema.find({}); // Ensure this line is present
 
-        const products = await productSchema.find(filterCriteria)
+        // Build the query based on the category
+        const query = {};
+        if (category) {
+            query.category = categoryId; // Filter by category if provided
+        }
+        console.log(category);
+        
+
+        
+        const products = await productSchema.find(query)
             .sort(sortCriteria)
             .skip(skip)
             .limit(limit);
 
-        const totalProducts = await productSchema.countDocuments(filterCriteria);
+        const totalProducts = await productSchema.countDocuments(query);
         const pages = Math.ceil(totalProducts / limit); 
-        res.render('shop', { products, pages, nextPage: parseInt(page) + 1, prevPage: parseInt(page) - 1, sort, page: parseInt(page) });
+        res.render('shop', { products, categories, pages, nextPage: parseInt(page) + 1, prevPage: parseInt(page) - 1, sort, category, page: parseInt(page) });
     } catch (error) {
         console.log(error);
-    }
-};
-const getCategories = async (req, res) => {
-    try {
-        const categories = await categorySchema.find(); // Assuming you have a category schema
-        return categories;
-    } catch (error) {
-        console.error(error);
-        return [];
+        res.status(500).send("Internal Server Error"); // Handle errors gracefully
     }
 };
 
@@ -134,7 +157,6 @@ const getProducts = async (req, res) => {
 
 module.exports = {
 	shop,
-    getCategories,
 	product,
 	getProducts,
     renderKartByPage

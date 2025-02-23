@@ -350,9 +350,12 @@ const cancelOrder = async (req, res) => {
         }
 
         // Check if the order can be cancelled
-        if (order.orderStatus == 'Placed' && order.orderStatus == 'Pending') {
+        if (order.orderStatus !== 'Placed' && order.orderStatus !== 'Pending') {
             return res.status(400).json({ error: 'Order cannot be cancelled' });
         }
+
+        // Calculate the total amount to be refunded
+        const totalAmount = order.orderItems.reduce((total, item) => total + (item.price * item.quantity), 0);
 
         // Increase the stock for each product in the order
         for (const item of order.orderItems) {
@@ -367,6 +370,20 @@ const cancelOrder = async (req, res) => {
         order.orderStatus = 'Cancelled';
         order.cancellationReason = reason; // Store the cancellation reason
         const orderState = await order.save();
+
+        // Update the wallet balance and add a transaction record
+        const wallet = await Wallet.findOne({ userId: order.userId });
+        if (wallet) {
+            wallet.balance += totalAmount;
+            wallet.transactions.push({
+                type: 'credit',
+                amount: totalAmount,
+                description: 'Refund for cancelled order',
+                date: new Date(),
+                walletBalance: wallet.balance
+            });
+            await wallet.save();
+        }
 
         res.status(200).json({ message: 'Order cancelled successfully', orderState });
     } catch (error) {

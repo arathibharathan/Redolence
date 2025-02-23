@@ -429,7 +429,10 @@
         <h2 class="card-title">
           <input type="radio" name="paymentMethod" id="cod" value="COD" required>
           <label for="cod">Cash On Delivery</label>
+          <input type="radio" name="paymentMethod" id="Online" value="Online " required>
+          <label for="Online">Online</label>
         </h2>
+        <button id="payNow-btn">Pay Now</button>
       </div>
     </div>
   </div>
@@ -908,11 +911,23 @@
 
 //placeOrder Script
 <script>
+
+
+// ---------
+// handle payment 
+
+
   document.addEventListener('DOMContentLoaded', () => {
-    const codRadio = document.getElementById('cod');
+    const codRadio = document.getElementsByName('paymentMethod');
   const placeOrderBtn = document.getElementById('placeOrderBtn');
     
+  codRadio.addEventListener('click', () => {
+    console.log(codRadio,'sdsdsdssdsd')
+    placeOrderBtn.disabled = !codRadio.checked;
+  });
+
   codRadio.addEventListener('change', () => {
+    console.log(codRadio,'sdsdsdssdsd')
     placeOrderBtn.disabled = !codRadio.checked;
   });
 
@@ -932,17 +947,22 @@
     }
 
     // Validate payment method
-    if (!codRadio.checked) {
-      Swal.fire({
-        icon: 'warning',
-        title: 'Oops...',
-        text: 'Please select Cash On Delivery payment method!'
-      });
-      return;
-    }
-
+    // if (!codRadio.codRadio) {
+    //   Swal.fire({
+    //     icon: 'warning',
+    //     title: 'Oops...',
+    //     text: 'Please select Cash On Delivery payment method!'
+    //   });
+    //   return;
+    // }
+    Swal.fire ({
+      icon:'warning',
+      title:'dd',
+      text:codRadio.values    
+    })
+    
     const addressId = selectedAddress.value;
-    const paymentType = 'COD';
+    const paymentType = codRadio.values;
 
     try {
       const response = await fetch('/place-order', {
@@ -986,6 +1006,11 @@
     }
   });
 });
+
+
+
+
+// -----------------
 </script>
 
 
@@ -1354,6 +1379,10 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
   });
+  </script>
+
+  <script>
+    
   </script>
 
 

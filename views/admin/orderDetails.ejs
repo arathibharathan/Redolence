@@ -519,16 +519,8 @@
                             <h6 class="fw-bold mt-4">Order Items</h6>
                             <table class="table table-bordered">
                                 <thead class="table-light">
-                                    <tr>
-                                        <th>Product</th>
-                                        <th>Quantity</th>
-                                        <th>Total</th>
-                                        <th>Status</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <% for (let item of order.orderItems) { %>
+                                     <tbody>
+                                    <% order.orderItems.forEach(item => { %>
                                         <tr>
                                             <td><%= item.name %></td>
                                             <td><%= item.quantity %></td>
@@ -566,12 +558,12 @@
                                                     data-product-name="<%= item.name %>"
                                                     data-quantity="<%= item.quantity %>"
                                                     data-price="<%= item.price %>"
-                                                    data-status="<%= item.productStatus %>">
+                                                    data-status="<%= item.status %>">
                                                     Edit
                                                 </button>
                                             </td>
                                         </tr>
-                                    <% } %>
+                                    <% }) %>
                                 </tbody>
                             </table>
                             <!-- Modal -->
@@ -607,10 +599,21 @@
                                                     <div class="col mb-3">
                                                         <label for="editStatus" class="form-label">Status</label>
                                                         <select id="editStatus" name="status" class="form-select">
-                                                            <option value="Placed">Placed</option>
-                                                            <option value="Pending">Pending</option>
-                                                            <option value="Shipped">Shipped</option>
-                                                            <option value="Delivered">Delivered</option>
+                                                            <% if (order.status === 'Placed') { %>
+                                                                <option value="Placed" selected>Placed</option>
+                                                                <option value="Pending">Pending</option>
+                                                                <option value="Shipped">Shipped</option>
+                                                                <option value="Delivered">Delivered</option>
+                                                            <% } else if (order.status === 'Pending') { %>
+                                                                <option value="Pending" selected>Pending</option>
+                                                                <option value="Shipped">Shipped</option>
+                                                                <option value="Delivered">Delivered</option>
+                                                            <% } else if (order.status === 'Shipped') { %>
+                                                                <option value="Shipped" selected>Shipped</option>
+                                                                <option value="Delivered">Delivered</option>
+                                                            <% } else if (order.status === 'Delivered') { %>
+                                                                <option value="Delivered" selected>Delivered</option>
+                                                            <% } %>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -698,8 +701,7 @@
 
         <!-- modal handling -->
  <script>
-       document.addEventListener('DOMContentLoaded', function() {
-    
+      document.addEventListener('DOMContentLoaded', function() {
     const editModal = document.getElementById('editOrderItemModal');
     
     editModal.addEventListener('show.bs.modal', function (event) {
@@ -721,16 +723,7 @@
         const statusSelect = document.getElementById('editStatus');
         statusSelect.value = status;
     });
-    editModal.addEventListener('show.bs.modal', function (event) {
-  const button = event.relatedTarget;
-  const status = button.getAttribute('data-status');
-  
-  // Set the status value after the modal is shown
-  setTimeout(() => {
-    const statusSelect = document.getElementById('editStatus');
-    statusSelect.value = status;
-  }, 10);
-});
+
     const editForm = document.getElementById('editOrderItemForm');
     
     editForm.addEventListener('submit', function(e) {
@@ -757,13 +750,15 @@
             return response.json();
         })
         .then(data => {
-            if (data.order) {
+            if (data.success) {
                 // Close the modal safely
                 const modalInstance = bootstrap.Modal.getInstance(editModal);
                 if (modalInstance) modalInstance.hide();
 
                 // Dynamically update the status in the table
                 updateStatusInTable(formData.itemId, formData.status);
+            } else {
+                alert('Failed to update order item: ' + data.error);
             }
         })
         .catch(error => {

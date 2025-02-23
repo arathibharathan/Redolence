@@ -60,10 +60,10 @@ const orderDetails = async (req, res) => {
         order.orderItems = order.orderItems.map(item => ({
             ...item,
             status: item.status || 'Placed' 
-        }))
-
+            
+        }));
         res.render('orderDetails', { 
-            order,
+            order, // Pass the order object to the EJS template
             statuses: ['Placed','Pending', 'Shipped', 'Delivered'] 
         }); 
     } catch (error) {
@@ -72,36 +72,43 @@ const orderDetails = async (req, res) => {
     }
 };
 
-
 const updateOrderItem = async (req, res) => {
     try {
-        const { itemId, quantity, price, status } = req.body;
+        const { itemId, status } = req.body;
 
-        // Find the order item by ID and update it
-        const updatedOrder = await orderSchema.findOneAndUpdate(
-            { "orderItems._id": itemId },
-            {
-                $set: {
-                    "orderItems.$.quantity": quantity,
-                    "orderItems.$.price": price,
-                    "orderItems.$.productStatus": status
-                }
-            },
-            { new: true } // Return the updated document
-        );
-
-        if (!updatedOrder) {
+        const orderItem = await orderSchema.findOne({ 'orderItems._id': itemId });
+        if (!orderItem) {
             return res.status(404).json({ error: 'Order item not found' });
         }
 
-        res.json({ order: updatedOrder }); 
+        const item = orderItem.orderItems.find(i => i._id.toString() === itemId);
+        if (!item) {
+            return res.status(404).json({ error: 'Order item not found' });
+        }
+
+        // Define allowed status transitions
+        const allowedTransitions = {
+            'Placed': ['Pending', 'Shipped', 'Delivered'],
+            'Pending': ['Shipped', 'Delivered'],
+            'Shipped': ['Delivered'],
+            'Delivered': []
+        };
+
+        // Check if the new status is allowed
+        if (!allowedTransitions[item.status].includes(status)) {
+            return res.status(400).json({ error: 'Invalid status transition' });
+        }
+
+        // Update the status
+        item.status = status;
+        await orderItem.save();
+
+        res.json({ success: true, order: orderItem });
     } catch (error) {
         console.log(error);
         res.status(500).json({ error: 'Internal Server Error', message: error.message });
     }
 };
-
-
 const salesReport = async (req, res) => {
     try {
         const { startDate, endDate } = req.query;
