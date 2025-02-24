@@ -36,6 +36,10 @@ const userSchema = new mongoose.Schema(
 			default: Date.now,
 			required: true,
 		},
+		wallet:{
+			type: mongoose.Schema.Types.ObjectId,
+			ref:"Wallet"
+		}
 	},
 	{ timestamps: true }
 );

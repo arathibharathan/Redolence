@@ -44,7 +44,8 @@ userRouter.post('/resendOtp/:id',registerController.resendOtp);
 
 //shop
 userRouter.get('/shop', shopController.shop);
-userRouter.post('/shop', shopController.getProducts);
+
+//userRouter.post('/shop', shopController.getProducts);
 userRouter.get('/renderKartByPage/:page',shopController.renderKartByPage)
 userRouter.get('/product', shopController.product);
 
@@ -136,9 +137,7 @@ userRouter.get('/get-address/:addressId', checkoutController.getAddressById);
 userRouter.put('/update-address/:addressId', checkoutController.updateAddress);
 
 // wallet
-userRouter.get('/wallet',walletController.wallet)
-// userRouter.get('/wallet/details', walletController.createWalletForUser);
-// userRouter.get('/wallet/details',walletController.getWalletDetails)
+userRouter.get('/wallet',auth.isLogin,walletController.wallet);
 
 
 // logout

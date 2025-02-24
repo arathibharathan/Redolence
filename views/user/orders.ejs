@@ -368,9 +368,13 @@
                   <p><strong>Payment Method:</strong> <%= order.paymentMethod %></p>
                   <p><strong>Total Amount:</strong> ₹<%= order.totalAmount.toFixed(2) %></p>
                 </div>
+
+              
                 <button class="btn btn-secondary view-details" onclick="toggleDetails(this)">View Details</button>
+                
+                
                 <button class="btn btn-danger" onclick="openCancelOrderModal('<%= order._id %>')" 
-                  <% if (order.orderStatus === 'Delivered') { %>
+                  <% if (order.orderStatus === 'Delivered' || order.orderStatus === 'Cancelled') { %>
                       style="display: none;" 
                   <% } %>
               >Cancel Order</button>

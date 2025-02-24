@@ -27,221 +27,279 @@
     <link rel="stylesheet" href="/user/assets/css/bootstrap.min.css">
     <!-- Main CSS File -->
     <link rel="stylesheet" href="/user/assets/css/style.css">
+    <style>
+      body {
+          background-color: #f6f6f6;
+          padding: 20px;
+      }
+      .wallet-container {
+          background-color: white;
+          border-radius: 10px;
+          padding: 20px;
+          box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      }
+      .balance-header {
+          background-color: #f8f9fa;
+          border-radius: 5px;
+          padding: 15px;
+          margin-bottom: 20px;
+      }
+      .transaction-type-deposit {
+          background-color: #d4edda;
+          color: #155724;
+      }
+      .transaction-type-withdrawal {
+          background-color: #f8d7da;
+          color: #721c24;
+      }
+      .transaction-type-pending {
+          background-color: #fff3cd;
+          color: #856404;
+      }
+  </style>
 </head>
 
-<body>
-    <div class="page-wrapper">
-        <header class="header">
-            <div class="header-top">
-                <div class="container">
-                    <div class="header-left">
-                        <div class="header-dropdown">
-                            <a href="#">Usd</a>
-                            <div class="header-menu">
-                                <ul>
-                                    <li><a href="#">Eur</a></li>
-                                    <li><a href="#">Usd</a></li>
-                                </ul>
-                            </div><!-- End .header-menu -->
-                        </div><!-- End .header-dropdown -->
+  <body>
+      <div class="page-wrapper">
+          <header class="header">
+              <div class="header-top">
+                  <div class="container mb-lg-2 pt-lg-2 pb-lg-2 mb-sm-0 pt-sm-0 pb-sm-0">
+                      <div class="header-left">
+                      </div><!-- End .header-left -->
 
-                        <div class="header-dropdown">
-                            <a href="#">Eng</a>
-                            <div class="header-menu">
-                                <ul>
-                                    <li><a href="#">English</a></li>
-                                    <li><a href="#">French</a></li>
-                                    <li><a href="#">Spanish</a></li>
-                                </ul>
-                            </div><!-- End .header-menu -->
-                        </div><!-- End .header-dropdown -->
-                    </div><!-- End .header-left -->
+                      <div class="header-right">
+                          <ul class="top-menu">
+                              <!-- <li>
+                          <a href="#">Links</a>
+                          <ul>
+                              <li><a href="#signin-modal" data-toggle="modal"><i class="icon-user"></i>Login</a></li>
+                          </ul>
+                      </li> -->
+                          </ul><!-- End .top-menu -->
+                      </div><!-- End .header-right -->
+                  </div><!-- End .container -->
+              </div><!-- End .header-top -->
 
-                    <div class="header-right">
-                        <ul class="top-menu">
-                            <li>
-                                <a href="#">Links</a>
-                                <ul>
-                                    <li><a href="tel:#"><i class="icon-phone"></i>Call: +0123 456 789</a></li>
-                                    <li><a href="wishlist.html"><i class="icon-heart-o"></i>Wishlist <span>(3)</span></a></li>
-                                    <li><a href="about.html">About Us</a></li>
-                                    <li><a href="contact.html">Contact Us</a></li>
-                                    <li><a href="#signin-modal" data-toggle="modal"><i class="icon-user"></i>Login</a></li>
-                                </ul>
-                            </li>
-                        </ul><!-- End .top-menu -->
-                    </div><!-- End .header-right -->
-                </div><!-- End .container -->
-            </div><!-- End .header-top -->
+              <div class="header-middle sticky-header">
+                  <div class="container">
+                      <div class="header-left">
+                          <button class="mobile-menu-toggler">
+                              <span class="sr-only">Toggle mobile menu</span>
+                              <i class="icon-bars"></i>
+                          </button>
 
-            <div class="header-middle sticky-header">
-                <div class="container">
-                    <div class="header-left">
-                        <button class="mobile-menu-toggler">
-                            <span class="sr-only">Toggle mobile menu</span>
-                            <i class="icon-bars"></i>
-                        </button>
-
-                        <a href="/" class="logo">
-                            <img src="/Redolence logo-01.png" alt="Redolence Logo" width="105" height="25">
+                          <a href="/" class="logo">
+                              <img src="assets/newimages/logo.png" alt="shopEazy Logo" width="105" height="25">
                           </a>
 
-                        <nav class="main-nav">
-                            <ul class="menu sf-arrows">
-                              <li>
-                                <a href="/" class="">Home</a>
-                              </li>
-                              <li class="megamenu-container active">
-                                <a href="/shop" class="">Product</a>
-                              </li>
-              
-                            </ul><!-- End .menu -->
+                          <nav class="main-nav">
+                              <ul class="menu sf-arrows">
+                                  <li class="megamenu-container active">
+                                      <a href="/" class="sf-with-ul">Home</a>
+
+
+                                  </li>
+                                  <li>
+                                      <a href="category.html" class="sf-with-ul">Shop</a>
+
+                                      <div class="megamenu megamenu-md">
+                                          <div class="row no-gutters">
+                                              <div class="col-md-8">
+                                                  <div class="menu-col">
+                                                      <div class="col-lg-9">
+                                                          <div class="address-selection">
+                                                             
+                                                                  <div class="row">
+
+                                                                      <div class="col-md-6">
+                                                                          <div class="menu-title">Shop with sidebar
+                                                                          </div>
+                                                                          <!-- End .menu-title -->
+                                                                          <ul>
+                                                                              <li><a href="category-list.html">Shop
+                                                                                      List</a></li>
+                                                                              <li><a href="category-2cols.html">Shop
+                                                                                      Grid 2
+                                                                                      Columns</a></li>
+                                                                              <li><a href="category.html">Shop Grid 3
+                                                                                      Columns</a>
+                                                                              </li>
+                                                                              <li><a href="category-4cols.html">Shop
+                                                                                      Grid 4
+                                                                                      Columns</a></li>
+                                                                              <li><a href="category-market.html"><span>Shop
+                                                                                          Market<span
+                                                                                              class="tip tip-new">New</span></span></a>
+                                                                              </li>
+                                                                          </ul>
+
+                                                                          <div class="menu-title">Shop no sidebar
+                                                                          </div>
+                                                                          <!-- End .menu-title -->
+                                                                          <ul>
+                                                                              <li><a href="category-boxed.html"><span>Shop
+                                                                                          Boxed
+                                                                                          No Sidebar<span
+                                                                                              class="tip tip-hot">Hot</span></span></a>
+                                                                              </li>
+                                                                              <li><a href="category-fullwidth.html">Shop
+                                                                                      Fullwidth
+                                                                                      No Sidebar</a></li>
+                                                                          </ul>
+                                                                      </div><!-- End .col-md-6 -->
+
+                                                                      <div class="col-md-6">
+                                                                          <div class="menu-title">Product Category
+                                                                          </div>
+                                                                          <!-- End .menu-title -->
+                                                                          <ul>
+                                                                              <li><a
+                                                                                      href="product-category-boxed.html">Product
+                                                                                      Category Boxed</a></li>
+                                                                              <li><a
+                                                                                      href="product-category-fullwidth.html"><span>Product
+                                                                                          Category Fullwidth<span
+                                                                                              class="tip tip-new">New</span></span></a>
+                                                                              </li>
+                                                                          </ul>
+                                                                          <div class="menu-title">Shop Pages</div>
+                                                                          <!-- End .menu-title -->
+                                                                          <ul>
+                                                                              <li><a href="cart.html">Cart</a></li>
+                                                                              <li><a href="checkout.html">Checkout</a>
+                                                                              </li>
+                                                                              <li><a href="wishlist.html">Wishlist</a>
+                                                                              </li>
+                                                                              <li><a href="#">My Account</a></li>
+                                                                          </ul>
+                                                                      </div><!-- End .col-md-6 -->
+                                                                  </div><!-- End .row -->
+                                                         
+                                                          </div>
+                                                      </div>
+                                                  </div><!-- End .menu-col -->
+                                              </div><!-- End .col-md-8 -->
+
+                                              <div class="col-md-4">
+                                                  <div class="banner banner-overlay">
+                                                      <a href="category.html" class="banner banner-menu">
+                                                          <!-- <img src="assets/images/menu/banner-1.jpg" alt="Banner"> -->
+
+                                                          <div class="banner-content banner-content-top">
+                                                              <!-- <div class="banner-title text-white">Last <br>Chance<br><span><strong>Sale</strong></span></div> -->
+                                                          </div><!-- End .banner-content -->
+                                                      </a>
+                                                  </div><!-- End .banner banner-overlay -->
+                                              </div><!-- End .col-md-4 -->
+                                          </div><!-- End .row -->
+                                      </div><!-- End .megamenu megamenu-md -->
+                                  </li>
+                              </ul><!-- End .menu -->
                           </nav><!-- End .main-nav -->
-                    </div><!-- End .header-left -->
-
-                    <div class="header-right">
-                        <div class="header-search">
-                            <a href="#" class="search-toggle" role="button" title="Search"><i class="icon-search"></i></a>
-                            <form action="#" method="get">
-                                <div class="header-search-wrapper">
-                                    <label for="q" class="sr-only">Search</label>
-                                    <input type="search" class="form-control" name="q" id="q" placeholder="Search in..." required>
-                                </div><!-- End .header-search-wrapper -->
-                            </form>
-                        </div><!-- End .header-search -->
-                        <div class="dropdown compare-dropdown">
-                            <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static" title="Compare Products" aria-label="Compare Products">
-                                <i class="icon-random"></i>
-                            </a>
-
-                            <div class="dropdown-menu dropdown-menu-right">
-                                <ul class="compare-products">
-                                    <li class="compare-product">
-                                        <a href="#" class="btn-remove" title="Remove Product"><i class="icon-close"></i></a>
-                                        <h4 class="compare-product-title"><a href="product.html">Blue Night Dress</a></h4>
-                                    </li>
-                                    <li class="compare-product">
-                                        <a href="#" class="btn-remove" title="Remove Product"><i class="icon-close"></i></a>
-                                        <h4 class="compare-product-title"><a href="product.html">White Long Skirt</a></h4>
-                                    </li>
-                                </ul>
-
-                                <div class="compare-actions">
-                                    <a href="#" class="action-link">Clear All</a>
-                                    <a href="#" class="btn btn-outline-primary-2"><span>Compare</span><i class="icon-long-arrow-right"></i></a>
-                                </div>
-                            </div><!-- End .dropdown-menu -->
-                        </div><!-- End .compare-dropdown -->
-
-                        <div class="dropdown cart-dropdown">
-                            <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
-                                <i class="icon-shopping-cart"></i>
-                                <span class="cart-count">2</span>
-                            </a>
-
-                            <div class="dropdown-menu dropdown-menu-right">
-                                <div class="dropdown-cart-products">
-                                    <div class="product">
-                                        <div class="product-cart-details">
-                                            <h4 class="product-title">
-                                                <a href="product.html">Beige knitted elastic runner shoes</a>
-                                            </h4>
-
-                                            <span class="cart-product-info">
-                                                <span class="cart-product-qty">1</span>
-                                                x $84.00
-                                            </span>
-                                        </div><!-- End .product-cart-details -->
-
-                                        <figure class="product-image-container">
-                                            <a href="product.html" class="product-image">
-                                                <img src="/user/assets/images/products/cart/product-1.jpg" alt="product">
-                                            </a>
-                                        </figure>
-                                        <a href="#" class="btn-remove" title="Remove Product"><i class="icon-close"></i></a>
-                                    </div><!-- End .product -->
-
-                                    <div class="product">
-                                        <div class="product-cart-details">
-                                            <h4 class="product-title">
-                                                <a href="product.html">Blue utility pinafore denim dress</a>
-                                            </h4>
-
-                                            <span class="cart-product-info">
-                                                <span class="cart-product-qty">1</span>
-                                                x $76.00
-                                            </span>
-                                        </div><!-- End .product-cart-details -->
-
-                                        <figure class="product-image-container">
-                                            <a href="product.html" class="product-image">
-                                                <img src="/user/assets/images/products/cart/product-2.jpg" alt="product">
-                                            </a>
-                                        </figure>
-                                        <a href="#" class="btn-remove" title="Remove Product"><i class="icon-close"></i></a>
-                                    </div><!-- End .product -->
-                                </div><!-- End .cart-product -->
-
-                                <div class="dropdown-cart-total">
-                                    <span>Total</span>
-
-                                    <span class="cart-total-price">$160.00</span>
-                                </div><!-- End .dropdown-cart-total -->
-
-                                <div class="dropdown-cart-action">
-                                    <a href="cart.html" class="btn btn-primary">View Cart</a>
-                                    <a href="checkout.html" class="btn btn-outline-primary-2"><span>Checkout</span><i class="icon-long-arrow-right"></i></a>
-                                </div><!-- End .dropdown-cart-total -->
-                            </div><!-- End .dropdown-menu -->
-                        </div><!-- End .cart-dropdown -->
-                    </div><!-- End .header-right -->
-                </div><!-- End .container -->
-            </div><!-- End .header-middle -->
-        </header><!-- End .header -->
-
-        <main class="main">
-        	<div class="page-header text-center" style="background-image: url('/user/assets/images/page-header-bg.jpg')">
-        		<div class="container">
-        			<h1 class="page-title">Wishlist<span>Shop</span></h1>
-        		</div><!-- End .container -->
-        	</div><!-- End .page-header -->
-            <nav aria-label="breadcrumb" class="breadcrumb-nav">
-                <div class="container">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                        <li class="breadcrumb-item"><a href="#">Shop</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Wishlist</li>
-                    </ol>
-                </div><!-- End .container -->
-            </nav><!-- End .breadcrumb-nav -->
+                      </div><!-- End .header-left -->
 
 
-            <h1>Wallet Balance</h1>
-            <p>Current Balance: ₹ <%= balance %></p>
-        
-            <h2>Transactions</h2>
-            <table border="1">
-                <thead>
-                    <tr>
-                        <th>TRANSACTION ID</th>
-                        <th>DATE</th>
-                        <th>DESCRIPTION</th>
-                        <th>AMOUNT</th>
-                        <th>TYPE</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <% transactions.forEach(transaction => { %>
-                        <tr>
-                            <td><%= transaction._id %></td>
-                            <td><%= transaction.date.toLocaleDateString() %></td>
-                            <td><%= transaction.description %></td>
-                            <td><%= transaction.amount %></td>
-                            <td><%= transaction.type %></td>
-                        </tr>
-                    <% }) %>
-                </tbody>
-            </table>
+
+                      <div class="header-right">
+                          <div class="header-search">
+                              <a href="#" class="search-toggle" role="button" title="Search"><i
+                                      class="icon-search"></i></a>
+                              <form action="#" method="get">
+                                  <div class="header-search-wrapper">
+                                      <label for="q" class="sr-only">Search</label>
+                                      <input type="search" class="form-control" name="q" id="q"
+                                          placeholder="Search in..." required>
+                                  </div><!-- End .header-search-wrapper -->
+                              </form>
+                          </div><!-- End .header-search -->
+
+
+
+
+
+                      </div><!-- End .header-right -->
+                  </div><!-- End .container -->
+              </div><!-- End .header-middle -->
+          </header><!-- End .header -->
+         
+
+                  <main class="main">
+                  <div class="page-header text-center" style="background-image: url('assets/images/page-header-bg.jpg')">
+                      <div class="container">
+                      <h1 class="page-title">Wallet</h1>
+                      </div>
+                  </div>
+                  <div class="container wallet-container">
+                      <div class="row balance-header">
+                          <div class="col-md-6">
+                              <h2>Wallet Balance</h2>
+                              <% if(wallet[0]?.balance){%>
+                              <h4>Current Balance: ₹ <%= wallet[0]?.balance %></h4><%}else{%><h4>Current Balance: ₹ 0</h4>
+                                  <%}%>
+                          </div>
+                          <div class="col-md-6 text-end">
+                              <!-- <button class="btn btn-primary me-2">Add Funds</button>
+                              <button class="btn btn-secondary">Withdraw</button> -->
+                          </div>
+                      </div>
+              
+                      <div class="row mb-3">
+                          <div class="col-md-4">
+                              <!-- <select class="form-select">
+                                  <option selected>Transaction Type: Show All</option>
+                                  <option>Deposit</option>
+                                  <option>Withdrawal</option>
+                                  <option>Purchase</option>
+                              </select> -->
+                          </div>
+                          <div class="col-md-4">
+                              <!-- <select class="form-select">
+                                  <option selected>Date Range: Show All</option>
+                                  <option>Last 7 days</option>
+                                  <option>Last 30 days</option>
+                                  <option>Last 90 days</option>
+                              </select> -->
+                          </div>
+                          <div class="col-md-4">
+                              <input type="text" class="form-control" placeholder="Search transactions">
+                          </div>
+                      </div>
+              
+                      <table class="table">
+                          <thead>
+                              <tr>
+                                  <th>TRANSACTION ID</th>
+                                  <th>DATE</th>
+                                  <th>DESCRIPTION</th>
+                                  <th>AMOUNT</th>
+                                 
+                                  <th>TYPE</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              <% wallet?.forEach(item=>{ %>
+                                  <% item.history.forEach(hist=>{ %>
+                              <tr>
+                                  <td><%=hist.transaction_id%></td>
+                                  <td> <%= 
+                                      new Date(hist.date.getTime() ).toLocaleDateString("en-US", {
+                                        year: "numeric",
+                                        month: "long",
+                                        day: "numeric",
+                                      }) 
+                                    %></td>
+                                  <td><%=hist.description%></td>
+                                  <td><%=hist.amount%></td>
+                                 <% if(hist.transaction_type == 'Cancelled')%>
+                                  <td><span class="badge transaction-type-withdrawal">Credit</span></td>
+                              </tr>
+                              <%})%>
+                             <%})%>
+                          </tbody>
+                      </table>
+                  </div>
+              
+                  </main>
 
             
 <footer class="footer">

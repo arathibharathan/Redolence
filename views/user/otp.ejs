@@ -131,6 +131,7 @@
 
 
   <script>
+    //This function is for,if enter a number,the cursor will move to the next column automatically
     function moveNext(current, nextId) {
       if (current.value.trim() !== "" && nextId) {
         const next = document.getElementById(nextId);
@@ -175,9 +176,7 @@
         document.getElementById('id5').value.trim(),
         document.getElementById('id6').value.trim()
       ].join("")
-      email = document.getElementById('emailInput').value.trim(),
-        console.log("form data is .", email, otp);
-
+      email = document.getElementById('emailInput').value.trim();
       const result = await fetch("/verifyOtp", {
         method: 'POST',
         headers: {

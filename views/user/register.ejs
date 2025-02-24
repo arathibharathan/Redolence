@@ -159,7 +159,7 @@
   </div>
   <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container">
-      <a class="navbar-brand" href="index.html">Redolence</a>
+      <a class="navbar-brand" href="/">Redolence</a>
     </div>
   </nav>
 
@@ -253,7 +253,9 @@
             <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
             Copyright &copy;<script>
               document.write(new Date().getFullYear());
-            </script> All rights reserved | This template is made with <i class="icon-heart color-danger" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+            </script> All rights reserved | This template is made with
+             <i class="icon-heart color-danger" aria-hidden="true"></i> 
+             by <a href="https://colorlib.com" target="_blank">Colorlib</a>
             <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
           </p>
         </div>
@@ -284,11 +286,11 @@
       }).then(response => response.json()) 
       console.log('data after api call :')
       if (result.success === true) {
+        // email
         window.location.href = `/otp/${result.email}`
       } else {
-        document.getElementById('informationlabel').innerHTML = result.message 
+        document.getElementById('informationlabel').innerHTML = result.message
       }
-
     })
   </script>
 

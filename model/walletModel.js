@@ -32,14 +32,6 @@ const walletSchema = new mongoose.Schema({
                 type: Date,
                 default: Date.now // Automatically set the transaction date
             },
-            walletBalance: { type: Number, default: 0 },
-            walletTransactions: [{
-            transactionId: String,
-            date: String,
-            description: String,
-            amount: Number,
-            type: String // 'Credit' or 'Debit'
-         }]
         }
     ]
 });
