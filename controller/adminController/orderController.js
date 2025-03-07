@@ -64,7 +64,7 @@ const orderDetails = async (req, res) => {
         }));
         res.render('orderDetails', { 
             order, // Pass the order object to the EJS template
-            statuses: ['Placed','Pending', 'Shipped', 'Delivered'] 
+            status: ['Placed','Pending', 'Shipped', 'Delivered'] 
         }); 
     } catch (error) {
         console.log(error);
@@ -74,18 +74,22 @@ const orderDetails = async (req, res) => {
 
 const updateOrderItem = async (req, res) => {
     try {
+        
         const { itemId, status } = req.body;
 
         const orderItem = await orderSchema.findOne({ 'orderItems._id': itemId });
+        
         if (!orderItem) {
             return res.status(404).json({ error: 'Order item not found' });
         }
-
+        
         const item = orderItem.orderItems.find(i => i._id.toString() === itemId);
+        
         if (!item) {
             return res.status(404).json({ error: 'Order item not found' });
         }
-
+        console.log(orderItem.orderStatus);
+        
         // Define allowed status transitions
         const allowedTransitions = {
             'Placed': ['Pending', 'Shipped', 'Delivered'],
@@ -94,13 +98,17 @@ const updateOrderItem = async (req, res) => {
             'Delivered': []
         };
 
+       
+       
         // Check if the new status is allowed
-        if (!allowedTransitions[item.status].includes(status)) {
+        if (!allowedTransitions[orderItem.orderStatus].includes(status)) {
             return res.status(400).json({ error: 'Invalid status transition' });
         }
+       
+
 
         // Update the status
-        item.status = status;
+        orderItem.orderStatus = status;
         await orderItem.save();
 
         res.json({ success: true, order: orderItem });

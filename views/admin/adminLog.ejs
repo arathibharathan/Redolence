@@ -40,7 +40,7 @@
     <!-- End Google Tag Manager -->
     
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="https://demos.themeselection.com/materio-bootstrap-html-admin-template/admin/assets/img/favicon/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="/Redolence logo-01.png" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com/">
@@ -113,9 +113,9 @@
   <div class="authentication-inner row m-0">
     <!-- /Left Section -->
     <div class="d-none d-lg-flex col-lg-7 col-xl-8 align-items-center justify-content-center p-12 pb-2">
-      <div>
+      <!-- <div>
         <img src="../../admin/assets/img/illustrations/auth-cover-login-illustration-light.png" class="authentication-image-model d-none d-lg-block" alt="auth-model" data-app-light-img="illustrations/auth-cover-login-illustration-light.png" data-app-dark-img="illustrations/auth-cover-login-illustration-dark.html">
-      </div>
+      </div> -->
       <img src="../../admin/assets/img/illustrations/tree.png" alt="tree" class="authentication-image-tree z-n1">
       <img src="../../admin/assets/img/illustrations/auth-cover-mask-light.png" class="scaleX-n1-rtl authentication-image d-none d-lg-block w-75" alt="triangle-bg" height="362" data-app-light-img="illustrations/auth-cover-mask-light.png" data-app-dark-img="illustrations/auth-cover-mask-dark.html">
     </div>
@@ -202,10 +202,6 @@
 <!-- / Content -->
 
   
-  <div class="buy-now">
-    <a href="https://themeselection.com/item/materio-bootstrap-html-admin-template/" target="_blank" class="btn btn-danger btn-buy-now">Buy Now</a>
-  </div>
-  
 
   
 
@@ -244,8 +240,6 @@
           username: document.getElementById("username").value.trim(),
           password: document.getElementById("password").value.trim()
         };
-
-        console.log('data before api call:',formData);
 
         const result = await fetch('/admin/loginCheck',{
           method: 'POST',

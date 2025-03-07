@@ -26,11 +26,6 @@ userRouter.use(session({
 userRouter.get('/', userController.home);
 
 
-//login
-userRouter.get("/login", auth.isLogout,loginController.login);
-userRouter.post("/login", loginController.logincheck);
-
-
 //register
 userRouter.get("/register", auth.isLogout,registerController.register);
 userRouter.post("/signup",registerController.registerCheck);
@@ -42,11 +37,14 @@ userRouter.post('/verifyOtp',registerController.verifyOTP);
 userRouter.post('/resendOtp/:id',registerController.resendOtp);
 
 
+//login
+userRouter.get("/login", auth.isLogout,loginController.login);
+userRouter.post("/login", loginController.logincheck);
+
 //shop
 userRouter.get('/shop', shopController.shop);
 
-//userRouter.post('/shop', shopController.getProducts);
-userRouter.get('/renderKartByPage/:page',shopController.renderKartByPage)
+userRouter.get('/renderCartByPage/:page',shopController.renderCartByPage)
 userRouter.get('/product', shopController.product);
 
 

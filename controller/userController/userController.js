@@ -18,8 +18,8 @@ const home = async (req, res) => {
 
         // Fetch best selling products
         const bestSellingProducts = await productSchema.find({ is_list: true })
-            .sort({ salesCount: -1 }) // Assuming you have a salesCount field
-            .limit(4)
+            .sort({ category: -1 }) // filter field category
+            .limit(3)
             .populate('category');
 
         res.render('home', { User, recentProducts, bestSellingProducts });

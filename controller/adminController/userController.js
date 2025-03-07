@@ -18,7 +18,7 @@ const blockUser = async (req, res) => {
         const { id } = req.body; // Extract the user ID from the request body
 
         let userBlock = await adminSchema.findById(id); // Find the user by ID using the adminSchema
-
+        
         if (!userBlock) {
             return res.status(404).json({ message: 'User not found' });
         }

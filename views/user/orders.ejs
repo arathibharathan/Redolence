@@ -119,49 +119,7 @@
 <body>
   <div class="page-wrapper">
     <header class="header">
-      <div class="header-top">
-        <div class="container">
-          <div class="header-left">
-            <div class="header-dropdown">
-              <a href="#">Usd</a>
-              <div class="header-menu">
-                <ul>
-                  <li><a href="#">Eur</a></li>
-                  <li><a href="#">Usd</a></li>
-                </ul>
-              </div><!-- End .header-menu -->
-            </div><!-- End .header-dropdown -->
-
-            <div class="header-dropdown">
-              <a href="#">Eng</a>
-              <div class="header-menu">
-                <ul>
-                  <li><a href="#">English</a></li>
-                  <li><a href="#">French</a></li>
-                  <li><a href="#">Spanish</a></li>
-                </ul>
-              </div><!-- End .header-menu -->
-            </div><!-- End .header-dropdown -->
-          </div><!-- End .header-left -->
-
-          <div class="header-right">
-            <ul class="top-menu">
-              <li>
-                <a href="#">Links</a>
-                <ul>
-                  <li><a href="tel:#"><i class="icon-phone"></i>Call: +0123 456 789</a></li>
-                  <li><a href="wishlist.html"><i class="icon-heart-o"></i>Wishlist <span>(3)</span></a></li>
-                  <li><a href="about.html">About Us</a></li>
-                  <li><a href="contact.html">Contact Us</a></li>
-                  <li><a href="#signin-modal" data-toggle="modal"><i class="icon-user"></i>Login</a></li>
-                </ul>
-              </li>
-            </ul><!-- End .top-menu -->
-          </div><!-- End .header-right -->
-        </div><!-- End .container -->
-      </div><!-- End .header-top -->
-
-      <!-- Cancel Order Reason Modal -->
+       <!-- Cancel Order Reason Modal -->
         <div class="modal fade" id="cancelOrderModal" tabindex="-1" role="dialog" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered" role="document">
               <div class="modal-content">
@@ -218,6 +176,7 @@
         </div>
 
 
+
       <div class="header-middle sticky-header">
         <div class="container">
           <div class="header-left">
@@ -234,8 +193,6 @@
               <ul class="menu sf-arrows">
                 <li >
                   <a href="/" class="">Home</a>
-
-
                 </li>
                 <li>
                   <a href="/shop" class="">Product</a>
@@ -248,8 +205,6 @@
                 <li>
                   <a class="megamenu-container active" href="/checkout" class="">Checkout</a>
                 </li>
-
-
               </ul><!-- End .menu -->
             </nav>
           </div><!-- End .header-left -->
@@ -268,24 +223,6 @@
               <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static" title="Compare Products" aria-label="Compare Products">
                 <i class="icon-random"></i>
               </a>
-
-              <div class="dropdown-menu dropdown-menu-right">
-                <ul class="compare-products">
-                  <li class="compare-product">
-                    <a href="#" class="btn-remove" title="Remove Product"><i class="icon-close"></i></a>
-                    <h4 class="compare-product-title"><a href="product.html">Blue Night Dress</a></h4>
-                  </li>
-                  <li class="compare-product">
-                    <a href="#" class="btn-remove" title="Remove Product"><i class="icon-close"></i></a>
-                    <h4 class="compare-product-title"><a href="product.html">White Long Skirt</a></h4>
-                  </li>
-                </ul>
-
-                <div class="compare-actions">
-                  <a href="#" class="action-link">Clear All</a>
-                  <a href="#" class="btn btn-outline-primary-2"><span>Compare</span><i class="icon-long-arrow-right"></i></a>
-                </div>
-              </div><!-- End .dropdown-menu -->
             </div><!-- End .compare-dropdown -->
 
             <div class="dropdown cart-dropdown">
@@ -369,23 +306,26 @@
                   <p><strong>Total Amount:</strong> ₹<%= order.totalAmount.toFixed(2) %></p>
                 </div>
 
-              
+              <!-- the button viewdetailes call the function toggle Details while clicking the button -->
                 <button class="btn btn-secondary view-details" onclick="toggleDetails(this)">View Details</button>
                 
-                
+
+                <%if(order.orderStatus === "Delivered"){%>
+                <!-- the button cancel order calls the function openCancelOrderModal while clicking the button -->
+                <button class="btn btn-warning" onclick="openReturnOrderModal('<%= order._id %>')" 
+                  <% if (order.orderStatus === 'Delivered') { %>
+                  <% } %>
+              >Return Order</button>
+              <%}else if(order.orderStatus!=="Cancelled"){%>
                 <button class="btn btn-danger" onclick="openCancelOrderModal('<%= order._id %>')" 
                   <% if (order.orderStatus === 'Delivered' || order.orderStatus === 'Cancelled') { %>
                       style="display: none;" 
                   <% } %>
               >Cancel Order</button>
-              
-              <button class="btn btn-warning" onclick="openReturnOrderModal('<%= order._id %>')" 
-                  <% if (order.orderStatus !== 'Delivered') { %>
-                      style="display: none;" 
-                  <% } %>
-              >Return Order</button>
-              </div>
-            
+            <% }else{
+              style="display: none;" 
+              }%>
+            </div>
               <div class="order-items" style="display: none;">
                 <h5>Order Items</h5>
                 <table class="table table-bordered">
@@ -829,11 +769,13 @@
   <!-- for view details -->
   <script>
     function toggleDetails(button) {
+
+  //  for displaying the color changing  in the button
       const orderItems = button.closest('.order-card').querySelector('.order-items');
       if (orderItems.style.display === "none") {
         orderItems.style.display = "block";
         button.textContent = "Hide Details";
-      } else {
+      } else { 
         orderItems.style.display = "none";
         button.textContent = "View Details";
       }

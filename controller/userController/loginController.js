@@ -1,3 +1,4 @@
+const mongoose = require("mongoose");
 const userSchema = require('../../model/userModel');
 const sendPassword = require('../../utils/sendPassword');
 const bcrypt = require('bcrypt');
@@ -17,6 +18,7 @@ const login = async (req, res) => {
 const logincheck = async (req, res) => {
 	try {
 		const { username, password } = req.body;
+		// check the user exist in the db
 		const userCheck = await userSchema.findOne({ username: username });
 
 		if (userCheck === null) {
@@ -25,6 +27,7 @@ const logincheck = async (req, res) => {
 				.status(400)
 				.json({ success: false, message: 'User not Found!' });
 		}
+		//bcrypt the password and matching with password in the db 
 		const is_password = await bcrypt.compare(password, userCheck.password);
 		if (!is_password) {
 			console.log('password not matching');
@@ -39,10 +42,6 @@ const logincheck = async (req, res) => {
 		console.log(error);
 	}
 };
-
-
-
-
 const userLogout = async (req, res) => {
 	try {
 		delete req.session.user;
@@ -51,6 +50,10 @@ const userLogout = async (req, res) => {
 		console.log(error);
 	}
 };
+
+
+
+
 
 const forgotpage = async (req, res) => {
 	try {
@@ -62,8 +65,8 @@ const forgotpage = async (req, res) => {
 
 const forgotpageCheck = async (req, res) => {
 	try {
-		console.log(req.body);
 		const { email } = req.body;
+		//check email exist or not
 		const Email = await userSchema.findOne({ email });
 
 		if (Email === null) {
@@ -72,6 +75,7 @@ const forgotpageCheck = async (req, res) => {
 				.status(400)
 				.json({ success: false, message: 'Email not Exist!' });
 		} else {
+			//send password to the mail
 			sendPassword(email);
 			console.log(sendPassword);
 			return res

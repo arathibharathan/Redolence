@@ -42,6 +42,8 @@ const cart = async (req, res) => {
       console.error(error);
     }
   };
+
+  
 const addcart = async (req, res) => {
     try {
       if(!req.session.user){

@@ -33,47 +33,6 @@
 <body>
   <div class="page-wrapper">
     <header class="header">
-      <div class="header-top">
-        <div class="container">
-          <div class="header-left">
-            <div class="header-dropdown">
-              <a href="#">Usd</a>
-              <div class="header-menu">
-                <ul>
-                  <li><a href="#">Eur</a></li>
-                  <li><a href="#">Usd</a></li>
-                </ul>
-              </div><!-- End .header-menu -->
-            </div><!-- End .header-dropdown -->
-
-            <div class="header-dropdown">
-              <a href="#">Eng</a>
-              <div class="header-menu">
-                <ul>
-                  <li><a href="#">English</a></li>
-                  <li><a href="#">French</a></li>
-                  <li><a href="#">Spanish</a></li>
-                </ul>
-              </div><!-- End .header-menu -->
-            </div><!-- End .header-dropdown -->
-          </div><!-- End .header-left -->
-
-          <div class="header-right">
-            <ul class="top-menu">
-              <li>
-                <a href="#">Links</a>
-                <ul>
-                  <li><a href="tel:#"><i class="icon-phone"></i>Call: +0123 456 789</a></li>
-                  <li><a href="wishlist.html"><i class="icon-heart-o"></i>Wishlist <span>(3)</span></a></li>
-                  <li><a href="about.html">About Us</a></li>
-                  <li><a href="contact.html">Contact Us</a></li>
-                  <li><a href="#signin-modal" data-toggle="modal"><i class="icon-user"></i>Login</a></li>
-                </ul>
-              </li>
-            </ul><!-- End .top-menu -->
-          </div><!-- End .header-right -->
-        </div><!-- End .container -->
-      </div><!-- End .header-top -->
 
       <div class="header-middle sticky-header">
         <div class="container">
@@ -155,9 +114,9 @@
       <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
         <div class="container">
           <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-            <li class="breadcrumb-item"><a href="#">Shop</a></li>
-            <li class="breadcrumb-item active" aria-current="page">User Details</li>
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item"><a href="shop">Shop</a></li>
+            <li class="breadcrumb-item active" aria-current="page" href="userDetails">User Details</li>
           </ol>
         </div><!-- End .container -->
       </nav><!-- End .breadcrumb-nav -->
@@ -215,15 +174,15 @@
                                 </div>
                                 <div class="mb-3">
                                   <label for="currentPassword" class="form-label"><strong>Current Password:</strong></label>
-                                  <input type="text" class="form-control" id="currentPassword" name="currentPassword" value="" required>
+                                  <input type="password" class="form-control" id="currentPassword" name="currentPassword" value="" required>
                                 </div>
                                 <div class="mb-3">
                                   <label for="newPassword" class="form-label"><strong>New Password:</strong></label>
-                                  <input type="text" class="form-control" id="newPassword" name="newPassword" value="">
+                                  <input type="password" class="form-control" id="newPassword" name="newPassword" value="">
                                 </div>
                                 <div class="mb-3">
                                   <label for="confirmPassword" class="form-label"><strong>Confirm Password:</strong></label>
-                                  <input type="text" class="form-control" id="confirmPassword" name="confirmPassword" value="">
+                                  <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" value="">
                                 </div>
 
                                 <button type="submit" class="btn btn-success mt-3">Save Changes</button>
@@ -554,147 +513,51 @@
   <script src="/user/assets/js/main.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const editUserForm = document.getElementById('editUserForm');
+<script>
 
-      editUserForm.addEventListener('submit', async function(event) {
+document.addEventListener('DOMContentLoaded', function() {
+    const editUserForm = document.getElementById('editUserForm');
+    editUserForm.addEventListener('submit', async function(event) {
         event.preventDefault();
 
         // Get form values
-        const name = document.getElementById('name').value.trim();
-        const phone = document.getElementById('phone').value.trim();
-        const currentPassword = document.getElementById('currentPassword').value;
-        const newPassword = document.getElementById('newPassword').value;
-        const confirmPassword = document.getElementById('confirmPassword').value;
+        const formData = {
+            name: document.getElementById('name').value.trim(),
+            phone: document.getElementById('phone').value.trim(),
+            currentPassword: document.getElementById('currentPassword').value, // Fixed typo
+            newPassword: document.getElementById('newPassword').value, // Fixed typo
+            confirmPassword: document.getElementById('confirmPassword').value,
+        };
 
-        // Validation checks
-        if (!validateForm(name, phone, currentPassword, newPassword, confirmPassword)) {
-          return;
-        }
-
-        try {
-          const response = await fetch('/editUser', {
+        const result = await fetch("/editUser ", {
             method: 'POST',
             headers: {
-              'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
             },
-            body: JSON.stringify({
-              name,
-              phone,
-              currentPassword,
-              newPassword
-            })
-          });
+            body: JSON.stringify(formData),
+        }).then(response => response.json());
 
-          const result = await response.json();
-
-          if (result.success) {
-            // Success notification
-            Swal.fire({
-              icon: 'success',
-              title: 'Success!',
-              text: result.message || 'Profile updated successfully',
-              timer: 2000,
-              showConfirmButton: false
-            });
-
-            // Optional: Redirect or update UI
-            setTimeout(() => {
-              window.location.href = '/dashboard'; // Redirect to profile page
-            }, 2000);
-          } else {
-            // Error notification
-            Swal.fire({
-              icon: 'error',
-              title: 'Error!',
-              text: result.message || 'Failed to update profile',
-              timer: 3000,
-              showConfirmButton: false
-            });
-          }
-        } catch (error) {
-          console.error('Error:', error);
-          Swal.fire({
-            icon: 'error',
-            title: 'Network Error',
-            text: 'Unable to connect to the server',
-            timer: 3000,
-            showConfirmButton: false
-          });
-        }
-      });
-
-      function validateForm(name, phone, currentPassword, newPassword, confirmPassword) {
-        // Name validation
-        if (name.length < 2) {
-          Swal.fire({
-            icon: 'warning',
-            title: 'Invalid Name',
-            text: 'Name must be at least 2 characters long',
-            timer: 2000,
-            showConfirmButton: false
-          });
-          return false;
-        }
-
-        // Phone validation (assuming 10-digit phone number)
-        const phoneRegex = /^[0-9]{10}$/;
-        if (!phoneRegex.test(phone)) {
-          Swal.fire({
-            icon: 'warning',
-            title: 'Invalid Phone Number',
-            text: 'Please enter a valid 10-digit phone number',
-            timer: 2000,
-            showConfirmButton: false
-          });
-          return false;
-        }
-
-        // Password validation
-        if (currentPassword.length < 6) {
-          Swal.fire({
-            icon: 'warning',
-            title: 'Invalid Current Password',
-            text: 'Current password must be at least 6 characters long',
-            timer: 2000,
-            showConfirmButton: false
-          });
-          return false;
-        }
-
-        // New password validation
-        if (newPassword.length > 0) {
-          if (newPassword.length < 6) {
-            Swal.fire({
-              icon: 'warning',
-              title: 'Invalid New Password',
-              text: 'New password must be at least 6 characters long',
-              timer: 2000,
-              showConfirmButton: false
-            });
-            return false;
-          }
-
-          // Confirm password match
-          if (newPassword !== confirmPassword) {
-            Swal.fire({
-              icon: 'warning',
-              title: 'Password Mismatch',
-              text: 'New password and confirm password do not match',
-              timer: 2000,
-              showConfirmButton: false
-            });
-            return false;
-          }
-        }
-
-        return true;
-      }
+if (result.success) {
+    // Success notification
+    Swal.fire({
+        icon: 'success',
+        title: 'Success!',
+        text: result.message || 'Profile updated successfully',
+        timer: 2000,
+        showConfirmButton: false
     });
-  </script>
-
-
+} else {
+    Swal.fire({
+        icon: 'error',
+        title: 'Error!',
+        text: result.message || 'Failed to update profile',
+        timer: 3000,
+        showConfirmButton: false
+    });
+}
+});
+});
+</script>
 
 </body>
 

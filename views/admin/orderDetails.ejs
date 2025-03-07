@@ -20,7 +20,7 @@
     <meta name="description" content="Start your development with a Dashboard for Bootstrap 5" />
     <meta name="keywords" content="dashboard, material, material design, bootstrap 5 dashboard, bootstrap 5 design, bootstrap 5">
     <link rel="canonical" href="https://themeselection.com/item/Redolance-bootstrap-html-admin-template/" />
-    <link rel="icon" type="image/x-icon" href="https://demos.themeselection.com/Redolence-bootstrap-html-admin-template/admin/assets/img/favicon/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="/Redolence logo-01.png" />
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com/" />
@@ -548,7 +548,8 @@
                                                     }
                                                     %>
                                                     <%= badgeClass %>">
-                                                    <%= item.status %>
+            
+                                                    <%= order.orderStatus %>
                                                 </span>
                                             </td>
                                             <td>
@@ -599,20 +600,15 @@
                                                     <div class="col mb-3">
                                                         <label for="editStatus" class="form-label">Status</label>
                                                         <select id="editStatus" name="status" class="form-select">
-                                                            <% if (order.status === 'Placed') { %>
-                                                                <option value="Placed" selected>Placed</option>
-                                                                <option value="Pending">Pending</option>
+                                                            <% if (order.orderStatus === 'Placed') { %>
                                                                 <option value="Shipped">Shipped</option>
                                                                 <option value="Delivered">Delivered</option>
-                                                            <% } else if (order.status === 'Pending') { %>
-                                                                <option value="Pending" selected>Pending</option>
+                                                            <% } if (order.orderStatus === 'Pending') { %>
                                                                 <option value="Shipped">Shipped</option>
                                                                 <option value="Delivered">Delivered</option>
-                                                            <% } else if (order.status === 'Shipped') { %>
-                                                                <option value="Shipped" selected>Shipped</option>
+                                                            <% } if (order.orderStatus === 'Shipped') { %>
                                                                 <option value="Delivered">Delivered</option>
-                                                            <% } else if (order.status === 'Delivered') { %>
-                                                                <option value="Delivered" selected>Delivered</option>
+                                                            <% } if (order.orderStatus === 'Delivered') { %>
                                                             <% } %>
                                                         </select>
                                                     </div>
@@ -744,17 +740,22 @@
             body: JSON.stringify(formData)
         })
         .then(response => {
+            
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
             return response.json();
+            
         })
         .then(data => {
+            
             if (data.success) {
                 // Close the modal safely
                 const modalInstance = bootstrap.Modal.getInstance(editModal);
                 if (modalInstance) modalInstance.hide();
 
+                console.log(formData.itemId);
+                console.log(formData.status);
                 // Dynamically update the status in the table
                 updateStatusInTable(formData.itemId, formData.status);
             } else {

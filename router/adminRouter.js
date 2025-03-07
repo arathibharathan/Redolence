@@ -47,13 +47,12 @@ adminRouter.post('/unblockUser', userController.unblockUser);
 
 // categoryRouter
 adminRouter.get('/category', auth.isLogin, categoryController.renderCategoryPage);
-adminRouter.post('/createCategory', categoryController.createCategory);
+adminRouter.post('/addCategory', categoryController.addCategory);
 adminRouter.post('/category', categoryController.categoryCheck);
-adminRouter.get('/updateCategory',auth.isLogin,categoryController.updateCategory);
-adminRouter.get('/categories', auth.isLogin, categoryController.getCatForEdit);
-adminRouter.post('/editCategory', categoryController.editCategory);
-adminRouter.get('/blockCategory', auth.isLogin, categoryController.blockCategory);
 
+// Category routes
+adminRouter.get('/category/:id', auth.isLogin, categoryController.getCategory);
+adminRouter.put('/editCategory', auth.isLogin, categoryController.updateCategory);
 
 
 // product
@@ -81,29 +80,20 @@ adminRouter.get('/coupons', auth.isLogin, couponController.getCoupons);
 // Create a new coupon
 adminRouter.post('/coupons', auth.isLogin, couponController.createCoupon);
 
-// // Update a coupon
-// adminRouter.put('/coupons/:id', auth.isLogin, couponController.updateCoupon);
+// Edit a coupon
+adminRouter.post('/coupons/edit/:id', auth.isLogin, couponController.editCoupon);
 
 // // Delete a coupon
 adminRouter.delete('/coupons/:id', auth.isLogin, couponController.deleteCoupon);
 
-//product Offer
-adminRouter.get('/productOffers', auth.isLogin, offerController.productOffers);
-adminRouter.get('/api/products', auth.isLogin, offerController.getProducts);
-adminRouter.post('/api/offers', auth.isLogin, offerController.createOffer);
-adminRouter.delete('/api/offers/:id', auth.isLogin, offerController.deleteOffer);
-adminRouter.get('/api/product-offers', auth.isLogin, offerController.offers)
 
-// Category offer
-adminRouter.get('/api/categories', auth.isLogin, offerController.getCategories);
-adminRouter.get('/categoryOffers', auth.isLogin, offerController.categoryOffers);
-adminRouter.get('/api/categoryOffers', auth.isLogin, offerController.getCategoryOffers);
-adminRouter.post('/api/categoryOffers', auth.isLogin, offerController.createCategoryOffer);
-adminRouter.get('/api/categoryOffers/:id', auth.isLogin, offerController.getCategoryOfferById);
-adminRouter.put('/api/categoryOffers/:id', auth.isLogin, offerController.updateCategoryOffer);
-adminRouter.delete('/api/categoryOffers/:id', auth.isLogin, offerController.deleteCategoryOffer);
 
-adminRouter.get('/referralOffers', auth.isLogin, offerController.referralOffers)
+// offers
+adminRouter.get('/offers',auth.isLogin,offerController.loadOffer);
+adminRouter.post('/offers/addOffers',offerController.addOffer)
+adminRouter.get('/offers/category',offerController.loadCateOffer)
+adminRouter.post('/updateOffer',offerController.updateOffer);
+adminRouter.post('/deleteOffer',offerController.deleteOffer);
 
 
 

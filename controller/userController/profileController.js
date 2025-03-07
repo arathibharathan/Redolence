@@ -1,8 +1,7 @@
 const userSchema = require('../../model/userModel');
 const addressSchema = require('../../model/addressModel');
 const bcrypt = require('bcrypt');
-
-
+const mongoose = require("mongoose")
 
 const userDetails = async (req, res) => {
     try {
@@ -18,23 +17,63 @@ const editUser = async (req, res) => {
         let useredit = await userSchema.findOne({ _id: req.session.user._id });
         res.render('editUser', { useredit });
     } catch (error) {
-        console.log(error);
+        console.log(error);  
     }
 };
 
 const editUserdata = async (req, res) => {
     try {
-        const { name, phone, currentPassword, newPassword } = req.body;
-        const userId = req.session.user._id;
+        
+        const { name, phone, currentPassword, newPassword, confirmPassword } = req.body; // Added confirmPassword
+        console.log(req.body);
 
-        // Find the user
+        const userId = req.session.user._id;
         const user = await userSchema.findById(userId);
 
-        // Verify current password
-        const isPasswordValid = await bcrypt.compare(
-            currentPassword,
-            user.password
-        );
+        if (!user) {
+            return res.json({
+                success: false,
+                message: 'User  not found',
+            });
+        }
+
+        if (name.length < 2) {
+            return res.json({
+                success: false,
+                message: 'Name should have at least 2 characters'
+            });
+        }
+
+        const phoneRegex = /^[0-9]{10}$/;
+        if (!phoneRegex.test(phone)) {
+            return res.json({
+                success: false,
+                message: 'Please enter a valid 10-digit phone number'
+            });
+        }
+
+        if (currentPassword.length < 6) {
+            return res.json({
+                success: false,
+                message: 'Current password must be at least 6 characters long'
+            });
+        }
+
+        if (newPassword.length < 6) { // Fixed logic
+            return res.json({
+                success: false,
+                message: 'New password must be at least 6 characters long'
+            });
+        }
+
+        if (newPassword !== confirmPassword) {
+            return res.json({
+                success: false,
+                message: 'New password and confirm password do not match'
+            });
+        }
+
+        const isPasswordValid = await bcrypt.compare(currentPassword, user.password);
         if (!isPasswordValid) {
             return res.json({
                 success: false,
@@ -42,11 +81,6 @@ const editUserdata = async (req, res) => {
             });
         }
 
-        // Update user details
-        user.name = name;
-        user.mobile = phone;
-
-        // Update password if new password is provided
         if (newPassword) {
             const hashedPassword = await bcrypt.hash(newPassword, 10);
             user.password = hashedPassword;
@@ -58,6 +92,7 @@ const editUserdata = async (req, res) => {
             success: true,
             message: 'Profile updated successfully',
         });
+
     } catch (error) {
         console.error(error);
         res.status(500).json({
@@ -92,11 +127,11 @@ const saveAddress = async (req, res) => {
             state,
             pinCode,
         } = req.body;
-
+        //find the user in the session
         const findId = await addressSchema.findOne({
             userId: req.session.user._id,
         });
-
+        //validation
         if (!name || !streetAddress || !mobileNumber) {
             return res.status(400).json({ 
                 success: false, 
@@ -123,17 +158,19 @@ const saveAddress = async (req, res) => {
                 pinCode,
             };
 
+            // if the user have no address, insert the userId and address in the db
             if (!findId) {
                 const newAddress = await addressSchema.insertMany([
                     { userId: req.session.user._id, address },
                 ]);
-
+                
                 return res.status(201).json({
                     success: true,
                     message: 'Address saved successfully',
                     address: newAddress,
                 });
             } else {
+                //otherwise  update the address
                 const updatedAddress = await addressSchema.findOneAndUpdate(
                     { userId: req.session.user._id },
                     { $push: { address: address } },
@@ -159,7 +196,7 @@ const saveAddress = async (req, res) => {
 
 
 
-
+//delete Address
 const deleteAddress = async (req, res) => {
     try {
         const addressId = req.params.addressId;

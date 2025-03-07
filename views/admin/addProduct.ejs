@@ -22,7 +22,7 @@
   <!-- ? PROD Only: Google Tag Manager (Default ThemeSelection: GTM-5DDHKGP, PixInvent: GTM-5J3LMKC) -->
 
   <!-- Favicon -->
-  <link rel="icon" type="image/x-icon" href="https://demos.themeselection.com/Redolence-bootstrap-html-admin-template/admin/assets/img/favicon/favicon.ico" />
+  <link rel="icon" type="image/x-icon" href="/Redolence logo-01.png" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
   <!-- Fonts -->
@@ -612,6 +612,7 @@
         let cropper;
         let currentImageId;
 
+        //input image, preview image
         function previewImage(input, previewId) {
             const preview = document.getElementById(previewId);
             const file = input.files[0];
@@ -631,13 +632,15 @@
                 input.closest('.image-upload-container').querySelector('.upload-placeholder').style.display = 'flex';
             }
         }
+        
 
+        //cropper
         function openCropper(imageNumber) {
             const input = document.getElementById(`productImage${imageNumber}`);
             const file = input.files[0];
             if (!file) {
                 alert('Please select an image first.');
-                return;
+                return; 
             }
 
             currentImageId = imageNumber;
@@ -660,6 +663,7 @@
             reader.readAsDataURL(file);
         }
 
+        //
         function cropImage() {
             if (!cropper) return;
 
@@ -702,7 +706,7 @@
                 const status =document.getElementById('product-status');
                 const category =document.getElementById('ecommerce-category');
                 const checkk1 =document.getElementById('diii1')
-                const checkk2 =document.getElementById('diii2')
+                const checkk2 =document.getElementById('diii2')                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
                 const checkk3 =document.getElementById('diii3')
 
                 

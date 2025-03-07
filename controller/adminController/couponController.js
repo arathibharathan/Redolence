@@ -1,7 +1,4 @@
 const couponSchema = require('../../model/couponModel')
-const productSchema = require('../../model/productModel')
-const offerSchema = require('../../model/offerModel')
-const CategorySchema = require('../../model/categoryModel')
 const { body, validationResult } = require('express-validator');
 
 
@@ -29,26 +26,33 @@ const createCoupon = async (req, res) => {
     }
 };
 
-// const updateCoupon = async (req, res) => {
-//     try {
-//         const { code, description, discount, status, expireDate, maxPurchaseAmount, maxAmount } = req.body;
-//         const updatedCoupon = await couponSchema.findByIdAndUpdate(req.params.id, {
-//             code,
-//             description,
-//             discount,
-//             status: status === 'true', // Convert string to boolean
-//             expireDate,
-//             maxPurchaseAmount,
-//             maxAmount
-//         }, { new: true });
+const editCoupon = async (req, res) => {
+    try {
+        console.log(req.params, req.body)
+        const { id } = req.params;
+        const { code, description, discount, status, expireDate, maxPurchaseAmount, maxAmount } = req.body;
 
-//         // Redirect to the coupon list or send a success response
-//         res.redirect('/admin/coupons'); // Adjust this path as necessary
-//     } catch (error) {
-//         console.log(error);
-//         res.status(500).json({ error: 'Internal Server Error', message: error.message });
-//     }
-// };
+        const updatedCoupon = await couponSchema.findByIdAndUpdate(id, {
+            code,
+            description,
+            discount,
+            status,
+            expireDate,
+            maxPurchaseAmount,
+            maxAmount
+        }, { new: true });
+
+        if (!updatedCoupon) {
+            return res.status(404).json({ error: 'Coupon not found' });
+        }
+
+        res.redirect('/admin/coupons'); // Redirect to the coupon list
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal Server Error', message: error.message });
+    }
+};
+
 
 const deleteCoupon = async (req, res) => {
     try {
@@ -68,6 +72,6 @@ const deleteCoupon = async (req, res) => {
 module.exports = {
      getCoupons,
      createCoupon,
-    //  updateCoupon,
+     editCoupon,
      deleteCoupon
 }

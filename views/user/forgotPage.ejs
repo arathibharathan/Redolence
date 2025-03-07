@@ -359,9 +359,6 @@
       const formData = {
         email: document.getElementById("email").value.trim()
       };
-
-      console.log('data before api call:', formData);
-
       const result = await fetch("/forgotpage", {
         method: 'POST',
         headers: {

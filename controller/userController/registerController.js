@@ -75,7 +75,7 @@ const registerCheck = async (req, res) => {
 				.status(400)
 				.json({ success: false, message: 'Enter name length btw 3 to 20' });
 
-				// if the validation is success, send otp to the email
+				// if the validation is success, call sendOtp function 
 		} else {
 			sendOtp(email);
 			const hashPassword = await hashPass(password);
@@ -101,9 +101,9 @@ const registerCheck = async (req, res) => {
 };
 
 // OTP
-// the variable email is taking the email coming with otp from the otp.ejs page 
+// the variable email is taking the email, it coming with otp from the otp.ejs page 
 const otpSender = async (req, res) => {
-	const email = req.params.id;
+	const email = req.params.id; //req.params.email
 	res.render('otp', { email });
 };
 
@@ -112,9 +112,11 @@ const verifyOTP = async (req, res) => {
 	try {
 		const { email, otp } = req.body;
 
+		// check the email is in the schema or not
 		const otpRecord = await otpSchema.findOne({ email });
-
-		if (!req.session.tempUser) {
+		console.log(1,otpRecord);
+		
+		if (!req.session.tempUser) { 
 			return res
 				.status(400)
 				.json({
@@ -135,17 +137,7 @@ const verifyOTP = async (req, res) => {
 		if (otpRecord.otp === otp) {
 			console.log('otp matched', newUser);
 
-			// await userSchema.insertMany([
-			// 	{
-			// 		name: newUser.name,
-			// 		username: newUser.username,
-			// 		email: newUser.email,
-			// 		mobile: newUser.mobile,
-			// 		password: newUser.password,
-			// 	},
-			// ]);
-
-			const createdUser = await userSchema.create({
+				await userSchema.create({
 				name: newUser.name,
 				username: newUser.username,
 				email: newUser.email,
@@ -153,19 +145,19 @@ const verifyOTP = async (req, res) => {
 				password: newUser.password,
 			});
 
-			const newWallet = await walletSchema.create({
-				userId: createdUser._id,
-				balance: 0,
-				transactions: [],
-			});
+			// const newWallet = await walletSchema.create({
+			// 	userId: createdUser._id,
+			// 	balance: 0,
+			// 	transactions: [],
+			// });
 
-			console.log(1,createdUser);
-			console.log(2,newWallet);
+			// // console.log(1,createdUser);
+			// // console.log(2,newWallet);
 			
 
-			// Associate wallet with user
-			createdUser.wallet = newWallet._id;
-			await createdUser.save();
+			// // Associate wallet with user
+			// createdUser.wallet = newWallet._id;
+			// await createdUser.save();
 
 
 			req.session.tempUser = null;
@@ -182,43 +174,6 @@ const verifyOTP = async (req, res) => {
 		res.status(500).send(error);
 	}
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 const resendOtp = async (req, res) => {
 	try {
 		const { email } = req.body;

@@ -167,6 +167,108 @@
         
       </div><!-- End .page-header -->
       
+      <aside class="sidebar-shop sidebar-filter">
+        <div class="sidebar-filter-wrapper">
+          <!-- Filter Section -->
+          <div class="widget widget-collapsible">
+            <h3 class="widget-title">
+              <a data-toggle="collapse" href="#widget-filter" role="button" aria-expanded="true" aria-controls="widget-filter">
+                Filter
+              </a>
+            </h3>
+            <div class="collapse show" id="widget-filter">
+              <div class="widget-body">
+                <div class="filter-items">
+                  <!-- Category Filter -->
+                  <div class="filter-item">
+                    <h4 class="filter-title">Category</h4>
+                    <div class="filter-categories">
+                      <% if (categories && categories.length > 0) { %>
+                        <% categories.forEach(category => { %>
+                          <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="cat-<%= category._id %>"
+                              onchange="filterByCategory('<%= category._id %>')"
+                              <% if (Array.isArray(categoryFilter) && categoryFilter.includes(category._id.toString())) { %>
+                              checked <% } %>>
+                            <label class="custom-control-label" for="cat-<%= category._id %>"><%= category.name %></label>
+                          </div>
+                        <% }) %>
+                      <% } else { %>
+                        <p>No categories available.</p>
+                      <% } %>
+                    </div>
+                  </div>
+      
+                  <!-- Price Filter -->
+                  <div class="filter-item">
+                    <h4 class="filter-title">Price</h4>
+                    <div class="filter-price">
+                      <input type="range" class="form-range" id="price-range" min="0" max="1000" step="10">
+                      <div class="price-values">
+                        <span id="min-price">0</span> - <span id="max-price">1000</span>
+                      </div>
+                    </div>
+                  </div>
+      
+                  <!-- Rating Filter -->
+                  <div class="filter-item">
+                    <h4 class="filter-title">Rating</h4>
+                    <div class="filter-rating">
+                      <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="rating-5">
+                        <label class="custom-control-label" for="rating-5">★★★★★</label>
+                      </div>
+                      <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="rating-4">
+                        <label class="custom-control-label" for="rating-4">★★★★☆</label>
+                      </div>
+                      <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="rating-3">
+                        <label class="custom-control-label" for="rating-3">★★★☆☆</label>
+                      </div>
+                      <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="rating-2">
+                        <label class="custom-control-label" for="rating-2">★★☆☆☆</label>
+                      </div>
+                      <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="rating-1">
+                        <label class="custom-control-label" for="rating-1">★☆☆☆☆</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Sort Section -->
+          <div class="widget widget-collapsible">
+            <h3 class="widget-title">
+              <a data-toggle="collapse" href="#widget-sort" role="button" aria-expanded="true" aria-controls="widget-sort">
+                Sort
+              </a>
+            </h3>
+            <div class="collapse show" id="widget-sort">
+              <div class="widget-body">
+                <div class="sort-options">
+                  <select id="sort-options" class="form-control" onchange="sortProducts()">
+                    <option value="popularity" <%= sort === 'popularity' ? 'selected' : '' %>>Popularity</option>
+                    <option value="price-asc" <%= sort === 'price-asc' ? 'selected' : '' %>>Price: Low to High</option>
+                    <option value="price-desc" <%= sort === 'price-desc' ? 'selected' : '' %>>Price: High to Low</option>
+                    <option value="average-rating" <%= sort === 'average-rating' ? 'selected' : '' %>>Average Ratings</option>
+                    <option value="featured" <%= sort === 'featured' ? 'selected' : '' %>>Featured</option>
+                    <option value="new-arrivals" <%= sort === 'new-arrivals' ? 'selected' : '' %>>New Arrivals</option>
+                    <option value="a-z" <%= sort === 'a-z' ? 'selected' : '' %>>A - Z</option>
+                    <option value="z-a" <%= sort === 'z-a' ? 'selected' : '' %>>Z - A</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+
+
       <nav aria-label="breadcrumb" class="breadcrumb-nav mb-2">
         <div class="container">
           <div class="row align-items-center">
@@ -176,53 +278,7 @@
                       <li class="breadcrumb-item active"><a href="#">Shop</a></li>
                       <li class="breadcrumb-item" aria-current="page">Boxed</li>
                   </ol>
-              </div>
-      
-              <!-- Search Bar -->
-              <div class="col-md-4 text-right">
-                  <div class="header-search">
-                      <a href="#" class="search-toggle" role="button" title="Search"><i class="icon-search"></i></a>
-                      <form action="#" method="get" class="d-inline-block">
-                          <div class="header-search-wrapper">
-                              <input type="search" class="form-control" name="q" id="q" placeholder="Search in..." required>
-                          </div>
-                      </form>
-                  </div>
-              </div>
-          </div>
-      
-          <!-- Filter & Sorting Section -->
-          <div class="row mt-3">
-              <div class="col-md-3">
-                  <div class="widget widget-collapsible">
-                      <h3 class="widget-title">
-                          <a data-toggle="collapse" href="#widget-1" role="button" aria-expanded="true" aria-controls="widget-1">
-                              Filter
-                          </a>
-                      </h3>
-                  </div>
-              </div>
-      
-              <div class="col-md-6">
-                  <div class="sorting-container text-center">
-                      <label for="sort-options" class="mr-2">Sort by:</label>
-                      <select id="sort-options" class="form-control d-inline-block w-auto" onchange="sortProducts()">
-                          <option value="popularity" <%= sort === 'popularity' ? 'selected' : '' %>>Popularity</option>
-                          <option value="price-asc" <%= sort === 'price-asc' ? 'selected' : '' %>>Price: Low to High</option>
-                          <option value="price-desc" <%= sort === 'price-desc' ? 'selected' : '' %>>Price: High to Low</option>
-                          <option value="average-rating" <%= sort === 'average-rating' ? 'selected' : '' %>>Average Ratings</option>
-                          <option value="featured" <%= sort === 'featured' ? 'selected' : '' %>>Featured</option>
-                          <option value="new-arrivals" <%= sort === 'new-arrivals' ? 'selected' : '' %>>New Arrivals</option>
-                          <option value="a-z" <%= sort === 'a-z' ? 'selected' : '' %>>A - Z</option>
-                          <option value="z-a" <%= sort === 'z-a' ? 'selected' : '' %>>Z - A</option>
-                      </select>
-                  </div>
-              </div>
-          </div>
-      </div>
-      
-        
-        <!-- End .container -->
+                </div>
       </nav><!-- End .breadcrumb-nav -->
 
       
@@ -252,35 +308,23 @@
                     <div class="product-price">
                       ₹<%= products[i].price %>
                     </div><!-- End .product-price -->
-                    <!-- <div>
-											<p><%= products[i].description %></p>
-										</div> -->
+                    
+
+                    <div>
+                      <% if (products[i].stock <= 0) { %> 
+                          <h6 href="#" style="color: red;">OUT OF STOCK</h6>
+                      <% } else { %>
+                          <h6 href="#" style="color: green;">IN STOCK</h6>
+                      <% } %>
+                  </div>
+                  
                   </div><!-- End .product-body -->
                 </div><!-- End .product -->
               </div><!-- End .col-sm-6 col-lg-4 col-xl-3 -->
               <% } %>
             </div><!-- End .row -->
 
-            <!-- <div class="load-more-container text-center">
-              <form action="/renderKartByPage/<%= prevPage %>?sort=<%= sort %>" method="GET" style="display:inline;">
-                  <button style="background-color: #c96;" <% if (prevPage < 1) { %> disabled <% } %> >
-                      Prev
-                  </button>
-              </form>
-              <% for (let i = 0; i < pages; i++) { %>
-                  <form action="/renderKartByPage/<%= i + 1 %>?sort=<%= sort %>" method="GET" style="display:inline;">
-                      <button style="width: 30px; height: 31px; background-color: #c96" type="submit" <% if (i + 1 === page) { %> disabled <% } %> >
-                          <%= i + 1 %>
-                      </button>
-                  </form>
-              <% } %>
-              <form action="/renderKartByPage/<%= nextPage %>?sort=<%= sort %>" method="GET" style="display:inline;">
-                  <button style="background-color: #c96;" <% if (nextPage > pages) { %> disabled <% } %> >
-                      Next
-                  </button>
-              </form>
-          </div> -->
-
+           
 
           <div class="load-more-container text-center">
             <form action="/shop" method="GET" style="display:inline;">
@@ -309,17 +353,8 @@
                 </button>
             </form>
         </div>
-        
-
-
           </div><!-- End .products -->
-
-
-
-
-
           <div class="sidebar-filter-overlay">
-          
           </div><!-- End .sidebar-filter-overlay -->
           <aside class="sidebar-shop sidebar-filter">
             <div class="sidebar-filter-wrapper">
@@ -329,57 +364,6 @@
                           Category
                       </a>
                   </h3>
-
-<!-- 
-
-                  <div class="collapse show" id="widget-category">
-                      <div class="widget-body">
-                          <div class="filter-items">
-                              <% if (categories && categories.length > 0) { %>
-                                  <% categories.forEach(category => { %>
-                                      <div class="filter-item">
-                                          <div class="custom-control custom-checkbox">
-                                              <input type="checkbox" class="custom-control-input" id="cat-<%= category._id %>" onchange="filterByCategory('<%= category._id %>')">
-                                              <label class="custom-control-label" for="cat-<%= category._id %>"><%= category.name %></label>
-                                          </div>
-                                      </div>
-                                  <% }) %>
-                              <% } else { %>
-                                  <p>No categories available.</p>
-                              <% } %>
-                          </div>
-                      </div>
-                  </div> -->
-                  <div class="collapse show" id="widget-category">
-                    <div class="widget-body">
-                        <div class="filter-items">
-                            <% if (categories && categories.length > 0) { %>
-                                <% categories.forEach(category => { %>
-                                    <div class="filter-item">
-                                        <div class="custom-control custom-checkbox">
-                                          <input type="checkbox" class="custom-control-input" id="cat-<%= category._id %>" 
-                                          onchange="filterByCategory('<%= category._id %>')" 
-                                          <% if (Array.isArray(categoryFilter) && categoryFilter.includes(category._id.toString())) { %> 
-                                          checked <% } %> >
-                                   
-                                            <label class="custom-control-label" for="cat-<%= category._id %>"><%= category.name %></label>
-                                        </div>
-                                    </div>
-                                <% }) %>
-                            <% } else { %>
-                                <p>No categories available.</p>
-                            <% } %>
-                        </div>
-                    </div>
-                </div>
-                
-
-
-
-
-
-
-
               </div>
           </div>
         </aside>
@@ -787,8 +771,6 @@
               productId
             }),
           });
-          console.log(productId);
-          
 
           const data = await response.json();
           if (response.ok) {

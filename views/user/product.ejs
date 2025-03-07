@@ -267,6 +267,14 @@
                     </div><!-- End .product-details-quantity -->
                   </div><!-- End .details-filter-row -->
 
+
+                  <div>
+                    <% if (product.stock <= 0) { %> 
+                        <h6 href="#" style="color: red;">OUT OF STOCK</h6>
+                    <% } else { %>
+                        <h6 href="#" style="color: green;">IN STOCK</h6>
+                    <% } %>
+                </div>
                 
                   <div class="product-details-action">
                     <a href="#" class="btn-product btn-cart" data-id="<%= product._id %>"><span>Add to Cart</span></a>

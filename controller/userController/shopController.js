@@ -1,19 +1,25 @@
 const productSchema = require('../../model/productModel');
 const CategorySchema = require('../../model/categoryModel');
 
+
 const shop = async (req, res) => {
 	try {
-		const perPage = 8; // Products per page
+		// Products per page
+		const perPage = 8; 
+		// extracts the page number from the query parameters of an HTTP request and ensures it is a valid integer. If no page number is provided, it defaults to 1.
 		const page = parseInt(req.query.page) || 1;
         const sort = req.query.sort || 'default';
         const categoryFilter = req.query.category ? req.query.category.split(',') : []; // Ensure it's an array
 
+
+		//filter
         let filterQuery = {}; // Default: No filters
 
         if (categoryFilter.length) {
             filterQuery.category = { $in: categoryFilter };
         }
 
+		//sort
         let sortQuery = {};
         if (sort === 'price-low') sortQuery.price = 1;
         if (sort === 'price-high') sortQuery.price = -1;
@@ -50,7 +56,7 @@ const shop = async (req, res) => {
 	}
 };
 
-const renderKartByPage = async (req, res) => {
+const renderCartByPage = async (req, res) => {
 	try {
 		res.set('Cache-Control', 'no-store');
 		const { page } = req.params;
@@ -155,5 +161,5 @@ module.exports = {
 	shop,
 	product,
 	getProducts,
-	renderKartByPage,
+	renderCartByPage,
 };
