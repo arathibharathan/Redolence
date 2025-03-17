@@ -35,7 +35,6 @@ const orders = async (req, res) => {
         }
 
         const orders = await orderSchema.find(filter);
-
         res.render('orderList', { orders });
     } catch (error) {
         console.log(error);

@@ -277,54 +277,53 @@
                   </li>
                 </ul>
               </aside><!-- End .col-lg-3 -->
-             
-
       
       <div class="page-content order-container">
         
         <% if (orders && orders.length > 0) { %>
           <% orders.forEach(order => { %>
             <div class="order-card" data-order-id="<%= order._id %>">
-              <div class="order-card-header">
+              <div class="order-card" data-order-id="<%= order._id %>">
+                <div class="order-card-header">
                   <h4 class="mb-0">Order #<%= order.order_id %></h4>
                   <span class="order-status 
-                      <%= 
-                          order.orderStatus === 'Placed' ? 'status-placed' : 
-                          order.orderStatus === 'Shipped' ? 'status-shipped' : 
-                          order.orderStatus === 'Delivered' ? 'status-delivered' : 
-                          'status-cancelled'
-                      %>
-                  ">
-                      <%= order.orderStatus %>
+                    <%= 
+                      order.orderStatus === 'Placed' ? 'status-placed' : 
+                      order.orderStatus === 'Shipped' ? 'status-shipped' : 
+                      order.orderStatus === 'Delivered' ? 'status-delivered' : 
+                      order.paymentStatus === 'Failed' ? 'status-failed' : 
+                      'status-cancelled'
+                    %>">
+                    <%= order.paymentStatus === 'Failed' ? 'Payment Failed' : order.orderStatus %>
                   </span>
-              </div>
-            
-              <div class="order-details">
-                <div class="order-info">
-                  <p><strong>Ordered On:</strong> <%= new Date(order.orderedAt).toLocaleString() %></p>
-                  <p><strong>Payment Method:</strong> <%= order.paymentMethod %></p>
-                  <p><strong>Total Amount:</strong> ₹<%= order.totalAmount.toFixed(2) %></p>
                 </div>
+              
+                <div class="order-details">
+                  <div class="order-info">
+                    <p><strong>Ordered On:</strong> <%= new Date(order.orderedAt).toLocaleString() %></p>
+                    <p><strong>Payment Method:</strong> <%= order.paymentMethod %></p>
+                    <p><strong>Total Amount:</strong> ₹<%= order.totalAmount.toFixed(2) %></p>
+                  </div>
+                </div>
+              
+                  <% if (order.paymentStatus === "Delivered") { %>
+                    <!-- Show Return and View Details buttons -->
+                    <button class="btn btn-warning" onclick="openReturnOrderModal('<%= order._id %>')">Return</button>
+                    <button class="btn btn-info" onclick="toggleDetails(this)">View Details</button>
+                  
+                  <% } else if (order.paymentStatus === "Failed") { %>
+                    <!-- Show Repay and View Details buttons -->
+                    <button class="btn btn-success" onclick="retryPayment('<%= order._id %>')">Repay</button>
+                    <button class="btn btn-info" onclick="toggleDetails(this)">View Details</button>
+                  
+                  <% } 
+                  else { %>
 
-              <!-- the button viewdetailes call the function toggle Details while clicking the button -->
-                <button class="btn btn-secondary view-details" onclick="toggleDetails(this)">View Details</button>
-                
-
-                <%if(order.orderStatus === "Delivered"){%>
-                <!-- the button cancel order calls the function openCancelOrderModal while clicking the button -->
-                <button class="btn btn-warning" onclick="openReturnOrderModal('<%= order._id %>')" 
-                  <% if (order.orderStatus === 'Delivered') { %>
+                    <!-- Show Cancel and View Details buttons -->
+                    <button class="btn btn-danger" onclick="openCancelOrderModal('<%= order._id %>')">Cancel</button>
+                    <button class="btn btn-info" onclick="toggleDetails(this)">View Details</button>
                   <% } %>
-              >Return Order</button>
-              <%}else if(order.orderStatus!=="Cancelled"){%>
-                <button class="btn btn-danger" onclick="openCancelOrderModal('<%= order._id %>')" 
-                  <% if (order.orderStatus === 'Delivered' || order.orderStatus === 'Cancelled') { %>
-                      style="display: none;" 
-                  <% } %>
-              >Cancel Order</button>
-            <% }else{
-              style="display: none;" 
-              }%>
+                  
             </div>
               <div class="order-items" style="display: none;">
                 <h5>Order Items</h5>
@@ -342,8 +341,8 @@
                       <tr>
                         <td><%= item.name %></td>
                         <td class="text-center"><%= item.quantity %></td>
-                        <td class="text-right">₹<%= item.price.toFixed(2) %></td>
-                        <td class="text-right">₹<%= item.totalPrice.toFixed(2) %></td>
+                        <td class="text-right">₹<%= item.price %></td>
+                        <td class="text-right">₹<%= item.totalPrice %></td>
                       </tr>
                     <% }) %>
                   </tbody>
@@ -768,6 +767,7 @@
 
   <!-- for view details -->
   <script>
+    
     function toggleDetails(button) {
 
   //  for displaying the color changing  in the button
@@ -794,8 +794,12 @@
         const data = await response.json(); // Parse the JSON response
 
         if (response.ok) {
-            // Update the UI to reflect the order cancellation
-            alert(data.message); // Show success message
+          Swal.fire({
+              icon: 'success',
+              title: data.message,
+              text: 'Order cancelled successfully!',
+              confirmButtonText: 'OK'
+            });
             
             // Find the order card in the DOM
             const orderCard = document.querySelector(`.order-card[data-order-id="${orderId}"]`);
@@ -812,7 +816,12 @@
             }
         } else {
             // Handle errors
-            alert(data.error || 'Failed to cancel order');
+            Swal.fire({
+              icon: 'error',
+              title: data.message,
+              text: 'Failed to cancel order',
+              confirmButtonText: 'OK'
+            });
         }
     } catch (error) {
         console.error('Error cancelling order:', error);
@@ -900,6 +909,27 @@ async function requestReturn(orderId, reason) {
         alert('An error occurred while requesting the return. Please try again.');
     }
 }
+  </script>
+
+  <script>
+    function retryPayment(orderId) {
+    fetch(`/retry-payment/${orderId}`, {
+        method: 'POST',
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            window.location.href = data.paymentUrl; // Redirect to payment page
+        } else {
+            alert('Failed to initiate repayment. Please try again.');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Something went wrong. Try again later.');
+    });
+}
+
   </script>
 </body>
 

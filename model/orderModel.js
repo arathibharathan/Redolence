@@ -84,7 +84,7 @@ const OrderSchema = new mongoose.Schema({
     },
     paymentMethod: {
         type: String,
-        enum: ['COD', 'online'], 
+        enum: ['COD', 'online','Online','Wallet'], 
         required: true,
     },
     paymentStatus: {
@@ -104,6 +104,9 @@ const OrderSchema = new mongoose.Schema({
     deliveredAt: {
         type: Date, 
     },
+    couponOffer: {
+        type: Number,
+    }
 });
 
 module.exports = mongoose.model('Order', OrderSchema);

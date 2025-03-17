@@ -199,12 +199,12 @@
                       <td class="quantity-col">
                         <div class="cart-product-quantity">
 
-                          <% if(products[0].stock<10){ %>
-                          <input type="number" class="form-control" value="<%= product.quantity %>" min="1" max="<%= products[0].stock%>" step="1" data-decimals="0" required onchange="updateQuantity('<%= product._id %>', this.value)" />
-                          <%}else{%>
-                          <input type="number" class="form-control" value="<%= product.quantity %>" min="1" max="10" step="1" data-decimals="0" required onchange="updateQuantity('<%= product._id %>', this.value)" />
-
-                            <%}%>
+                          <% if(product.stock < 10){ %>
+                            <input type="number" class="form-control" value="<%= product.quantity %>" min="1" max="<%= product.stock %>" step="1" data-decimals="0" required onchange="updateQuantity('<%= product._id %>', this.value)" />
+                          <% } else { %>
+                            <input type="number" class="form-control" value="<%= product.quantity %>" min="1" max="10" step="1" data-decimals="0" required onchange="updateQuantity('<%= product._id %>', this.value)" />
+                          <% } %>
+                          
                         </div>
                       </td>
                       <td class="total-col">₹<%= (product.price || 0) * product.quantity %></td>
@@ -611,8 +611,18 @@
 
           // Update the displayed subtotal
           subtotalElement.textContent = subtotal.toFixed(2);
+
+          // Swal.fire({
+          //   title: 'success',
+          //   text: result.message,
+          //   confirmButtonText: 'OK',
+          // });
         } else {
-          alert(result.message || 'Failed to update quantity.');
+          Swal.fire({
+            title: 'error',
+            text: result.message,
+            confirmButtonText: 'OK',
+          });
         }
       } catch (error) {
         console.error('Error updating quantity:', error);

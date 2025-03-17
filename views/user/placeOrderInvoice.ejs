@@ -337,7 +337,7 @@
                 <div class="invoice-meta">
                     <div class="meta-item">
                         <strong>Order Number:</strong>
-                        <span>#<%= orders.order_id %></span>
+                        <span data-order-id="<%= orders.order_id %>">#<%= orders.order_id %></span>
                     </div>
                     <div class="meta-item">
                         <strong>Order Date:</strong>
@@ -425,10 +425,13 @@
         </div>
     
         <div class="invoice-actions">
-            <button onclick="window.print()" class="btn btn-primary print-btn">
-                <i class="icon-print"></i> Print Invoice
-            </button>
-        </div>
+          <button onclick="window.print()" class="btn btn-primary print-btn">
+              <i class="icon-print"></i> Print Invoice
+          </button>
+          <button onclick="downloadPDF()" class="btn btn-success download-btn" style="margin-left: 10px;">
+              <i class="icon-download"></i> Download PDF
+          </button>
+      </div>
     </div>
     </main>
 
@@ -806,6 +809,42 @@
   <script src="/user/assets/js/main.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> 
 
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script>
+    async function downloadPDF() {
+        const invoice = document.querySelector('.invoice-container');
+        
+        // Use html2canvas to capture the invoice
+        const canvas = await html2canvas(invoice, {
+            scale: 2, // Increase for better resolution
+            useCORS: true,
+            logging: true,
+        });
+    
+        // Create PDF
+        const imgData = canvas.toDataURL('image/png');
+        const pdf = new jspdf.jsPDF({
+            orientation: 'portrait',
+            unit: 'mm',
+            format: 'a4'
+        });
+    
+        const pageWidth = pdf.internal.pageSize.getWidth();
+        const pageHeight = pdf.internal.pageSize.getHeight();
+        
+        // Calculate image dimensions to fit page
+        const imgWidth = pageWidth;
+        const imgHeight = (canvas.height * imgWidth) / canvas.width;
+    
+        // Add image to PDF
+        pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+        
+        // Save the PDF
+        pdf.save(`invoice_${document.querySelector('[data-order-id]').textContent}.pdf`);
+    }
+    </script> 
 </body>
 
 </html>

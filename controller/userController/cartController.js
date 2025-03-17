@@ -7,50 +7,55 @@ const { isLogin } = require('../../middleware/userAuth');
 
 // calculate the subtotal in this controller
 const cart = async (req, res) => {
-    try {
-      const userData = await cartSchema.findOne({ userId: req.session.user._id });
-      
-      const productDetails = userData ? userData.productDetails.map(item => ({
-        productId: item.productId.toString(),
-        quantity: item.quantity,
-      })) : [];
-      
-      const productIds = productDetails.map(item => item.productId);
-  
-      const products = await productSchema.find({ _id: { $in: productIds } });
-      
-      
-      
-      // Combine the product details with the quantity
-      const enrichedProducts = productDetails ? products.map(product => {
-        const matchedDetail = productDetails.find(
-          detail => detail.productId === product._id.toString()
-        );
-        
-        return {
-          ...product._doc, // Include all fields of the product
-          quantity: matchedDetail ? matchedDetail.quantity : 0,
-        };   
-      }) : [];
-      // Calculate subtotal
-      const subtotal = enrichedProducts.reduce((total, product) => {
-        return total + (product.price || 0) * product.quantity;
-      }, 0);
-  
-      res.render('cart', { products: enrichedProducts, subtotal });
-    } catch (error) {
-      console.error(error);
+  try {
+    const userData = await cartSchema.findOne({ userId: req.session.user._id });
+
+    const productDetails = userData?.productDetails?.map(item => ({
+      productId: item.productId.toString(),
+      quantity: item.quantity,
+    })) || [];
+
+    if (productDetails.length === 0) {
+      return res.render('cart', { products: [], subtotal: 0 });
     }
-  };
+
+    const productIds = productDetails.map(item => item.productId);
+    const products = await productSchema.find({ _id: { $in: productIds } });
+
+    // Combine product details with quantity
+    const enrichedProducts = products.map(product => {
+      const matchedDetail = productDetails.find(
+        detail => detail.productId === product._id.toString()
+      );
+      
+      return {
+        ...product._doc, // Include all fields of the product
+        quantity: matchedDetail?.quantity || 0,
+      };
+    });
+
+    // Calculate subtotal
+    const subtotal = enrichedProducts.reduce((total, product) => {
+      return total + (product.price || 0) * product.quantity;
+    }, 0);
+
+    res.render('cart', { products: enrichedProducts, subtotal });
+
+  } catch (error) {
+    console.error("Error fetching cart data:", error);
+    res.status(500).send("Internal Server Error");
+  }
+};
+
 
   
 const addcart = async (req, res) => {
     try {
+      
       if(!req.session.user){
         return res.status(404).json({ message: 'User not found, Please Login' });
         
       }
-      
         const productId = req.body.productId;
         const userId = req.session.user._id;
 
@@ -174,7 +179,7 @@ const addToWishlist = async (req, res) => {
             wishlist.products.push(productId);
             await wishlist.save();
             return res.status(200).json({ message: 'Product added to wishlist' });
-        } else {
+        } else if(wishlist.products.includes(productId)){
             return res.status(400).json({ message: 'Product is already in wishlist' });
         }
     } catch (error) {

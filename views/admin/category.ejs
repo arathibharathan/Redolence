@@ -455,30 +455,30 @@
         });
   
       // Function to fetch and render categories
-      async function fetchCategories() {
-        try {
-          const response = await fetch('/admin/categories');
-          const categories = await response.json();
+    //   async function fetchCategories() {
+    //     try {
+    //       const response = await fetch('/admin/categories');
+    //       const categories = await response.json();
   
-          // Clear the existing content
-          const container = document.getElementById('categoryListContainer');
-          container.innerHTML = '';
+    //       // Clear the existing content
+    //       const container = document.getElementById('categoryListContainer');
+    //       container.innerHTML = '';
   
-          // Render the updated list of categories
-          categories.forEach(category => {
-            const categoryItem = document.createElement('div');
-            categoryItem.className = 'category-item';
-            categoryItem.innerHTML = `
-              <h3>${category.name}</h3>
-              <p>${category.description}</p>
-              <p>Status: ${category.status}</p>
-            `;
-            container.appendChild(categoryItem);
-          });
-        } catch (error) {
-          console.error('Error fetching categories:', error);
-        }
-      }
+    //       // Render the updated list of categories
+    //       categories.forEach(category => {
+    //         const categoryItem = document.createElement('div');
+    //         categoryItem.className = 'category-item';
+    //         categoryItem.innerHTML = `
+    //           <h3>${category.name}</h3>
+    //           <p>${category.description}</p>
+    //           <p>Status: ${category.status}</p>
+    //         `;
+    //         container.appendChild(categoryItem);
+    //       });
+    //     } catch (error) {
+    //       console.error('Error fetching categories:', error);
+    //     }
+    //   }
     });
   </script>
 
@@ -577,24 +577,55 @@ async function updateCategory(){
 </script> 
 
 
- <script> 
-   async function blockCategory (tag, id){
-       try {
-         fetch(`/admin/blockCategory?_id=${id}`)
-         .then((result) => {
-           if (tag.innerText=="Unlist") {
-             tag.innerText="List"
-             tag.style.background='green'
-           } else {
-             tag.innerText="Unlist"
-             tag.style.background='red'
-           } 
-         })
-       } catch (error) {
-           console.log(error.message)
-       }
-   }
- </script>
+<script>
+  async function blockCategory(button, categoryId) {
+      try {
+          const response = await fetch(`/admin/blockCategory`, {
+              method: 'PUT',
+              headers: {
+                  'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ categoryId })
+          });
+  
+          const result = await response.json();
+  
+          if (result.success) {
+              // Toggle button appearance
+              if (result.newStatus === 'listed') {
+                  button.innerText = 'Unlist';
+                  button.classList.remove('btn-success');
+                  button.classList.add('btn-danger');
+              } else {
+                  button.innerText = 'List';
+                  button.classList.remove('btn-danger');
+                  button.classList.add('btn-success');
+              }
+              
+              Swal.fire({
+                  icon: 'success',
+                  title: 'Status Updated',
+                  text: 'Category status has been updated successfully!',
+                  showConfirmButton: false,
+                  timer: 1500
+              });
+          } else {
+              Swal.fire({
+                  icon: 'error',
+                  title: 'Error',
+                  text: result.message || 'Failed to update category status',
+              });
+          }
+      } catch (error) {
+          console.error('Error:', error);
+          Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: 'An error occurred while updating the category status',
+          });
+      }
+  }
+  </script>
 
     </body>
 

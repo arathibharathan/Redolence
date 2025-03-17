@@ -8,6 +8,7 @@ const loginController =require('../controller/userController/loginController');
 const checkoutController =require('../controller/userController/checkoutController');
 const cartController =require('../controller/userController/cartController');
 const walletController =require('../controller/userController/walletController')
+// const offerController =require('../controller/userController/offerController')
 const passport = require('../passport');
 const session = require("express-session");
 const auth = require('../middleware/userAuth');
@@ -43,8 +44,9 @@ userRouter.post("/login", loginController.logincheck);
 
 //shop
 userRouter.get('/shop', shopController.shop);
+// userRouter.get('/api/products', shopController.getFilteredProducts);
 
-userRouter.get('/renderCartByPage/:page',shopController.renderCartByPage)
+// userRouter.get('/renderCartByPage/:page',shopController.renderCartByPage)
 userRouter.get('/product', shopController.product);
 
 
@@ -108,23 +110,21 @@ userRouter.post('/wishlist/remove', auth.isLogin, cartController.removeProductFr
 userRouter.get('/checkout',checkoutController.checkout);
 userRouter.post('/save-address', checkoutController.addressSave);
 userRouter.post('/place-order', checkoutController.placeOrder)
-userRouter.post('/confirmPayment',checkoutController.confirmPayment)
-userRouter.post('/cancelBooking',checkoutController.cancelBooking)
-userRouter.post('/cancelOrderRefundPayment',checkoutController.cancelOrderandrefundPayment)
+userRouter.post('/applyCoupon', auth.isLogin, checkoutController.applyCoupon)
 
-
-userRouter.post('/apply-coupon', checkoutController.applyCoupon);
-userRouter.post('/remove-coupon', checkoutController.removeCoupon);
+// Cancel razorpay
+userRouter.get('/cancelRazorpay',checkoutController.cancelRazorpay);
 
 
 // Order
 userRouter.get('/orders', checkoutController.orders);
-userRouter.get('/orders', checkoutController.placeOrder);
+userRouter.post('/retry-payment/:orderId',checkoutController.repay)
+// userRouter.get('/orders', checkoutController.placeOrder);
 userRouter.get('/order-details/:orderId', checkoutController.getOrderDetails);
 userRouter.post('/update-order-status', checkoutController.updateOrderStatus);
 userRouter.post('/cancel-order', checkoutController.cancelOrder);
 userRouter.post('/request-return', checkoutController.requestReturn);
-userRouter.get('/placeOrderInvoice/:id', checkoutController.placeOrderInvoice);
+userRouter.get('/placeOrderInvoice', checkoutController.placeOrderInvoice);
 
 
 userRouter.delete('/delete-address/:addressId', checkoutController.deleteAddress);
@@ -135,11 +135,15 @@ userRouter.get('/get-address/:addressId', checkoutController.getAddressById);
 userRouter.put('/update-address/:addressId', checkoutController.updateAddress);
 
 // wallet
-userRouter.get('/wallet',auth.isLogin,walletController.wallet);
+userRouter.get('/wallet',auth.isLogin,walletController.loadWallet);
+
+// offer
+// userRouter.get('/offer', offerController.offerCheck)
 
 
 // logout
 userRouter.get('/logout',loginController.userLogout);
+
 
 
 

@@ -16,90 +16,118 @@ const register = async (req, res) => {
 	}
 };
 const registerCheck = async (req, res) => {
-	try {
-		const { name,
-			  username,
-			  email, 
-			  mobile, 
-			  password, 
-			  confirmPassword } 
-			  =req.body;
+    try {
+        const { name, username, email, mobile, password, confirmPassword } = req.body;
 
-			  // To find the user,email,mobile exist in the db or not 
-		let usercheck = await userSchema.findOne({ username: username });
-		let emailcheck = await userSchema.findOne({ email: email });
-		let mobilecheck = await userSchema.findOne({ mobile: mobile });
-		
-		if (usercheck) {
-			console.log('username already exist');
-			return res
-				.status(400)
-				.json({ success: false, message: 'user already exist ' });
-		} else if (emailcheck) {
-			console.log('email already exist');
-			return res
-				.status(400)
-				.json({ success: false, message: 'Email already exist' });
-		} else if (!/[A-Za-z0-9.%]+@gmail.com/.test(email)) {
-			console.log('Enter valid email');
-			return res
-				.status(400)
-				.json({ success: false, message: 'Enter valid email' });
-		} else if (mobilecheck) {
-			console.log('mobile number already exist');
-			return res
-				.status(400)
-				.json({ success: false, message: 'mobile number already exist' });
-		} else if (password !== confirmPassword) {
-			console.log('confirm password is not matching');
-			return res
-				.status(400)
-				.json({ success: false, message: 'confirm password is not matching' });
-		} else if (mobile.length !== 10) {
-			console.log('mobile number must contains 10 digits');
-			return res
-				.status(400)
-				.json({
-					success: false,
-					message: 'mobile number must contains 10 digits',
-				});
-		} else if (username.length < 3 || username.length > 20) {
-			console.log('Enter username length btw 3 to 20');
-			return res
-				.status(400)
-				.json({ success: false, message: 'Enter username length btw 6 to 20' });
+        // Check for missing fields
+        if (!name || !username || !email || !mobile || !password || !confirmPassword) {
+            return res.status(400).json({
+                success: false,
+                message: "All fields are required. Please fill in all details.",
+            });
+        }
 
-		} else if (name.length < 3 || name.length > 20) {
-			console.log('Enter name length btw 3 to 20');
-			return res
-				.status(400)
-				.json({ success: false, message: 'Enter name length btw 3 to 20' });
+        // Validate Name (Only letters, 3 to 20 characters)
+        if (!/^[A-Za-z\s]{3,20}$/.test(name)) {
+            return res.status(400).json({
+                success: false,
+                message: "Name should only contain letters and be between 3 to 20 characters.",
+            });
+        }
 
-				// if the validation is success, call sendOtp function 
-		} else {
-			sendOtp(email);
-			const hashPassword = await hashPass(password);
-			//take all the values of the req.body in to the keys
-			const user = {
-				name: req.body.name,
-				username: req.body.username,
-				mobile: req.body.mobile,
-				email: req.body.email,
-				password: hashPassword,
-			};
-			// temporarly storing the user details in to the session for saving the user details to the db after otp confirmation
-			req.session.tempUser = user;
+        // Validate Username (Only alphanumeric, 3 to 20 characters)
+        if (!/^[A-Za-z0-9]{3,20}$/.test(username)) {
+            return res.status(400).json({
+                success: false,
+                message: "Username should be 3-20 characters long and contain only letters and numbers.",
+            });
+        }
 
-			return res
-				.status(200)
-				.json({ success: true, message: 'signup successful!', email: email});
-		}
-	} catch (error) {
-		console.log(error.message);
-		res.status(500).send(error);
-	}
+        // Validate Email (Strict Gmail validation)
+        if (!/^[a-zA-Z0-9._%+-]+@gmail\.com$/.test(email)) {
+            return res.status(400).json({
+                success: false,
+                message: "Please enter a valid Gmail address.",
+            });
+        }
+
+        // Validate Mobile Number (Only numbers, exactly 10 digits)
+        if (!/^\d{10}$/.test(mobile)) {
+            return res.status(400).json({
+                success: false,
+                message: "Mobile number must be exactly 10 digits long.",
+            });
+        }
+
+        // Validate Password (At least 6 characters long)
+        if (password.length < 6) {
+            return res.status(400).json({
+                success: false,
+                message: "Password must be at least 6 characters long.",
+            });
+        }
+
+        // Confirm Password Match
+        if (password !== confirmPassword) {
+            return res.status(400).json({
+                success: false,
+                message: "Passwords do not match. Please check again.",
+            });
+        }
+
+        // Check if username, email, or mobile number already exists in the database
+        let usercheck = await userSchema.findOne({ username });
+        let emailcheck = await userSchema.findOne({ email });
+        let mobilecheck = await userSchema.findOne({ mobile });
+
+        if (usercheck) {
+            return res.status(400).json({
+                success: false,
+                message: "This username is already taken. Please choose another.",
+            });
+        }
+
+        if (emailcheck) {
+            return res.status(400).json({
+                success: false,
+                message: "An account with this email already exists.",
+            });
+        }
+
+        if (mobilecheck) {
+            return res.status(400).json({
+                success: false,
+                message: "This mobile number is already registered.",
+            });
+        }
+
+        // If all validations pass, proceed to send OTP
+        sendOtp(email);
+        const hashPassword = await hashPass(password);
+
+        // Store user details in session for OTP verification
+        req.session.tempUser = {
+            name,
+            username,
+            mobile,
+            email,
+            password: hashPassword,
+        };
+
+        return res.status(200).json({
+            success: true,
+            message: "Signup successful! Please verify your email with the OTP sent.",
+            email: email,
+        });
+
+    } catch (error) {
+        console.error("Error in registration:", error.message);
+        res.status(500).json({
+            success: false,
+            message: "An unexpected error occurred. Please try again later.",
+        });
+    }
 };
-
 // OTP
 // the variable email is taking the email, it coming with otp from the otp.ejs page 
 const otpSender = async (req, res) => {
@@ -145,21 +173,7 @@ const verifyOTP = async (req, res) => {
 				password: newUser.password,
 			});
 
-			// const newWallet = await walletSchema.create({
-			// 	userId: createdUser._id,
-			// 	balance: 0,
-			// 	transactions: [],
-			// });
-
-			// // console.log(1,createdUser);
-			// // console.log(2,newWallet);
 			
-
-			// // Associate wallet with user
-			// createdUser.wallet = newWallet._id;
-			// await createdUser.save();
-
-
 			req.session.tempUser = null;
 			return res
 				.status(200)

@@ -5,67 +5,49 @@
 <!-- Redolence/index-18.html  22 Nov 2019 10:00:41 GMT -->
 
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Redolence - Bootstrap eCommerce Template</title>
-  <meta name="keywords" content="HTML5 Template">
-  <meta name="description" content="Redolence - Bootstrap eCommerce Template">
-  <meta name="author" content="p-themes">
-  <!-- Favicon -->
-  <link rel="apple-touch-icon" sizes="180x180" href="/user/assets/images/icons/apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/user/assets/images/icons/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/user/assets/images/icons/favicon-16x16.png">
-  <link rel="manifest" href="/user/assets/images/icons/site.html">
-  <link rel="mask-icon" href="/user/assets/images/icons/safari-pinned-tab.svg" color="#666666">
-  <link rel="shortcut icon" href="/user/assets/images/icons/favicon.ico">
-  <meta name="apple-mobile-web-app-title" content="Redolence">
-  <meta name="application-name" content="Redolence">
-  <meta name="msapplication-TileColor" content="#cc9966">
-  <meta name="msapplication-config" content="/user/assets/images/icons/browserconfig.xml">
-  <meta name="theme-color" content="#ffffff">
-  <!-- Plugins CSS File -->
-  <link rel="stylesheet" href="/user/assets/css/bootstrap.min.css">
-  <link rel="stylesheet" href="/user/assets/css/plugins/owl-carousel/owl.carousel.css">
-  <link rel="stylesheet" href="/user/assets/css/plugins/magnific-popup/magnific-popup.css">
-  <!-- Main CSS File -->
-  <link rel="stylesheet" href="/user/assets/css/style.css">
-  <link rel="stylesheet" href="/user/assets/css/demos/demo-18.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Redolence - Bootstrap eCommerce Template</title>
+    <meta name="keywords" content="HTML5 Template">
+    <meta name="description" content="Redolence - Bootstrap eCommerce Template">
+    <meta name="author" content="p-themes">
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/user/assets/images/icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/user/assets/images/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/user/assets/images/icons/favicon-16x16.png">
+    <link rel="manifest" href="/user/assets/images/icons/site.html">
+    <link rel="mask-icon" href="/user/assets/images/icons/safari-pinned-tab.svg" color="#666666">
+    <link rel="shortcut icon" href="/user/assets/images/icons/favicon.ico">
+    <meta name="apple-mobile-web-app-title" content="Redolence">
+    <meta name="application-name" content="Redolence">
+    <meta name="msapplication-TileColor" content="#cc9966">
+    <meta name="msapplication-config" content="/user/assets/images/icons/browserconfig.xml">
+    <meta name="theme-color" content="#ffffff">
+    <!-- Plugins CSS File -->
+    <link rel="stylesheet" href="/user/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/user/assets/css/plugins/owl-carousel/owl.carousel.css">
+    <link rel="stylesheet" href="/user/assets/css/plugins/magnific-popup/magnific-popup.css">
+    <!-- Main CSS File -->
+    <link rel="stylesheet" href="/user/assets/css/style.css">
+    <link rel="stylesheet" href="/user/assets/css/demos/demo-18.css">
 </head>
 
 <body>
-  <div class="page-wrapper">
-    <header class="header header-11">
-      <div class="header-middle sticky-header">
-        <div class="container">
-          <div class="header-left">
-            <nav class="main-nav">
-              <ul class="menu sf-arrows">
-                <li class="megamenu-container active">
-                  <a href="" class="">Home</a>
-                </li>
-                <li>
-                  <a href="/shop" class="">Product</a>
-                </li>
-                <li>
-                  <%if(User){%>
-                  <a href="/dashboard" class=""><%= User[0].name%></a>
-
-                  <%}else{%>
-                  <a href="/login" class="">Login</a>
-
-                  <%}%>
-                                    
-                </li>
-                <li>
-                                    <%if(User){%>
-                  <a href="/logout" class="">Logout</a>
-                  <%}else{%>
-                  <a href="/register" class="">Register</a>
-                  <%}%>
+    <div class="page-wrapper">
+        <header class="header header-11">
+            <div class="header-middle sticky-header">
+                <div class="container">
+                    <div class="header-left">
+                        <nav class="main-nav">
+                            <ul>
+                                <li>
+                                    <a href="/" class="logo">
+                                        <img src="/Redolence logo-01.png" alt="Redole Logo"
+                                            style="width:215px; height: 86px; padding-right: 23px">
+                                    </a>
                                 </li>
-
-                            </ul><!-- End .menu -->
+                            </ul>
                         </nav><!-- End .main-nav -->
 
                         <button class="mobile-menu-toggler">
@@ -74,33 +56,38 @@
                         </button>
                     </div><!-- End .header-left -->
 
-                    <div class="header-center">
-                        <a href="/" class="logo">
-                            <img src="/Redolence logo-01.png" alt="Redolence Logo" style="width: 200px; height: 100px; margin-top: -28px;" >
-                        </a>
-                    </div><!-- End .header-center -->
+
 
                     <div class="header-right">
-                        <div class="header-search header-search-extended header-search-visible">
-                            <a href="#" class="search-toggle" role="button"><i class="icon-search"></i></a>
-                            <form action="#" method="get">
-                                <div class="header-search-wrapper">
-                                    <label for="q" class="sr-only">Search</label>
-                                    <input type="search" class="form-control" name="q" id="q" placeholder="Search product ..." required>
-                                    <button class="btn btn-primary" type="submit"><i class="icon-search"></i></button>
-                                </div><!-- End .header-search-wrapper -->
-                            </form>
-                        </div><!-- End .header-search -->
-                        
-                        <a href="wishList" class="wishlist-link">
-                            <i class="icon-heart-o"></i>
-                        </a>
+                        <ul class="menu sf-arrows">
+                            <li class="megamenu-container active">
+                                <a href="" class="">Home</a>
+                            </li>
+                            <li>
+                                <a href="/shop" class="">Product</a>
+                            </li>
+                            <li>
+                                <%if(User){%>
+                                    <a href="/dashboard" class="">
+                                        <%= User[0].name%>
+                                    </a>
 
-                        <div class="dropdown cart-dropdown">
-                            <a href="/cart" class="dropdown-toggle" role="button" >
-                                <i class="icon-shopping-cart"></i>
-                            </a>
-                        </div>
+                                    <%}else{%>
+                                        <a href="/login" class="">Login</a>
+
+                                        <%}%>
+
+                            </li>
+                            <li>
+                                <%if(User){%>
+                                    <a href="/logout" class="">Logout</a>
+                                    <%}else{%>
+                                        <a href="/register" class="">Register</a>
+                                        <%}%>
+                            </li>
+
+                        </ul><!-- End .menu -->
+
                     </div><!-- End .header-right -->
                 </div><!-- End .container -->
             </div><!-- End .header-middle -->
@@ -108,8 +95,10 @@
 
         <main class="main">
             <div class="intro-slider-container mb-3 mb-lg-5">
-                <div class="intro-slider owl-carousel owl-theme owl-nav-inside owl-light" data-toggle="owl" data-owl-options='{"dots": true, "nav": false}'>
-                    <div class="intro-slide" style="background-image: url(/abstract-3d-flowers-with-perfume-bottle.webp);">
+                <div class="intro-slider owl-carousel owl-theme owl-nav-inside owl-light" data-toggle="owl"
+                    data-owl-options='{"dots": true, "nav": false}'>
+                    <div class="intro-slide"
+                        style="background-image: url(/abstract-3d-flowers-with-perfume-bottle.webp);">
                         <div class="container">
                             <div class="intro-content text-center">
                                 <h3 class="intro-subtitle cross-txt text-primary">SEASONAL PICKS</h3>
@@ -124,10 +113,12 @@
                         </div><!-- End .intro-content -->
                     </div><!-- End .intro-slide -->
 
-                    <div class="intro-slide" style="background-image: url(/user/assets/images/demos/demo-18/slider/slide-2.jpg);">
+                    <div class="intro-slide"
+                        style="background-image: url(/user/assets/images/demos/demo-18/slider/slide-2.jpg);">
                         <div class="container">
                             <div class="intro-content text-center">
-                                <h3 class="intro-subtitle text-primary cross-txt">Women's Accessories</h3><!-- End .h3 intro-subtitle -->
+                                <h3 class="intro-subtitle text-primary cross-txt">Women's Accessories</h3>
+                                <!-- End .h3 intro-subtitle -->
                                 <h1 class="intro-title text-white">Save up to</h1><!-- End .intro-title -->
                                 <div class="intro-text text-white">30-50% off</div><!-- End .intro-text -->
                                 <div class="intro-action cross-txt">
@@ -148,11 +139,12 @@
                     <div class="col-lg-6">
                         <div class="banner banner-hover">
                             <a href="shop">
-                                <img src="/user/img/img2.jpg" alt="Banner" style="width: 574px; height: 560px;" >
+                                <img src="/user/img/img2.jpg" alt="Banner" style="width: 574px; height: 560px;">
                             </a>
 
                             <div class="banner-content">
-                                <h3 class="banner-title text-white"><a href="#">Ladies perfumes and fragrances</a></h3><!-- End .banner-title -->
+                                <h3 class="banner-title text-white"><a href="#">Ladies perfumes and fragrances</a></h3>
+                                <!-- End .banner-title -->
                                 <a href="shop" class="banner-link">Shop Now <i class="icon-long-arrow-right"></i></a>
                             </div><!-- End .banner-content -->
                         </div><!-- End .banner -->
@@ -161,12 +153,14 @@
                     <div class="col-sm-6 col-lg-3">
                         <div class="banner banner-hover">
                             <a href="shop">
-                                <img src="/All_day_champs_compressed.webp" alt="Banner" style="width: 290px; height: 560px;" >
+                                <img src="/All_day_champs_compressed.webp" alt="Banner"
+                                    style="width: 290px; height: 560px;">
 
                             </a>
 
                             <div class="banner-content">
-                                <h3 class="banner-title text-white"><a href="#">Men’s Fragrances</a></h3><!-- End .banner-title -->
+                                <h3 class="banner-title text-white"><a href="#">Men’s Fragrances</a></h3>
+                                <!-- End .banner-title -->
                                 <a href="shop" class="banner-link">Shop Now <i class="icon-long-arrow-right"></i></a>
                             </div><!-- End .banner-content -->
                         </div><!-- End .banner -->
@@ -179,7 +173,8 @@
                             </a>
 
                             <div class="banner-content">
-                                <h3 class="banner-title text-white"><a href="#">Unisex Fragrances </a></h3><!-- End .banner-title -->
+                                <h3 class="banner-title text-white"><a href="#">Unisex Fragrances </a></h3>
+                                <!-- End .banner-title -->
                                 <a href="shop" class="banner-link">Shop Now <i class="icon-long-arrow-right"></i></a>
                             </div><!-- End .banner-content -->
                         </div><!-- End .banner -->
@@ -190,7 +185,8 @@
                             </a>
 
                             <div class="banner-content">
-                                <h3 class="banner-title text-white"><a href="#">New Arrivals</a></h3><!-- End .banner-title -->
+                                <h3 class="banner-title text-white"><a href="#">New Arrivals</a></h3>
+                                <!-- End .banner-title -->
                                 <a href="shop" class="banner-link">Shop Now <i class="icon-long-arrow-right"></i></a>
                             </div><!-- End .banner-content -->
                         </div><!-- End .banner -->
@@ -204,56 +200,68 @@
                         <h2 class="title">Recent Arrivals</h2>
                         <div class="products-container mb-7">
                             <div class="row justify-content-center">
-                                <% if(recentProducts && recentProducts.length > 0) { %>
+                                <% if(recentProducts && recentProducts.length> 0) { %>
                                     <% recentProducts.forEach(function(product) { %>
                                         <div class="col-6 col-md-4">
                                             <div class="product product-4">
                                                 <figure class="product-media">
-                                                    <a href="/product/<%= product._id %>">
-                                                        <% if(product.images && product.images.length > 0) { %>
-                                                            <img src="/uploads/<%= product.images[0] %>" alt="<%= product.name %>" class="product-image">
+                                                    <a href="/product?id=<%= product._id %>">
+                                                        <% if(product.images && product.images.length> 0) { %>
+                                                            <img src="/uploads/<%= product.images[0] %>"
+                                                                alt="<%= product.name %>" class="product-image">
                                                             <% if(product.images[1]) { %>
-                                                                <img src="/uploads/<%= product.images[1] %>" alt="<%= product.name %>" class="product-image-hover">
-                                                            <% } %>
-                                                        <% } %>
+                                                                <img src="/uploads/<%= product.images[1] %>"
+                                                                    alt="<%= product.name %>"
+                                                                    class="product-image-hover">
+                                                                <% } %>
+                                                                    <% } %>
                                                     </a>
-                        
+
                                                     <div class="product-action-vertical">
-                                                        <a href="wishList" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
-                                                        <a href="#" class="btn-product-icon btn-quickview" title="Quick view"><span>Quick view</span></a>
+                                                        <a href="wishList"
+                                                            class="btn-product-icon btn-wishlist btn-expandable"><span>add
+                                                                to wishlist</span></a>
+                                                        <a href="#" class="btn-product-icon btn-quickview"
+                                                            title="Quick view"><span>Quick view</span></a>
                                                     </div>
-                        
+
                                                     <div class="product-action">
                                                         <div class="product-action action-icon-top">
-                                                            <button class="btn-product btn-cart" data-id="<%= product._id %>"><span>add to cart</span></button>
+                                                            <button class="btn-product btn-cart"
+                                                                data-id="<%= product._id %>"><span>add to
+                                                                    cart</span></button>
                                                         </div><!-- End .product-action -->
                                                     </div>
                                                 </figure>
-                        
+
                                                 <div class="product-body">
                                                     <div class="product-cat">
-                                                        <a href="/category/<%= product.category._id %>"><%= product.category.name %></a>
+                                                        <a href="/category/<%= product.category._id %>">
+                                                            <%= product.category.name %>
+                                                        </a>
                                                     </div>
-                                                    <h3 class="product-title"><a href="/product/<%= product._id %>"><%= product.name %></a></h3>
+                                                    <h3 class="product-title"><a href="/product/<%= product._id %>">
+                                                            <%= product.name %>
+                                                        </a></h3>
                                                     <div class="product-price">
                                                         $<%= product.price.toFixed(2) %>
                                                     </div>
-                                                    
-                                                    <% if(product.stock <= 0) { %>
+
+                                                    <% if(product.stock <=0) { %>
                                                         <div class="product-label label-out">Out of Stock</div>
-                                                    <% } %>
+                                                        <% } %>
                                                 </div>
                                             </div>
                                         </div>
-                                    <% }); %>
-                                <% } else { %>
-                                    <div class="col-12 text-center">
-                                        <p>No products available</p>
-                                    </div>
-                                <% } %>
+                                        <% }); %>
+                                            <% } else { %>
+                                                <div class="col-12 text-center">
+                                                    <p>No products available</p>
+                                                </div>
+                                                <% } %>
                             </div>
                         </div>
-                        
+
                     </div>
 
                     <aside class="col-lg-3">
@@ -262,55 +270,65 @@
                                 <div class="col-sm-6 col-lg-12">
                                     <div class="widget widget-products">
                                         <h4 class="widget-title">Best Selling</h4>
-                    
+
                                         <div class="products">
-                                            <% if(bestSellingProducts && bestSellingProducts.length > 0) { %>
+                                            <% if(bestSellingProducts && bestSellingProducts.length> 0) { %>
                                                 <% bestSellingProducts.forEach(function(product) { %>
                                                     <div class="product product-sm">
                                                         <figure class="product-media">
                                                             <a href="/product/<%= product._id %>">
-                                                                <% if(product.images && product.images.length > 0) { %>
-                                                                    <img src="/uploads/<%= product.images[0] %>" alt="<%= product.name %>" class="product-image">
-                                                                <% } %>
+                                                                <% if(product.images && product.images.length> 0) { %>
+                                                                    <img src="/uploads/<%= product.images[0] %>"
+                                                                        alt="<%= product.name %>" class="product-image">
+                                                                    <% } %>
                                                             </a>
                                                         </figure>
-                    
+
                                                         <div class="product-body">
                                                             <div class="product-cat">
-                                                                <a href="/category/<%= product.category._id %>"><%= product.category.name %></a>
+                                                                <a href="/category/<%= product.category._id %>">
+                                                                    <%= product.category.name %>
+                                                                </a>
                                                             </div>
                                                             <h5 class="product-title">
-                                                                <a href="/product/<%= product._id %>"><%= product.name %></a>
+                                                                <a href="/product/<%= product._id %>">
+                                                                    <%= product.name %>
+                                                                </a>
                                                             </h5>
                                                             <div class="product-price">
                                                                 <% if (product.oldPrice) { %>
-                                                                    <span class="new-price">Now $<%= product.price.toFixed(2) %></span>
-                                                                    <span class="old-price">Was $<%= product.oldPrice.toFixed(2) %></span>
-                                                                <% } else { %>
-                                                                    $<%= product.price.toFixed(2) %>
-                                                                <% } %>
+                                                                    <span class="new-price">Now $<%=
+                                                                            product.price.toFixed(2) %></span>
+                                                                    <span class="old-price">Was $<%=
+                                                                            product.oldPrice.toFixed(2) %></span>
+                                                                    <% } else { %>
+                                                                        $<%= product.price.toFixed(2) %>
+                                                                            <% } %>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                <% }); %>
-                                            <% } else { %>
-                                                <p>No best selling products available</p>
-                                            <% } %>
+                                                    <% }); %>
+                                                        <% } else { %>
+                                                            <p>No best selling products available</p>
+                                                            <% } %>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="col-sm-6 col-lg-12">
-                                    <div class="widget widget-subscribe" style="background-image: url(/homepage2.avif);">
-                                        <h2 class="widget-title">Sign up for email <br>& get 25% off </h2><!-- End .widget-title -->
+                                    <div class="widget widget-subscribe"
+                                        style="background-image: url(/homepage2.avif);">
+                                        <h2 class="widget-title">Sign up for email <br>& get 25% off </h2>
+                                        <!-- End .widget-title -->
                                         <p>Subcribe to get information about products and coupons</p>
 
                                         <form action="#">
-                                            <input type="email" class="form-control" placeholder="Enter your Email Address" required>
+                                            <input type="email" class="form-control"
+                                                placeholder="Enter your Email Address" required>
 
                                             <input type="submit" class="btn btn-outline-white" value="Subscribe">
                                         </form>
-                                        
+
                                     </div><!-- End .widget widget-banner -->
                                 </div><!-- End .col-sm-6 col-lg-12 -->
 
@@ -318,13 +336,16 @@
                                     <div class="widget widget-banner">
                                         <div class="banner banner-overlay">
                                             <a href="shop">
-                                    <div class="widget widget-subscribe" style="background-image: url(/homePage1.jpg);">
+                                                <div class="widget widget-subscribe"
+                                                    style="background-image: url(/homePage1.jpg);">
 
                                             </a>
 
                                             <div class="banner-content">
-                                                <h4 class="banner-subtitle"><a href="#">Spring 2019</a></h4><!-- End .banner-title -->
-                                                <h3 class="banner-title"><a href="#">SAVE UP TO <br>50% OFF</a></h3><!-- End .banner-title -->
+                                                <h4 class="banner-subtitle"><a href="#">Spring 2019</a></h4>
+                                                <!-- End .banner-title -->
+                                                <h3 class="banner-title"><a href="#">SAVE UP TO <br>50% OFF</a></h3>
+                                                <!-- End .banner-title -->
                                                 <a href="#" class="banner-link">Shop Now</a>
                                             </div><!-- End .banner-content -->
                                         </div><!-- End .banner -->
@@ -335,8 +356,7 @@
                                     <div class="widget widget-posts">
                                         <h4 class="widget-title">New Blog Posts</h4><!-- End .widget-title -->
 
-                                        <div class="owl-carousel owl-simple" data-toggle="owl" 
-                                            data-owl-options='{
+                                        <div class="owl-carousel owl-simple" data-toggle="owl" data-owl-options='{
                                                 "nav":false, 
                                                 "dots": true, 
                                                 "loop": false, 
@@ -345,8 +365,9 @@
                                             <article class="entry">
                                                 <figure class="entry-media">
                                                     <a href="single.html">
-                                    <div class="widget widget-subscribe" style="background-image: url(/homePage3.jpg);">
-                                                        <!-- <img src="/homePage3.jpg" alt="image desc"> -->
+                                                        <div class="widget widget-subscribe"
+                                                            style="background-image: url(/homePage3.jpg);">
+                                                            <!-- <img src="/homePage3.jpg" alt="image desc"> -->
                                                     </a>
                                                 </figure><!-- End .entry-media -->
 
@@ -360,7 +381,8 @@
                                                     </h5><!-- End .entry-title -->
 
                                                     <div class="entry-content">
-                                                        <p>Lorem ipsum dolor sit amet, consec tetuer adipiscing elit. Donec odio</p>
+                                                        <p>Lorem ipsum dolor sit amet, consec tetuer adipiscing elit.
+                                                            Donec odio</p>
                                                         <a href="single.html" class="read-more">Read More</a>
                                                     </div><!-- End .entry-content -->
                                                 </div><!-- End .entry-body -->
@@ -383,7 +405,8 @@
                                                     </h5><!-- End .entry-title -->
 
                                                     <div class="entry-content">
-                                                        <p>Suspendisse urna nibh, viverra non, semper suscipit, posuere a, pede ...</p>
+                                                        <p>Suspendisse urna nibh, viverra non, semper suscipit, posuere
+                                                            a, pede ...</p>
                                                         <a href="single.html" class="read-more">Read More</a>
                                                     </div><!-- End .entry-content -->
                                                 </div><!-- End .entry-body -->
@@ -396,9 +419,9 @@
                     </aside><!-- End .col-lg-3 -->
                 </div><!-- End .row -->
 
-                
 
-            
+
+
         </main><!-- End .main -->
 
         <footer class="footer footer-dark">
@@ -417,7 +440,7 @@
                                 </div><!-- End .icon-box-content -->
                             </div><!-- End .icon-box -->
                         </div><!-- End .col-sm-6 col-lg-3 -->
-                        
+
                         <div class="col-sm-6 col-lg-3">
                             <div class="icon-box icon-box-side">
                                 <span class="icon-box-icon">
@@ -464,15 +487,22 @@
                     <div class="row">
                         <div class="col-sm-6 col-lg-3">
                             <div class="widget widget-about">
-                                <img src="/Redolence logo-01.png" class="footer-logo" alt="Footer Logo" style="width: 170px; height: 100px">
-                                <p>Praesent dapibus, neque id cursus ucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. </p>
+                                <img src="/Redolence logo-01.png" class="footer-logo" alt="Footer Logo"
+                                    style="width: 170px; height: 100px">
+                                <p>Praesent dapibus, neque id cursus ucibus, tortor neque egestas augue, eu vulputate
+                                    magna eros eu erat. </p>
 
                                 <div class="social-icons">
-                                    <a href="#" class="social-icon" title="Facebook" target="_blank"><i class="icon-facebook-f"></i></a>
-                                    <a href="#" class="social-icon" title="Twitter" target="_blank"><i class="icon-twitter"></i></a>
-                                    <a href="#" class="social-icon" title="Instagram" target="_blank"><i class="icon-instagram"></i></a>
-                                    <a href="#" class="social-icon" title="Youtube" target="_blank"><i class="icon-youtube"></i></a>
-                                    <a href="#" class="social-icon" title="Pinterest" target="_blank"><i class="icon-pinterest"></i></a>
+                                    <a href="#" class="social-icon" title="Facebook" target="_blank"><i
+                                            class="icon-facebook-f"></i></a>
+                                    <a href="#" class="social-icon" title="Twitter" target="_blank"><i
+                                            class="icon-twitter"></i></a>
+                                    <a href="#" class="social-icon" title="Instagram" target="_blank"><i
+                                            class="icon-instagram"></i></a>
+                                    <a href="#" class="social-icon" title="Youtube" target="_blank"><i
+                                            class="icon-youtube"></i></a>
+                                    <a href="#" class="social-icon" title="Pinterest" target="_blank"><i
+                                            class="icon-pinterest"></i></a>
                                 </div><!-- End .soial-icons -->
                             </div><!-- End .widget about-widget -->
                         </div><!-- End .col-sm-6 col-lg-3 -->
@@ -525,7 +555,8 @@
 
             <div class="footer-bottom">
                 <div class="container">
-                    <p class="footer-copyright">Copyright © 2019 Redolence Store. All Rights Reserved.</p><!-- End .footer-copyright -->
+                    <p class="footer-copyright">Copyright © 2019 Redolence Store. All Rights Reserved.</p>
+                    <!-- End .footer-copyright -->
                     <figure class="footer-payments">
                         <img src="/user/assets/images/payments.png" alt="Payment methods" width="272" height="20">
                     </figure><!-- End .footer-payments -->
@@ -544,10 +575,11 @@
 
             <form action="#" method="get" class="mobile-search">
                 <label for="mobile-search" class="sr-only">Search</label>
-                <input type="search" class="form-control" name="mobile-search" id="mobile-search" placeholder="Search in..." required>
+                <input type="search" class="form-control" name="mobile-search" id="mobile-search"
+                    placeholder="Search in..." required>
                 <button class="btn btn-primary" type="submit"><i class="icon-search"></i></button>
             </form>
-            
+
             <nav class="mobile-nav">
                 <ul class="mobile-menu">
                     <li class="active">
@@ -587,10 +619,12 @@
                             <li><a href="category-2cols.html">Shop Grid 2 Columns</a></li>
                             <li><a href="category.html">Shop Grid 3 Columns</a></li>
                             <li><a href="category-4cols.html">Shop Grid 4 Columns</a></li>
-                            <li><a href="category-boxed.html"><span>Shop Boxed No Sidebar<span class="tip tip-hot">Hot</span></span></a></li>
+                            <li><a href="category-boxed.html"><span>Shop Boxed No Sidebar<span
+                                            class="tip tip-hot">Hot</span></span></a></li>
                             <li><a href="category-fullwidth.html">Shop Fullwidth No Sidebar</a></li>
                             <li><a href="product-category-boxed.html">Product Category Boxed</a></li>
-                            <li><a href="product-category-fullwidth.html"><span>Product Category Fullwidth<span class="tip tip-new">New</span></span></a></li>
+                            <li><a href="product-category-fullwidth.html"><span>Product Category Fullwidth<span
+                                            class="tip tip-new">New</span></span></a></li>
                             <li><a href="cart.html">Cart</a></li>
                             <li><a href="checkout.html">Checkout</a></li>
                             <li><a href="wishlist.html">Wishlist</a></li>
@@ -602,7 +636,8 @@
                         <ul>
                             <li><a href="product.html">Default</a></li>
                             <li><a href="product-centered.html">Centered</a></li>
-                            <li><a href="product-extended.html"><span>Extended Info<span class="tip tip-new">New</span></span></a></li>
+                            <li><a href="product-extended.html"><span>Extended Info<span
+                                            class="tip tip-new">New</span></span></a></li>
                             <li><a href="product-gallery.html">Gallery</a></li>
                             <li><a href="product-sticky.html">Sticky Info</a></li>
                             <li><a href="product-sidebar.html">Boxed With Sidebar</a></li>
@@ -720,23 +755,28 @@
                         <div class="form-tab">
                             <ul class="nav nav-pills nav-fill" role="tablist">
                                 <li class="nav-item">
-                                    <a class="nav-link active" id="signin-tab" data-toggle="tab" href="#signin" role="tab" aria-controls="signin" aria-selected="true">Sign In</a>
+                                    <a class="nav-link active" id="signin-tab" data-toggle="tab" href="#signin"
+                                        role="tab" aria-controls="signin" aria-selected="true">Sign In</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" id="register-tab" data-toggle="tab" href="#register" role="tab" aria-controls="register" aria-selected="false">Register</a>
+                                    <a class="nav-link" id="register-tab" data-toggle="tab" href="#register" role="tab"
+                                        aria-controls="register" aria-selected="false">Register</a>
                                 </li>
                             </ul>
                             <div class="tab-content" id="tab-content-5">
-                                <div class="tab-pane fade show active" id="signin" role="tabpanel" aria-labelledby="signin-tab">
+                                <div class="tab-pane fade show active" id="signin" role="tabpanel"
+                                    aria-labelledby="signin-tab">
                                     <form action="#">
                                         <div class="form-group">
                                             <label for="singin-email">Username or email address *</label>
-                                            <input type="text" class="form-control" id="singin-email" name="singin-email" required>
+                                            <input type="text" class="form-control" id="singin-email"
+                                                name="singin-email" required>
                                         </div><!-- End .form-group -->
 
                                         <div class="form-group">
                                             <label for="singin-password">Password *</label>
-                                            <input type="password" class="form-control" id="singin-password" name="singin-password" required>
+                                            <input type="password" class="form-control" id="singin-password"
+                                                name="singin-password" required>
                                         </div><!-- End .form-group -->
 
                                         <div class="form-footer">
@@ -746,8 +786,10 @@
                                             </button>
 
                                             <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="signin-remember">
-                                                <label class="custom-control-label" for="signin-remember">Remember Me</label>
+                                                <input type="checkbox" class="custom-control-input"
+                                                    id="signin-remember">
+                                                <label class="custom-control-label" for="signin-remember">Remember
+                                                    Me</label>
                                             </div><!-- End .custom-checkbox -->
 
                                             <a href="#" class="forgot-link">Forgot Your Password?</a>
@@ -775,12 +817,14 @@
                                     <form action="#">
                                         <div class="form-group">
                                             <label for="register-email">Your email address *</label>
-                                            <input type="email" class="form-control" id="register-email" name="register-email" required>
+                                            <input type="email" class="form-control" id="register-email"
+                                                name="register-email" required>
                                         </div><!-- End .form-group -->
 
                                         <div class="form-group">
                                             <label for="register-password">Password *</label>
-                                            <input type="password" class="form-control" id="register-password" name="register-password" required>
+                                            <input type="password" class="form-control" id="register-password"
+                                                name="register-password" required>
                                         </div><!-- End .form-group -->
 
                                         <div class="form-footer">
@@ -790,8 +834,10 @@
                                             </button>
 
                                             <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="register-policy" required>
-                                                <label class="custom-control-label" for="register-policy">I agree to the <a href="#">privacy policy</a> *</label>
+                                                <input type="checkbox" class="custom-control-input" id="register-policy"
+                                                    required>
+                                                <label class="custom-control-label" for="register-policy">I agree to the
+                                                    <a href="#">privacy policy</a> *</label>
                                             </div><!-- End .custom-checkbox -->
                                         </div><!-- End .form-footer -->
                                     </form>
@@ -833,8 +879,8 @@
     <!-- Main JS File -->
     <script src="/user/assets/js/main.js"></script>
     <script src="/user/assets/js/demos/demo-18.js"></script>
-    
-</body>
+
+
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
@@ -859,15 +905,15 @@
                 const data = await response.json();
                 if (response.ok) {
                     Swal.fire({
-                        icon: 'success', 
+                        icon: 'success',
                         title: 'Success',
-                        text: data.message, 
+                        text: data.message,
                     });
                 } else {
                     Swal.fire({
-                        icon: 'error', 
+                        icon: 'error',
                         title: 'Failed',
-                        text: data.message, 
+                        text: data.message,
                     });
                 }
             } catch (error) {
@@ -877,5 +923,55 @@
     });
 </script>
 
+
+<script>
+    const addToWishlistButtons = document.querySelectorAll('.btn-wishlist');
+
+    addToWishlistButtons.forEach(button => {
+      button.addEventListener('click', async (event) => {
+        event.preventDefault();
+        const productId = button.getAttribute('data-id');
+
+        try {
+          const response = await fetch("/wishlist", {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ productId }),
+          });
+
+          const data = await response.json();
+          if (response.ok) {
+            button.classList.toggle('in-wishlist');
+            button.querySelector('span').textContent = button.classList.contains('in-wishlist') ? 'Remove from wishlist' : 'Add to wishlist';
+
+            if (button.classList.contains('in-wishlist')) {
+              button.classList.add('blink');
+              setTimeout(() => {
+                button.classList.remove('blink');
+              }, 2000);
+            }
+            Swal.fire({
+              icon: 'success',
+              title: 'Success',
+              text: data.message,
+            });
+          } else {
+            Swal.fire({
+              icon: 'error',
+              title: 'Failed',
+              text: data.message,
+            });
+          }
+        } catch (error) {
+          console.error('Error adding to wishlist:', error);
+        }
+      });
+    });
+  </script>
+
+
 <!-- Redolence/index-18.html  22 Nov 2019 10:00:57 GMT -->
+</body>
 </html>

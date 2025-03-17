@@ -29,7 +29,8 @@ const couponSchema = new mongoose.Schema({
     maxAmount: {
         type: Number,
         required: true
-    }
+    },
+    appliedUsers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }] // ✅ Track users who applied
 });
 
 module.exports = mongoose.model('Coupon', couponSchema);

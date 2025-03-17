@@ -1,10 +1,7 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 const userSchema = require('../../model/userModel');
 const sendPassword = require('../../utils/sendPassword');
 const bcrypt = require('bcrypt');
-
-
-
 
 const login = async (req, res) => {
 	try {
@@ -18,30 +15,62 @@ const login = async (req, res) => {
 const logincheck = async (req, res) => {
 	try {
 		const { username, password } = req.body;
-		// check the user exist in the db
+
+		// Check if username and password are provided
+		if (!username || !password) {
+			return res
+				.status(400)
+				.json({
+					success: false,
+					message: 'Username and password are required',
+				});
+		}
+
+		// Validate username length (Optional: Add regex if needed)
+		if (username.length < 3) {
+			return res
+				.status(400)
+				.json({
+					success: false,
+					message: 'Username must be at least 3 characters long',
+				});
+		}
+
+		// Check if user exists in the database
 		const userCheck = await userSchema.findOne({ username: username });
 
-		if (userCheck === null) {
-			console.log('User not Found!');
+		if (!userCheck) {
+			console.log('User not found!');
 			return res
-				.status(400)
-				.json({ success: false, message: 'User not Found!' });
+				.status(404)
+				.json({ success: false, message: 'Invalid username or password' });
 		}
-		//bcrypt the password and matching with password in the db 
-		const is_password = await bcrypt.compare(password, userCheck.password);
-		if (!is_password) {
-			console.log('password not matching');
+
+		// Compare entered password with hashed password in DB
+		const isPasswordValid = await bcrypt.compare(password, userCheck.password);
+
+		if (!isPasswordValid) {
+			console.log('Incorrect password attempt');
 			return res
-				.status(400)
-				.json({ success: false, message: 'password not matching' });
-		} else {
-			req.session.user = userCheck;
-			return res.status(200).json({ success: true });
+				.status(401)
+				.json({ success: false, message: 'Invalid username or password' });
 		}
+
+		// Store user session after successful login
+		req.session.user = userCheck;
+
+		return res.status(200).json({ success: true, message: 'Login successful' });
 	} catch (error) {
-		console.log(error);
+		console.error('Login error:', error);
+		return res
+			.status(500)
+			.json({
+				success: false,
+				message: 'Something went wrong. Please try again later.',
+			});
 	}
 };
+
 const userLogout = async (req, res) => {
 	try {
 		delete req.session.user;
@@ -50,10 +79,6 @@ const userLogout = async (req, res) => {
 		console.log(error);
 	}
 };
-
-
-
-
 
 const forgotpage = async (req, res) => {
 	try {
@@ -78,19 +103,15 @@ const forgotpageCheck = async (req, res) => {
 			//send password to the mail
 			sendPassword(email);
 			console.log(sendPassword);
-			return res
-				.status(200)
-				.json({
-					success: true,
-					message: 'Password send to your email successfully....!',
-				});
+			return res.status(200).json({
+				success: true,
+				message: 'Password send to your email successfully....!',
+			});
 		}
 	} catch (error) {
 		console.log(error);
 	}
 };
-
-
 
 module.exports = {
 	login,

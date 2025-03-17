@@ -12,22 +12,29 @@ const renderCategoryPage = async (req, res) => {
 };
 
 const addCategory = async (req, res) => {
-	try {
-			const { name, description, status } = req.body;
+    try {
+        let { name, description, status } = req.body;
 
-			// Check if the category already exists
-			const existingCategory = await CategorySchema.findOne({ name });
+        // Trim input values
+        name = name?.trim();
 
-			if (existingCategory) {
-			  return res.status(400).json({ success: false, message: 'Category already exists' });
-			}
+        // Check for empty fields
+        if (!name) {
+            return res.status(400).json({ success: false, message: 'Name is required' });
+        }
 
+        // Ensure case-insensitive uniqueness
+        const existingCategory = await CategorySchema.findOne({ name: { $regex: `^${name}$`, $options: 'i' } });
 
-			  // Create a new category`
-			  const newCategory = new CategorySchema({ name, description, status });
-			  await newCategory.save();
+        if (existingCategory) {
+            return res.status(400).json({ success: false, message: 'Category already exists' });
+        }
 
-			  res.status(200).json({ success: true, message: 'Category created successfully!' }); 
+        // Create a new category
+        const newCategory = new CategorySchema({ name, description, status });
+        await newCategory.save();
+
+        res.status(200).json({ success: true, message: 'Category created successfully!' });
 
 	} catch (error) {
 		res.status(500).json({
@@ -37,37 +44,9 @@ const addCategory = async (req, res) => {
 		});
 	}
 };
-const categoryCheck = async (req, res) => {
-	try {
-		const { name, description, status } = req.body;
-		const existingCategory = await CategorySchema.findOne({ name: name });
-		if (existingCategory) {
-			return res
-				.status(409)
-				.json({ success: false, message: 'Category already exists' });
-		}
-
-		const newCategory = new CategorySchema({
-			name: name.trim(),
-			description: description,
-			status: status,
-		});
-
-		await newCategory.save();
-
-		res
-			.status(200)
-			.json({ success: true, message: 'Category added successfully' });
-	} catch (error) {
-		res.status(500).json({
-			success: false,
-			message: 'An error occurred while adding the category',
-		});
-	}
-};
 
 
-// Get single category
+// Get single category for edit
 const getCategory = async (req, res) => {
     try {
 		
@@ -82,7 +61,7 @@ const getCategory = async (req, res) => {
     }
 };
 
-// Update category
+// Update category, to show values in edit modal
 const updateCategory = async (req, res) => {
     try {
 		const { id,name,description,status } = req.body
@@ -103,13 +82,40 @@ const updateCategory = async (req, res) => {
     }
 };
 
+//block and unblock
+const blockCategory = async (req, res) => {
+	try {
+        const { categoryId } = req.body;
+        const category = await CategorySchema.findById(categoryId);
+
+        if (!category) {
+            return res.status(404).json({ 
+                success: false, 
+                message: 'Category not found' 
+            });
+        }
+
+        // Toggle status
+        category.status = category.status === 'listed' ? 'unlisted' : 'listed';
+        await category.save();
+
+        res.json({ 
+            success: true, 
+            newStatus: category.status 
+        });
+    } catch (error) {
+        res.status(500).json({ 
+            success: false, 
+            message: error.message 
+        });
+    }
+}
 
 
 module.exports = {
 	renderCategoryPage,
 	addCategory,
-	categoryCheck,
 	getCategory,
 	updateCategory,
-	
+	blockCategory
 };

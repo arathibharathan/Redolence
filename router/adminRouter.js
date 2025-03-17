@@ -45,14 +45,13 @@ adminRouter.post('/blockUser', userController.blockUser);
 adminRouter.post('/unblockUser', userController.unblockUser);
 
 
-// categoryRouter
-adminRouter.get('/category', auth.isLogin, categoryController.renderCategoryPage);
-adminRouter.post('/addCategory', categoryController.addCategory);
-adminRouter.post('/category', categoryController.categoryCheck);
-
 // Category routes
+adminRouter.get('/category', auth.isLogin, categoryController.renderCategoryPage);
+adminRouter.post('/addCategory', auth.isLogin, categoryController.addCategory);
 adminRouter.get('/category/:id', auth.isLogin, categoryController.getCategory);
 adminRouter.put('/editCategory', auth.isLogin, categoryController.updateCategory);
+adminRouter.put('/blockCategory', auth.isLogin, categoryController.blockCategory)
+
 
 
 // product

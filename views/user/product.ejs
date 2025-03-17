@@ -8,7 +8,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Redolence - Bootstrap eCommerce Template</title>
+  <title>Redolence</title>
   <meta name="keywords" content="HTML5 Template">
   <meta name="description" content="Redolence - Bootstrap eCommerce Template">
   <meta name="author" content="p-themes">
@@ -31,6 +31,7 @@
   <!-- Main CSS File -->
   <link rel="stylesheet" href="/user/assets/css/style.css">
   <link rel="stylesheet" href="/user/assets/css/plugins/nouislider/nouislider.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 
 <body>
@@ -102,7 +103,11 @@
               </ul><!-- End .menu -->
             </nav><!-- End .main-nav -->
           </div><!-- End .header-left -->
-
+          <div>
+            <a href="/wallet">
+                <i class="fa-solid fa-wallet" style="color: black; font-size: 20px; padding-left: 421px;"></i>
+            </a>
+        </div>
           <div class="header-right">
             <div class="header-search">
               <a href="#" class="search-toggle" role="button" title="Search"><i class="icon-search"></i></a>
@@ -113,10 +118,10 @@
                 </div><!-- End .header-search-wrapper -->
               </form>
             </div>
+
+             
             <div class="dropdown compare-dropdown">
-              <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static" title="Compare Products" aria-label="Compare Products">
-                <i class="icon-random"></i>
-              </a>
+           
 
               <div class="dropdown-menu dropdown-menu-right">
                 <ul class="compare-products">
@@ -191,6 +196,11 @@
       </div><!-- End .header-middle -->
     </header><!-- End .header -->
 
+    <div class="page-header text-center" style="background-image: url('/user/assets/images/page-header-bg.jpg')">
+      <div class="container py-5">
+          <h1 class="page-title">Products<span>Shop</span></h1>
+      </div>
+  </div>
     <main class="main">
       <nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
         <div class="container d-flex align-items-center">
@@ -279,8 +289,7 @@
                   <div class="product-details-action">
                     <a href="#" class="btn-product btn-cart" data-id="<%= product._id %>"><span>Add to Cart</span></a>
                     <div class="details-action-wrapper">
-                      <a href="#" class="btn-product btn-wishlist" title="Wishlist"><span>Add to Wishlist</span></a>
-                      <a href="#" class="btn-product btn-compare" title="Compare"><span>Add to Compare</span></a>
+                      <a href="#" class="btn-product btn-wishlist" data-id="<%= product._id%>" title="Wishlist"><span>Add to Wishlist</span></a>
                     </div><!-- End .details-action-wrapper -->
                   </div><!-- End .product-details-action -->
 
@@ -334,7 +343,7 @@
                 </a>
 
                 <div class="product-action-vertical">
-                  <!-- <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a> -->
+                  <a href="#" class="btn-product-icon btn-wishlist btn-expandable"><span>add to wishlist</span></a>
                 </div><!-- End .product-action-vertical -->
 
                 <div class="product-action">
@@ -800,6 +809,55 @@
       });
     });
   </script>
+
+
+<script>
+  const addToWishlistButtons = document.querySelectorAll('.btn-wishlist');
+
+  addToWishlistButtons.forEach(button => {
+    button.addEventListener('click', async (event) => {
+      event.preventDefault();
+      const productId = button.getAttribute('data-id');
+
+      try {
+        const response = await fetch("/wishlist", {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ productId }),
+        });
+
+        const data = await response.json();
+        if (response.ok) {
+          button.classList.toggle('in-wishlist');
+          // This finds the <span> element inside the button and changes its text based on whether the button now has the 'in-wishlist' class. If it does, the text becomes "Remove from wishlist"; otherwise, it's "Add to wishlist".
+          button.querySelector('span').textContent = button.classList.contains('in-wishlist') ? 'Remove from wishlist' : 'Add to wishlist';
+
+          if (button.classList.contains('in-wishlist')) {
+            button.classList.add('blink');
+            setTimeout(() => {
+              button.classList.remove('blink');
+            }, 2000);
+          }
+          Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: data.message,
+          });
+        } else {
+          Swal.fire({
+            icon: 'info',
+            title: 'Warning',
+            text: data.message,
+          });
+        }
+      } catch (error) {
+        console.error('Error adding to wishlist:', error);
+      }
+    });
+  });
+</script>
 </body>
 
 

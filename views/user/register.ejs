@@ -77,7 +77,7 @@
     .login-container button {
       width: 100%;
       padding: 12px;
-      background-color: #4CAF50;
+      background-color: #c96;
       color: white;
       border: none;
       border-radius: 4px;
@@ -87,7 +87,7 @@
     }
 
     .login-container button:hover {
-      background-color: #45a049;
+      background-color: #c96;
     }
 
     .login-container a {
@@ -263,7 +263,7 @@
     </div>
   </footer>
 
-
+<!-- registration -->
   <script>
     const form = document.getElementById("signform")
     form.addEventListener('submit', async function(event) { 
@@ -288,13 +288,13 @@
       if (result.success === true) {
         // email
         window.location.href = `/otp/${result.email}`
+        
       } else {
         document.getElementById('informationlabel').innerHTML = result.message
       }
     })
   </script>
-
-
+  
 </body>
 
 </html>
