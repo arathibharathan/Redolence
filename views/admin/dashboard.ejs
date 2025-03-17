@@ -19,24 +19,7 @@
   <link rel="canonical" href="https://themeselection.com/item/Redolence-bootstrap-html-admin-template/">
 
 
-  <!-- ? PROD Only: Google Tag Manager (Default ThemeSelection: GTM-5DDHKGP, PixInvent: GTM-5J3LMKC) -->
-  <script>
-    (function(w, d, s, l, i) {
-      w[l] = w[l] || [];
-      w[l].push({
-        'gtm.start': new Date().getTime(),
-        event: 'gtm.js'
-      });
-      var f = d.getElementsByTagName(s)[0],
-        j = d.createElement(s),
-        dl = l != 'dataLayer' ? '&l=' + l : '';
-      j.async = true;
-      j.src =
-        '../../../../www.googletagmanager.com/gtm5445.html?id=' + i + dl;
-      f.parentNode.insertBefore(j, f);
-    })(window, document, 'script', 'dataLayer', 'GTM-5DDHKGP');
-  </script>
-  <!-- End Google Tag Manager -->
+ 
 
   <!-- Favicon -->
   <link rel="icon" type="image/x-icon" href="/Redolence logo-01.png" />
@@ -67,44 +50,15 @@
   <link rel="stylesheet" href="../../admin/assets/vendor/libs/apex-charts/apex-charts.css" />
   <link rel="stylesheet" href="../../admin/assets/vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.css">
 
+  <!-- Page CSS -->
 
 
   <!-- Helpers -->
   <script src="../../admin/assets/vendor/js/helpers.js"></script>
   <script src="../../admin/assets/js/config.js"></script>
-
-
-  <style>
-    .tables-container {
-    display: flex;
-    justify-content: space-between; /* Adjust this to your preference like 'center' or 'flex-start' */
-    margin: 20px 0; /* Add some margin for spacing */
-}
-
-.table-section {
-    flex: 1; /* Allow each table to take equal space */
-    margin: 0 10px; /* Margin between tables */
-    border: 1px solid #ccc; /* Optional: border for better visibility */
-    border-radius: 5px; /* Optional: rounded corners */
-}
-
-table {
-    width: 100%; /* Ensure tables use full width of their container */
-    border-collapse: collapse; /* Remove space between table cells */
-}
-
-th, td {
-    padding: 10px; /* Add padding for better spacing */
-    text-align: left; /* Align text to the left */
-}
-
-th {
-    background-color: #f0f0f0; /* Light gray background for headers */
-    font-weight: bold; /* Bold headers */
-}
-
-
-  </style>
+  <!-- Add these in your head tag -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 
 </head>
 
@@ -243,61 +197,365 @@ th {
       <!-- Layout container -->
       <div class="layout-page">
 
-       
-           
+
+
 
 
         <h5 class="mb-2">Welcome back,<span class="h4 fw-semibold"> Redolence 👋🏻</span></h5>
-        <div class="col-12 col-lg-7">
-          <p>🌟 Redolence – Where Elegance Meets Aroma! 🌟
-            Discover the art of enchanting fragrances with Redolence. ✨ Our exclusive perfume collection is designed to captivate your senses and elevate your style. 💎✨ Indulge in luxury, embrace the essence of sophistication, and leave a trail of charm wherever you go. 🌹💫
-
-            🛍️ Shop Now to experience the magic of Redolence! 🌟</p>
+        <div class="col-12 d-flex justify-content-center align-items-center flex-column text-center p-5">
+            <h2 class="mb-3 text-uppercase fw-bold text-primary">
+                <i class="fas fa-perfume"></i> REDOLENCE
+            </h2>
+            <p class="lead text-dark w-75">
+                🌟 <strong>Redolence – Where Elegance Meets Aroma!</strong> 🌟<br>
+                Discover the art of enchanting fragrances with Redolence. ✨ Our exclusive perfume collection is designed to captivate your senses and elevate your style. 💎✨ <br>  
+                Indulge in luxury, embrace the essence of sophistication, and leave a trail of charm wherever you go. 🌹💫  
+            </p>
+        </div>
+        
+        
+        <div id="reportMetrics" class="mb-5">
+            <h3 class="mb-4">Report Metrics</h3>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card shadow-sm border-0">
+                        <div class="card-body text-center">
+                            <p class="mb-1"><strong>Overall Sales Count:</strong></p>
+                            <h4 class="text-primary" id="totalSalesCount"><%= totalSalesCount %></h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card shadow-sm border-0">
+                        <div class="card-body text-center">
+                            <p class="mb-1"><strong>Overall Order Amount:</strong></p>
+                            <h4 class="text-success">₹<span id="totalOrderAmount"><%= totalOrderAmount.toFixed(2) %></span></h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card shadow-sm border-0">
+                        <div class="card-body text-center">
+                            <p class="mb-1"><strong>Overall Discount:</strong></p>
+                            <h4 class="text-danger">₹<span id="totalDiscount"><%= totalDiscount.toFixed(2) %></span></h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <div class="container">
-            <div class="tables-container">
-                <div class="table-section">
-                    <h2>Best Selling Products</h2>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Rank</th>
-                                <th>Product Name</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <% bestSellingProducts.forEach((product, index) => { %>
-                                <tr>
-                                    <td><%= index + 1 %></td>
-                                    <td><%= product.name %></td>
-                                </tr>
-                            <% }) %>
-                        </tbody>
-                    </table>
+
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0 fw-semibold text-primary">
+                            <i class="ri-line-chart-line me-2"></i>Sales Performance Overview
+                        </h5>
+                        <div class="btn-group btn-group-sm" role="group">
+                            <button type="button" class="btn btn-outline-primary active" id="weeklyViewBtn">Weekly</button>
+                            <button type="button" class="btn btn-outline-primary" id="monthlyViewBtn">Monthly</button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div id="salesOrdersChart" style="height: 350px;"></div>
+                    </div>
                 </div>
-                <div class="table-section">
-                    <h2>Best Selling Categories</h2>
-                    <table>
-                        <thead>
+            </div>
+        </div>
+
+
+<div class="row mb-4">
+    <!-- Top Products Section -->
+    <div class="col-md-6">
+        <div class="card shadow-sm h-100">
+            <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                <h5 class="mb-0 fw-semibold text-primary">
+                    <i class="ri-trophy-line me-2"></i>Top 10 Products
+                </h5>
+                <span class="badge bg-primary">Best Sellers</span>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead class="table-light">
                             <tr>
-                                <th>Rank</th>
-                                <th>Category Name</th>
+                                <th>#</th>
+                                <th>Product</th>
+                                <th class="text-center">Units Sold</th>
+                                <th class="text-end">Revenue</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <% bestSellingCategories.forEach((category, index) => { %>
+                            <% if (topProducts && topProducts.length > 0) { %>
+                                <% topProducts.forEach((product, index) => { %>
+                                    <tr>
+                                        <td><%= index + 1 %></td>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="avatar avatar-sm me-2 bg-light-primary rounded">
+                                                    <span class="avatar-initial rounded"><i class="ri-perfume-line"></i></span>
+                                                </div>
+                                                <span class="fw-medium"><%= product.productName %></span>
+                                            </div>
+                                        </td>
+                                        <td class="text-center"><%= product.totalQuantity %></td>
+                                        <td class="text-end">₹<%= product.totalRevenue.toFixed(2) %></td>
+                                    </tr>
+                                <% }); %>
+                            <% } else { %>
                                 <tr>
-                                    <td><%= index + 1 %></td>
-                                    <td><%= category.name %></td>
+                                    <td colspan="4" class="text-center py-4">No product data available</td>
                                 </tr>
-                            <% }) %>
+                            <% } %>
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
+    </div>
+
+    <!-- Top Categories Section -->
+    <div class="col-md-6">
+        <div class="card shadow-sm h-100">
+            <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                <h5 class="mb-0 fw-semibold text-success">
+                    <i class="ri-folder-chart-line me-2"></i>Top 10 Categories
+                </h5>
+                <span class="badge bg-success">Best Performers</span>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>#</th>
+                                <th>Category</th>
+                                <th class="text-center">Units Sold</th>
+                                <th class="text-end">Revenue</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% if (topCategories && topCategories.length > 0) { %>
+                                <% topCategories.forEach((category, index) => { %>
+                                    <tr>
+                                        <td><%= index + 1 %></td>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="avatar avatar-sm me-2 bg-light-success rounded">
+                                                    <span class="avatar-initial rounded"><i class="ri-price-tag-3-line"></i></span>
+                                                </div>
+                                                <span class="fw-medium"><%= category.categoryName %></span>
+                                            </div>
+                                        </td>
+                                        <td class="text-center"><%= category.totalQuantity %></td>
+                                        <td class="text-end">₹<%= category.totalRevenue.toFixed(2) %></td>
+                                    </tr>
+                                <% }); %>
+                            <% } else { %>
+                                <tr>
+                                    <td colspan="4" class="text-center py-4">No category data available</td>
+                                </tr>
+                            <% } %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Visualizations for top products and categories - Add above the Sales Report Form -->
+<div class="row mb-5">
+    <!-- Products Chart -->
+    <div class="col-md-6">
+        <div class="card shadow-sm h-100">
+            <div class="card-header bg-transparent">
+                <h5 class="mb-0">Top Products Visualization</h5>
+            </div>
+            <div class="card-body">
+                <div id="topProductsChart" style="height: 300px;"></div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Categories Chart -->
+    <div class="col-md-6">
+        <div class="card shadow-sm h-100">
+            <div class="card-header bg-transparent">
+                <h5 class="mb-0">Top Categories Visualization</h5>
+            </div>
+            <div class="card-body">
+                <div id="topCategoriesChart" style="height: 300px;"></div>
+            </div>
+        </div>
+    </div>
+</div>
         
+        <main class="flex-grow-1 p-3">
+            <!-- Sales Report Form -->
+            <div class="card mb-4">
+                <div class="container mt-5">
+                    <h1 class="mb-4">Sales Report</h1>
+                    
+                    <form id="salesReportForm" class="mb-5">
+                        <div class="row g-3 align-items-center mb-4">
+                            <div class="col-md-5">
+                                <label for="startDate" class="form-label">Custom Date Range:</label>
+                                <div class="d-flex gap-2">
+                                    <input type="date" id="startDate" name="startDate" class="form-control" required>
+                                    <input type="date" id="endDate" name="endDate" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="interval" class="form-label">Select Interval:</label>
+                                <select id="interval" name="interval" class="form-select">
+                                    <option value="1">Daily</option>
+                                    <option value="7">Weekly</option>
+                                    <option value="30">Monthly</option>
+                                    <option value="365">Yearly</option>
+                                    <option value="custom">Custom Range</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3 d-flex align-items-end" style="margin-top: 39px;" >
+                                <button type="submit" class="btn btn-primary w-100">
+                                    Generate Report
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                   
+                    <div class="alert alert-info mb-4">
+                        <strong>Showing:</strong> <%= typeof reportType !== 'undefined' ? reportType : 'Daily Report' %> 
+                        <% if(typeof startDate !== 'undefined' && typeof endDate !== 'undefined') { %>
+                            from <%= startDate %> to <%= endDate %>
+                        <% } %>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover align-middle">
+                            <thead class="table-light">
+                                <tr>
+                                    <th class="text-center">Order ID</th>
+                                    <th class="text-center">Date</th>
+                                    <th class="text-center">Items</th>
+                                    <th class="text-center">Price</th>
+                                    <th class="text-center">Total Amount</th>
+                                    <th class="text-center">Coupon</th>
+                                    <th class="text-center">Discount</th>
+                                </tr>
+                            </thead>
+                            <tbody id="reportData" class="text-center">
+                                <% reportData.forEach(report => { %>
+                                    <tr>
+                                        <td><%= report.orderId %></td>
+                                        <td><%= report.date %></td>
+                                        <td><%= report.items %></td>
+                                        <td>₹<%= report.price %></td>
+                                        <td>₹<%= report.totalAmount %></td>
+                                        <td><%= report.coupon %></td>
+                                        <td>₹<%= report.discount %></td>
+                                    </tr>
+                                <% }) %>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center mt-4">
+                        <a href="/admin/orderList" class="btn btn-outline-secondary">
+                            <i class="ri-arrow-left-line me-2"></i>Back to Order List
+                        </a>
+                        <div>
+                            <button onclick="downloadPDF()" class="btn btn-danger me-2">
+                                <i class="ri-file-pdf-line me-2"></i>Download PDF
+                            </button>
+                            <button onclick="downloadExcel()" class="btn btn-success">
+                                <i class="ri-file-excel-line me-2"></i>Download Excel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pagination-container mt-4">
+                <nav aria-label="Sales report pagination">
+                    <ul class="pagination justify-content-center">
+                        <% if (hasPrevPage) { %>
+                            <li class="page-item">
+                                <a class="page-link" href="?interval=<%= interval %>&startDate=<%= startDate %>&endDate=<%= endDate %>&page=1" aria-label="First">
+                                    <span aria-hidden="true">&laquo;&laquo;</span>
+                                </a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="?interval=<%= interval %>&startDate=<%= startDate %>&endDate=<%= endDate %>&page=<%= prevPage %>" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                        <% } else { %>
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#" aria-label="First">
+                                    <span aria-hidden="true">&laquo;&laquo;</span>
+                                </a>
+                            </li>
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                        <% } %>
+                        
+                        <% 
+                            // Show a reasonable number of page links
+                            let startPage = Math.max(1, currentPage - 2);
+                            let endPage = Math.min(totalPages, currentPage + 2);
+                            
+                            // Always show at least 5 pages if available
+                            if (endPage - startPage < 4 && totalPages > 4) {
+                                if (currentPage < 3) {
+                                    endPage = Math.min(startPage + 4, totalPages);
+                                } else {
+                                    startPage = Math.max(endPage - 4, 1);
+                                }
+                            }
+                        %>
+                        
+                        <% for (let i = startPage; i <= endPage; i++) { %>
+                            <li class="page-item <%= i === currentPage ? 'active' : '' %>">
+                                <a class="page-link" href="?interval=<%= interval %>&startDate=<%= startDate %>&endDate=<%= endDate %>&page=<%= i %>"><%= i %></a>
+                            </li>
+                        <% } %>
+                        
+                        <% if (hasNextPage) { %>
+                            <li class="page-item">
+                                <a class="page-link" href="?interval=<%= interval %>&startDate=<%= startDate %>&endDate=<%= endDate %>&page=<%= nextPage %>" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="?interval=<%= interval %>&startDate=<%= startDate %>&endDate=<%= endDate %>&page=<%= lastPage %>" aria-label="Last">
+                                    <span aria-hidden="true">&raquo;&raquo;</span>
+                                </a>
+                            </li>
+                        <% } else { %>
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#" aria-label="Last">
+                                    <span aria-hidden="true">&raquo;&raquo;</span>
+                                </a>
+                            </li>
+                        <% } %>
+                    </ul>
+                </nav>
+                <div class="text-center mt-2">
+                    <small class="text-muted">Showing page <%= currentPage %> of <%= totalPages %> (<%= totalSalesCount %> total records)</small>
+                </div>
+            </div>
+        </main>
 
 
         <!-- / Footer -->
@@ -336,6 +594,8 @@ th {
   <script src="../../admin/assets/vendor/libs/i18n/i18n.js"></script>
   <script src="../../admin/assets/vendor/libs/typeahead-js/typeahead.js"></script>
   <script src="../../admin/assets/vendor/js/menu.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 
   <!-- endbuild -->
 
@@ -350,9 +610,526 @@ th {
 
   <!-- Page JS -->
   <script src="../../admin/assets/js/app-academy-dashboard.js"></script>
+
   
 
+  <script>
+   document.addEventListener('DOMContentLoaded', function() {
+    const intervalSelect = document.getElementById('interval');
+    const startDateInput = document.getElementById('startDate');
+    const endDateInput = document.getElementById('endDate');
+    const salesReportForm = document.getElementById('salesReportForm');
+    
+    // Set default values for date inputs
+    const today = new Date().toISOString().split('T')[0];
+    endDateInput.value = today;
+    
+    const lastWeek = new Date();
+    lastWeek.setDate(lastWeek.getDate() - 7);
+    startDateInput.value = lastWeek.toISOString().split('T')[0];
+    
+    // Set the interval value if it exists in URL
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('interval')) {
+        intervalSelect.value = urlParams.get('interval');
+    }
+    
+    // Set date values from URL if they exist
+    if (urlParams.has('startDate')) {
+        startDateInput.value = urlParams.get('startDate');
+    }
+    if (urlParams.has('endDate')) {
+        endDateInput.value = urlParams.get('endDate');
+    }
+    
+    // Handle interval change
+    intervalSelect.addEventListener('change', function() {
+        const value = this.value;
+        const today = new Date();
+        
+        // Update date fields based on selected interval
+        if (value === 'custom') {
+            // Enable date fields for custom range
+            startDateInput.removeAttribute('disabled');
+            endDateInput.removeAttribute('disabled');
+        } else {
+            // Disable custom date fields but still set their values
+            startDateInput.setAttribute('disabled', 'disabled');
+            endDateInput.setAttribute('disabled', 'disabled');
+            
+            // Set endDate to today
+            endDateInput.value = today.toISOString().split('T')[0];
+            
+            // Set startDate based on interval
+            let startDate = new Date();
+            switch(value) {
+                case '1': // Daily
+                    startDate.setDate(today.getDate() - 1);
+                    break;
+                case '7': // Weekly
+                    startDate.setDate(today.getDate() - 7);
+                    break;
+                case '30': // Monthly
+                    startDate.setMonth(today.getMonth() - 1);
+                    break;
+                case '365': // Yearly
+                    startDate.setFullYear(today.getFullYear() - 1);
+                    break;
+                default:
+                    startDate.setDate(today.getDate() - 7);
+            }
+            startDateInput.value = startDate.toISOString().split('T')[0];
+        }
+    });
+    
+    // Initialize form state based on selected interval
+    intervalSelect.dispatchEvent(new Event('change'));
+    
+    // Handle form submission
+    salesReportForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const interval = intervalSelect.value;
+        const startDate = startDateInput.value;
+        const endDate = endDateInput.value;
+        
+        let url = '/admin/sales-report?interval=' + interval;
+
+        if (startDate && endDate) {
+        url += '&startDate=' + startDate + '&endDate=' + endDate;
+    }
+    url += '&page=1'; // Reset to first page on new search
+        window.location.href = url;
+    });
+});
+    </script>
+
 </body>
+
+
+
+
+
+
+<script>
+    
+    // Add this to your existing script section at the bottom of the page
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize the sales chart
+    let salesOrdersChart;
+    let weeklyChart = true; // Track which view is currently active
+    
+    // Function to initialize the chart
+    function initSalesChart() {
+        // Get data from server-side
+        <% if (typeof chartData !== 'undefined' && chartData.dates && chartData.salesData && chartData.ordersData) { %>
+            const currentDates = <%- JSON.stringify(chartData.dates) %>;
+            const currentSalesData = <%- JSON.stringify(chartData.salesData) %>;
+            const currentOrdersData = <%- JSON.stringify(chartData.ordersData) %>;
+            
+            // Weekly chart data
+            const weeklyDates = <%- typeof weeklyChartData !== 'undefined' ? JSON.stringify(weeklyChartData.dates) : '[]' %>;
+            const weeklySales = <%- typeof weeklyChartData !== 'undefined' ? JSON.stringify(weeklyChartData.salesData) : '[]' %>;
+            const weeklyOrders = <%- typeof weeklyChartData !== 'undefined' ? JSON.stringify(weeklyChartData.ordersData) : '[]' %>;
+            
+            // Monthly chart data
+            const monthlyDates = <%- typeof monthlyChartData !== 'undefined' ? JSON.stringify(monthlyChartData.dates) : '[]' %>;
+            const monthlySales = <%- typeof monthlyChartData !== 'undefined' ? JSON.stringify(monthlyChartData.salesData) : '[]' %>;
+            const monthlyOrders = <%- typeof monthlyChartData !== 'undefined' ? JSON.stringify(monthlyChartData.ordersData) : '[]' %>;
+        <% } else { %>
+            // Fallback data if server data is not available
+            const currentDates = ['Mar 10', 'Mar 11', 'Mar 12', 'Mar 13', 'Mar 14', 'Mar 15', 'Mar 16'];
+            const currentSalesData = currentDates.map(() => Math.floor(Math.random() * 5000) + 5000);
+            const currentOrdersData = currentDates.map(() => Math.floor(Math.random() * 50) + 20);
+            
+            const weeklyDates = currentDates;
+            const weeklySales = currentSalesData;
+            const weeklyOrders = currentOrdersData;
+            
+            const monthlyDates = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
+            const monthlySales = monthlyDates.map(() => Math.floor(Math.random() * 30000) + 15000);
+            const monthlyOrders = monthlyDates.map(() => Math.floor(Math.random() * 300) + 100);
+        <% } %>
+        
+        // Use the data based on currently active view
+        let displayDates = weeklyChart ? weeklyDates : monthlyDates;
+        let displaySales = weeklyChart ? weeklySales : monthlySales;
+        let displayOrders = weeklyChart ? weeklyOrders : monthlyOrders;
+        
+        // If we have current data that matches the interval, use it
+        if (currentDates.length > 0 && currentSalesData.length > 0) {
+            const intervalValue = document.getElementById('interval').value;
+            
+            // Use current data if it matches our interval
+            if ((intervalValue === '7' && weeklyChart) || 
+                (intervalValue === '30' && !weeklyChart) ||
+                (intervalValue === 'custom' || intervalValue === '1' || intervalValue === '365')) {
+                displayDates = currentDates;
+                displaySales = currentSalesData;
+                displayOrders = currentOrdersData;
+            }
+        }
+        
+        // Calculate highest sale for annotation
+        const highestSale = Math.max(...displaySales);
+        
+        const salesOrdersOptions = {
+            series: [
+                {
+                    name: 'Net Sales',
+                    type: 'area',
+                    data: displaySales
+                },
+                {
+                    name: 'Orders',
+                    type: 'line',
+                    data: displayOrders
+                }
+            ],
+            chart: {
+                height: 350,
+                type: 'line',
+                toolbar: {
+                    show: false
+                },
+                fontFamily: 'Inter, sans-serif',
+                zoom: {
+                    enabled: false
+                },
+                animations: {
+                    enabled: true,
+                    easing: 'easeinout',
+                    speed: 800
+                }
+            },
+            colors: ['#695CFE', '#FF9F43'],
+            stroke: {
+                width: [2, 4],
+                curve: 'smooth'
+            },
+            fill: {
+                type: ['gradient', 'solid'],
+                gradient: {
+                    shade: 'light',
+                    type: "vertical",
+                    shadeIntensity: 0.5,
+                    opacityFrom: 0.7,
+                    opacityTo: 0.1,
+                    stops: [0, 100]
+                }
+            },
+            markers: {
+                size: [4, 6],
+                strokeWidth: 0,
+                hover: {
+                    size: 9
+                }
+            },
+            xaxis: {
+                categories: displayDates,
+                labels: {
+                    style: {
+                        colors: '#666',
+                        fontSize: '12px'
+                    }
+                },
+                axisBorder: {
+                    show: false
+                },
+                axisTicks: {
+                    show: false
+                }
+            },
+            yaxis: [
+                {
+                    title: {
+                        text: 'Net Sales (₹)',
+                        style: {
+                            color: '#695CFE'
+                        }
+                    },
+                    labels: {
+                        formatter: function(val) {
+                            return '₹' + val.toFixed(0);
+                        },
+                        style: {
+                            colors: '#666'
+                        }
+                    }
+                },
+                {
+                    opposite: true,
+                    title: {
+                        text: 'Orders',
+                        style: {
+                            color: '#FF9F43'
+                        }
+                    },
+                    labels: {
+                        formatter: function(val) {
+                            return val.toFixed(0);
+                        },
+                        style: {
+                            colors: '#666'
+                        }
+                    }
+                }
+            ],
+            annotations: {
+                position: 'front',
+                yaxis: [
+                    {
+                        y: highestSale,
+                        borderColor: '#695CFE',
+                        strokeDashArray: 0,
+                        label: {
+                            borderColor: '#695CFE',
+                            style: {
+                                color: '#fff',
+                                background: '#695CFE'
+                            },
+                            text: 'Highest Sale: ₹' + highestSale.toFixed(0)
+                        }
+                    }
+                ]
+            },
+            tooltip: {
+                shared: true,
+                intersect: false,
+                y: {
+                    formatter: function(val, { seriesIndex }) {
+                        return seriesIndex === 0 ? '₹' + val.toFixed(2) : val + ' orders';
+                    }
+                }
+            },
+            legend: {
+                position: 'top',
+                horizontalAlign: 'right',
+                floating: true,
+                offsetY: -25,
+                offsetX: -5
+            },
+            grid: {
+                borderColor: '#f1f1f1',
+                strokeDashArray: 4,
+                xaxis: {
+                    lines: {
+                        show: true
+                    }
+                }
+            }
+        };
+        
+        // Destroy existing chart if it exists
+        if (salesOrdersChart) {
+            salesOrdersChart.destroy();
+        }
+        
+        salesOrdersChart = new ApexCharts(document.querySelector("#salesOrdersChart"), salesOrdersOptions);
+        salesOrdersChart.render();
+    }
+    
+    // Initialize chart when DOM is loaded
+    if (typeof ApexCharts !== 'undefined') {
+        initSalesChart();
+        
+        // Toggle between weekly and monthly views
+        document.getElementById('weeklyViewBtn').addEventListener('click', function() {
+            this.classList.add('active');
+            document.getElementById('monthlyViewBtn').classList.remove('active');
+            weeklyChart = true;
+            initSalesChart();
+        });
+        
+        document.getElementById('monthlyViewBtn').addEventListener('click', function() {
+            this.classList.add('active');
+            document.getElementById('weeklyViewBtn').classList.remove('active');
+            weeklyChart = false;
+            initSalesChart();
+        });
+        
+        // Connect sales report form to chart update
+        const salesReportForm = document.getElementById('salesReportForm');
+        if (salesReportForm) {
+            salesReportForm.addEventListener('submit', function() {
+                // Chart will update when page reloads with new data
+                // We don't need to do anything here
+            });
+        }
+        
+        // Handle interval changes
+        const intervalSelect = document.getElementById('interval');
+        if (intervalSelect) {
+            intervalSelect.addEventListener('change', function() {
+                // Update chart based on selected interval
+                // This is just visual feedback until form submission
+                if (this.value === '7') {
+                    document.getElementById('weeklyViewBtn').click();
+                } else if (this.value === '30') {
+                    document.getElementById('monthlyViewBtn').click();
+                }
+            });
+        }
+    }
+    
+    // Initialize product and category charts
+    function initProductCategoryCharts() {
+        // Products chart
+        <% if (typeof topProducts !== 'undefined' && topProducts.length > 0) { %>
+            const productNames = <%- JSON.stringify(topProducts.map(p => p.productName)) %>;
+            const productQuantities = <%- JSON.stringify(topProducts.map(p => p.totalQuantity)) %>;
+            const productRevenues = <%- JSON.stringify(topProducts.map(p => p.totalRevenue)) %>;
+            
+            const topProductsOptions = {
+                series: [{
+                    name: 'Quantity',
+                    data: productQuantities
+                }],
+                chart: {
+                    type: 'bar',
+                    height: 300,
+                    toolbar: {
+                        show: false
+                    }
+                },
+                plotOptions: {
+                    bar: {
+                        horizontal: false,
+                        columnWidth: '55%',
+                        borderRadius: 4
+                    },
+                },
+                dataLabels: {
+                    enabled: false
+                },
+                colors: ['#695CFE'],
+                xaxis: {
+                    categories: productNames,
+                    labels: {
+                        style: {
+                            fontSize: '12px'
+                        },
+                        rotate: -45,
+                        rotateAlways: true,
+                        trim: true,
+                        maxHeight: 80
+                    }
+                },
+                yaxis: {
+                    title: {
+                        text: 'Units Sold'
+                    }
+                },
+                tooltip: {
+                    y: {
+                        formatter: function(val) {
+                            return val + " units";
+                        }
+                    }
+                },
+            };
+            
+            const topProductsChart = new ApexCharts(document.querySelector("#topProductsChart"), topProductsOptions);
+            topProductsChart.render();
+        <% } %>
+        
+        // Categories chart
+        <% if (typeof topCategories !== 'undefined' && topCategories.length > 0) { %>
+            const categoryNames = <%- JSON.stringify(topCategories.map(c => c.categoryName)) %>;
+            const categoryRevenues = <%- JSON.stringify(topCategories.map(c => c.totalRevenue)) %>;
+            
+            const topCategoriesOptions = {
+                series: [{
+                    name: 'Revenue',
+                    data: categoryRevenues
+                }],
+                chart: {
+                    type: 'bar',
+                    height: 300,
+                    toolbar: {
+                        show: false
+                    }
+                },
+                plotOptions: {
+                    bar: {
+                        horizontal: false,
+                        columnWidth: '55%',
+                        borderRadius: 4
+                    },
+                },
+                dataLabels: {
+                    enabled: false
+                },
+                colors: ['#28C76F'],
+                xaxis: {
+                    categories: categoryNames,
+                    labels: {
+                        style: {
+                            fontSize: '12px'
+                        },
+                        rotate: -45,
+                        rotateAlways: true,
+                        trim: true,
+                        maxHeight: 80
+                    }
+                },
+                yaxis: {
+                    title: {
+                        text: 'Revenue (₹)'
+                    },
+                    labels: {
+                        formatter: function(val) {
+                            return '₹' + val.toFixed(0);
+                        }
+                    }
+                },
+                tooltip: {
+                    y: {
+                        formatter: function(val) {
+                            return '₹' + val.toFixed(2);
+                        }
+                    }
+                },
+            };
+            
+            const topCategoriesChart = new ApexCharts(document.querySelector("#topCategoriesChart"), topCategoriesOptions);
+            topCategoriesChart.render();
+        <% } %>
+    }
+    
+    // Initialize product and category charts
+    if (typeof ApexCharts !== 'undefined') {
+        initProductCategoryCharts();
+    }
+    
+    // PDF download functionality
+    window.downloadPDF = function() {
+        const reportElement = document.querySelector('.container');
+        const opt = {
+            margin: 10,
+            filename: 'sales-report.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2 },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        };
+        
+        html2pdf().set(opt).from(reportElement).save();
+    };
+    
+    // Excel download functionality
+    window.downloadExcel = function() {
+        const reportTable = document.querySelector('table');
+        const ws = XLSX.utils.table_to_sheet(reportTable);
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, 'Sales Report');
+        XLSX.writeFile(wb, 'sales-report.xlsx');
+    };
+});
+
+
+    </script>
+
+    
 
 
 </html>

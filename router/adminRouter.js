@@ -38,6 +38,7 @@ adminRouter.post('/loginCheck', adminController.adminCheck);
 
 //dashboard
 adminRouter.get('/dashboard', auth.isLogin, dashboardController.getdashBoard);
+adminRouter.get('/sales-report', auth.isLogin, dashboardController.getSalesReport);
 
 //user
 adminRouter.get('/userList', auth.isLogin, userController.getUserList);
@@ -69,8 +70,6 @@ adminRouter.get('/searchProducts', productController.searchProducts)
 adminRouter.get('/orderList',auth.isLogin, orderController.orders)
 adminRouter.get('/orderDetails/:id', auth.isLogin, orderController.orderDetails);
 adminRouter.put('/updateOrderItem', auth.isLogin, orderController.updateOrderItem);
-adminRouter.get('/salesReport', auth.isLogin, orderController.salesReport);
-adminRouter.get('/download-excel', auth.isLogin, orderController.downloadExcel);
 
 //coupon
 // Get all coupons
