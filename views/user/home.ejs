@@ -218,12 +218,12 @@
                                                     </a>
 
                                                     <div class="product-action-vertical">
-                                                        <a href="wishList"
-                                                            class="btn-product-icon btn-wishlist btn-expandable"><span>add
-                                                                to wishlist</span></a>
-                                                        <a href="#" class="btn-product-icon btn-quickview"
-                                                            title="Quick view"><span>Quick view</span></a>
-                                                    </div>
+                                                        <a
+                                                          class="btn-product-icon btn-wishlist btn-expandable <%= product.isInWishlist ? 'in-wishlist' : '' %>"
+                                                          data-id="<%= product._id %>">
+                                                        </a>
+                                                      </div>
+                                                      
 
                                                     <div class="product-action">
                                                         <div class="product-action action-icon-top">

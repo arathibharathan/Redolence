@@ -18,8 +18,10 @@ const razorpayInstance = new Razorpay({
 
 const cancelRazorpay = async(req, res) => {
 	try {
-		await OrderSchema.updateOne({ _id: req.query._id }, { paymentStatus: 'Failed' })
-		res.redirect('/')
+		
+		await OrderSchema.updateOne({ _id: req.query.id }, { paymentStatus: 'Failed' })
+		
+		res.redirect(`/`)
 	} catch (error) {
 		
 	}
@@ -146,32 +148,57 @@ const addressSave = async (req, res) => {
 };
 
 const orders = async (req, res) => {
-	try {
-		
-		if (!req.session.user) {
-			return res.redirect('/login');
-			
-		}
-		const userOrders = await OrderSchema.find({
-			userId: req.session.user._id,
-		}).sort({ orderedAt: -1 });
-		res.render('orders', {
-			orders: userOrders,
-			user: req.session.user,
-		});
-	} catch (error) {
-		console.error(error);
-		res.status(500).json('error', { message: 'Error fetching orders' });
-	}
+    try {
+        if (!req.session.user) {
+            return res.redirect('/login');
+        }
+        
+        // Pagination parameters
+        const page = parseInt(req.query.page) || 1; // Current page (default: 1)
+        const limit = 5; // Number of orders per page
+        const skip = (page - 1) * limit; // Number of orders to skip
+        
+        // Get total count for pagination
+        const totalOrders = await OrderSchema.countDocuments({
+            userId: req.session.user._id
+        });
+        
+        const totalPages = Math.ceil(totalOrders / limit);
+        
+        // Get paginated orders
+        const userOrders = await OrderSchema.find({
+            userId: req.session.user._id,
+        })
+        .sort({ orderedAt: -1 })
+        .skip(skip)
+        .limit(limit);
+        
+        res.render('orders', {
+            orders: userOrders,
+            user: req.session.user,
+            pagination: {
+                page,
+                limit,
+                totalPages,
+                totalOrders
+            }
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json('error', { message: 'Error fetching orders' });
+    }
 };
+
 const repay = async (req, res) => {
     try {
-        const order = await OrderSchema.findById(req.params.orderId);
+        const orderId = req.body.orderId; // Get order ID from request body
+        const order = await OrderSchema.findById(orderId);
 
-        if (!order || order.paymentStatus !== 'Failed') {
+        if (!order || order.paymentStatus === 'Success') {
             return res.status(400).json({ success: false, message: 'Invalid order for repayment' });
         }
 
+        // Create a new Razorpay order
         const options = {
             amount: order.totalAmount * 100, // Convert to paise
             currency: "INR",
@@ -181,12 +208,21 @@ const repay = async (req, res) => {
 
         const razorpayOrder = await razorpayInstance.orders.create(options);
 
+        // Update order status
         order.paymentStatus = 'Pending'; // Update status while retrying
-        order.razorpayOrderId = razorpayOrder.id;
         await order.save();
 
-        res.json({ success: true, paymentUrl: '/' });    
-		// `/pay/${razorpayOrder.id}`
+        // Return the necessary details for Razorpay integration
+        res.status(200).json({
+            success: true,
+            orderId: order.order_id,
+            id: order._id,
+            amount: order.totalAmount,
+            razorpayOrder: razorpayOrder,
+            keyId: process.env.RAZORPAY_KEY_ID || '',
+            name: req.session.user?.name || 'Customer',
+            paymentMethod: 'Online'
+        });
     } catch (error) {
         console.error('Retry Payment Error:', error);
         res.status(500).json({ success: false, message: 'Failed to retry payment' });
@@ -269,49 +305,7 @@ const placeOrder = async (req, res) => {
             await userWallet.save();
         }
 
-        // Online Payment (Razorpay)
-        // let razorpayOrder;
-        // if (paymentMethod === 'Online') {
-        //     const options = {
-        //         amount: total * 100, // Convert to paise
-        //         currency: "INR",
-        //         receipt: newOrder.order_id,
-        //         payment_capture: 1
-        //     };
-
-        //     razorpayOrder = await razorpayInstance.orders.create(options);
-        // }
-
-        // // Save the order in the database
-        // const result = await newOrder.save();
-
-        // // Clear the user's cart
-        // await CartSchema.findOneAndDelete({ userId });
-
-        // // Update product stock
-        // for (const item of orderItems) {
-        //     const product = await ProductSchema.findById(item.productId);
-        //     if (product) {
-        //         if (product.stock < item.quantity) {
-        //             throw new Error(`Insufficient stock for product: ${item.name}`);
-        //         }
-        //         product.stock -= item.quantity;
-        //         await product.save();
-        //     }
-        // }
-
-        // // Return response
-        // res.status(200).json({
-        //     message: 'Order placed successfully',
-		// 	paymentMethod,
-        //     orderId: result.order_id,
-        //     id: result._id,
-        //     amount: result.totalAmount,
-        //     razorpayOrder: razorpayOrder || null,
-		// 	keyId: process.env.RAZORPAY_KEY_ID || '',
-		// 	name: req.session.user.name
-        // });
-		
+        
 		
 		let razorpayOrder;
     	let paymentStatus = 'Pending'; // Default status
@@ -320,15 +314,19 @@ const placeOrder = async (req, res) => {
     const result = await newOrder.save();
 
     if (paymentMethod === 'Online') {
+		// 1
         const options = {
             amount: total * 100, // Convert to paise
             currency: "INR",
             receipt: result.order_id,
             payment_capture: 1
         };
+		// 1
 
         try {
+			// 2
             razorpayOrder = await razorpayInstance.orders.create(options);
+			// 2
         } catch (error) {
             console.error('Razorpay Order Creation Failed:', error);
 
@@ -364,8 +362,9 @@ const placeOrder = async (req, res) => {
 
     // Update the order status
     await OrderSchema.findByIdAndUpdate(result._id, { status: paymentStatus });
-
     // Return response
+	
+	// 3
     res.status(200).json({
         message: paymentStatus === 'Success' ? 'Order placed successfully' : 'Order failed',
         paymentMethod,
@@ -377,6 +376,7 @@ const placeOrder = async (req, res) => {
         name: req.session.user.name,
         status: paymentStatus
     });
+	// 3
 
 
     } catch (error) {

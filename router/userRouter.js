@@ -44,7 +44,6 @@ userRouter.post("/login", loginController.logincheck);
 
 //shop
 userRouter.get('/shop', shopController.shop);
-// userRouter.get('/api/products', shopController.getFilteredProducts);
 
 // userRouter.get('/renderCartByPage/:page',shopController.renderCartByPage)
 userRouter.get('/product', shopController.product);
@@ -118,8 +117,7 @@ userRouter.get('/cancelRazorpay',checkoutController.cancelRazorpay);
 
 // Order
 userRouter.get('/orders', checkoutController.orders);
-userRouter.post('/retry-payment/:orderId',checkoutController.repay)
-// userRouter.get('/orders', checkoutController.placeOrder);
+userRouter.post('/retry-payment', checkoutController.repay);
 userRouter.get('/order-details/:orderId', checkoutController.getOrderDetails);
 userRouter.post('/update-order-status', checkoutController.updateOrderStatus);
 userRouter.post('/cancel-order', checkoutController.cancelOrder);

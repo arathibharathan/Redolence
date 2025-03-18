@@ -27,6 +27,8 @@
 	<!-- Main CSS File -->
 	<link rel="stylesheet" href="user/assets/css/style.css" />
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+	<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
 </head>
 
 <body>
@@ -761,7 +763,7 @@
 			<nav class="mobile-nav">
 				<ul class="mobile-menu">
 					<li class="active">
-						<a href="index.html">Home</a>
+						<a href="/">Home</a>
 
 						<ul>
 							<li><a href="index-1.html">01 - furniture store</a></li>
@@ -1114,6 +1116,7 @@
 	<!-- Main JS File -->
 	<script src="user/assets/js/main.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
 
 
@@ -1645,8 +1648,11 @@
 
 	</script>
 
-	<!-- place-order button -->
-	<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+	
+	 <!-- 1 -->
+		<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+	 <!-- 2 -->
+
 	<script>
 		document.addEventListener('DOMContentLoaded', () => {
 			const placeOrderBtn = document.getElementById('placeOrderBtn');
@@ -1723,8 +1729,42 @@
 					}
 
 					// Existing payment method handling
+					console.log('response', responseData)
 					if (responseData.paymentMethod === 'Online') {
-						// ... existing Razorpay code ...
+						// 2
+						var options = {
+							"key": responseData.keyId,
+							"amount": responseData.amount * 100,  // Convert to paise
+							"currency": "INR",
+							"name": responseData.name,  // Removed quotes
+							"order_id": responseData.razorpayOrder.id, // Ensure orderId is not undefined
+							"handler": function (response) {
+								console.log("Payment Success:", response);
+								window.location.href = `/placeOrderInvoice?id=${responseData.id}`;
+							},
+							"theme": {
+								"color": "#2300a3"
+							}
+						};
+
+						
+						var razorpayObject = new Razorpay(options);
+
+						razorpayObject.on('payment.failed', function (response) {
+							console.log("Payment Failed:", response);
+							// alert("Payment Faileds");
+							Swal.fire({
+							icon: 'error',
+							title: "Payment Faileds",
+							text: 'Your order Payment Faileds',
+							confirmButtonText: 'OK',
+						})
+							window.location.href = `/cancelRazorpay?id=${responseData.id}`;
+						});
+
+						razorpayObject.open();
+						// 2
+
 					} else {
 						Swal.fire({
 							icon: 'success',
@@ -1749,85 +1789,6 @@
 				}
 			});
 		})
-
-		// function handleRazorpayPayment(result, bookingDetails) {
-		// 	var options = {
-		// 		key: 'rzp_test_6damh00ndxLBqq',
-		// 		amount: result.totalAmount * 100,
-		// 		currency: 'INR',
-		// 		name: 'Machintko',
-		// 		order_id: result.paymentID,
-		// 		handler: async function (response) {
-		// 			response.bookingDetails = bookingDetails;
-		// 			response.order_id = result.orderId;
-		// 			response.paymentReferance = result.paymentID;
-
-		// 			// Handle successful payment
-		// 			const confirmed = await confirmPayment(response);
-		// 		},
-		// 	};
-
-		// 	var rzp1 = new Razorpay(options);
-		// 	rzp1.on('payment.failed', async function (response) {
-		// 		const cancelBooking = await fetch('/cancelBooking', {
-		// 			method: 'post',
-		// 			headers: { 'Content-Type': 'Application/json' },
-		// 			body: JSON.stringify(bookingDetails),
-		// 		})
-		// 			.then((res) => {
-		// 				return res.json();
-		// 			})
-		// 			.catch((err) => {
-		// 				console.log(err);
-		// 			});
-		// 		console.log(bookingDetails, cancelBooking);
-		// 		if (cancelBooking.cancelled) {
-		// 			swal({
-		// 				title: 'failed',
-		// 				text: response,
-		// 				icon: 'error',
-		// 				button: 'OK',
-		// 			});
-		// 		} else {
-		// 			swal({
-		// 				title: 'failed',
-		// 				text: response,
-		// 				icon: 'error',
-		// 				button: 'OK',
-		// 			}).then();
-		// 		}
-		// 	});
-		// 	rzp1.open();
-		// }
-
-		// async function confirmPayment(paymentDetails) {
-		// 	// openModal();
-		// 	const confirmPaymentResponse = await fetch(
-		// 		'/confirmPayment',
-		// 		{
-		// 			method: 'post',
-		// 			headers: { 'Content-Type': 'application/json' },
-		// 			body: JSON.stringify(paymentDetails),
-		// 		}
-		// 	)
-		// 		.then((confirmPaymentResult) => {
-		// 			return confirmPaymentResult.json();
-		// 		})
-		// 		.catch((err) => {
-		// 			console.log(err);
-		// 		});
-
-		// 	if (confirmPaymentResponse.status) {
-		// 		window.location.assign('/custom/Home');
-		// 	} else {
-		// 		swal({
-		// 			title: 'failed',
-		// 			text: 'Payment failed please try again',
-		// 			icon: 'error',
-		// 			button: 'OK',
-		// 		});
-		// 	}
-		// }
 
 	</script>
 

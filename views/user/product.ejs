@@ -37,47 +37,7 @@
 <body>
   <div class="page-wrapper">
     <header class="header">
-      <div class="header-top">
-        <div class="container">
-          <div class="header-left">
-            <div class="header-dropdown">
-              <a href="#">Usd</a>
-              <div class="header-menu">
-                <ul>
-                  <li><a href="#">Eur</a></li>
-                  <li><a href="#">Usd</a></li>
-                </ul>
-              </div><!-- End .header-menu -->
-            </div><!-- End .header-dropdown -->
-
-            <div class="header-dropdown">
-              <a href="#">Eng</a>
-              <div class="header-menu">
-                <ul>
-                  <li><a href="#">English</a></li>
-                  <li><a href="#">French</a></li>
-                  <li><a href="#">Spanish</a></li>
-                </ul>
-              </div><!-- End .header-menu -->
-            </div><!-- End .header-dropdown -->
-          </div><!-- End .header-left -->
-
-          <div class="header-right">
-            <ul class="top-menu">
-              <li>
-                <a href="#">Links</a>
-                <ul>
-                  <li><a href="tel:#"><i class="icon-phone"></i>Call: +0123 456 789</a></li>
-                  <li><a href="wishlist.html"><i class="icon-heart-o"></i>Wishlist <span>(3)</span></a></li>
-                  <li><a href="about.html">About Us</a></li>
-                  <li><a href="contact.html">Contact Us</a></li>
-                  <li><a href="#signin-modal" data-toggle="modal"><i class="icon-user"></i>Login</a></li>
-                </ul>
-              </li>
-            </ul><!-- End .top-menu -->
-          </div><!-- End .header-right -->
-        </div><!-- End .container -->
-      </div><!-- End .header-top -->
+      
 
       <div class="header-middle sticky-header">
         <div class="container">
@@ -109,14 +69,12 @@
             </a>
         </div>
           <div class="header-right">
-            <div class="header-search">
-              <a href="#" class="search-toggle" role="button" title="Search"><i class="icon-search"></i></a>
-              <form action="#" method="get">
-                <div class="header-search-wrapper">
-                  <label for="q" class="sr-only">Search</label>
-                  <input type="search" class="form-control" name="q" id="q" placeholder="Search in..." required>
-                </div><!-- End .header-search-wrapper -->
-              </form>
+            <div class="dropdown compare-dropdown">
+              <div class="dropdown compare-dropdown">
+                <a href="/wishlist" class="dropdown-toggle" role="button" title="Wishlist" aria-label="Wishlist">
+                  <i class="icon-heart-o"></i>
+                </a>
+                </div>
             </div>
 
              
@@ -209,18 +167,6 @@
             <li class="breadcrumb-item"><a href="shop">Products</a></li>
             <li class="breadcrumb-item active" aria-current="page">Default</li>
           </ol>
-
-          <nav class="product-pager ml-auto" aria-label="Product">
-            <a class="product-pager-link product-pager-prev" href="#" aria-label="Previous" tabindex="-1">
-              <i class="icon-angle-left"></i>
-              <span>Prev</span>
-            </a>
-
-            <a class="product-pager-link product-pager-next" href="#" aria-label="Next" tabindex="-1">
-              <span>Next</span>
-              <i class="icon-angle-right"></i>
-            </a>
-          </nav><!-- End .pager-nav -->
         </div><!-- End .container -->
       </nav><!-- End .breadcrumb-nav -->
 
@@ -251,6 +197,7 @@
                       <a class="product-gallery-item" href="#" data-image="../../uploads/<%= product.images[2]%>" data-zoom-image="../../uploads/<%= product.images[2]%>">
                         <img src="../../uploads/<%= product.images[2]%>" alt="product with model">
                       </a>
+                      
 
 
                     </div><!-- End .product-image-gallery -->
@@ -269,14 +216,6 @@
                   <div class="product-content">
                     <p><%= product.description %></p>
                   </div><!-- End .product-content -->
-
-                  <div class="details-filter-row details-row-size">
-                    <label for="qty">Qty:</label>
-                    <div class="product-details-quantity">
-                      <input type="number" id="qty" class="form-control" value="1" min="1" max="10" step="1" data-decimals="0" required>
-                    </div><!-- End .product-details-quantity -->
-                  </div><!-- End .details-filter-row -->
-
 
                   <div>
                     <% if (product.stock <= 0) { %> 
@@ -858,7 +797,9 @@
     });
   });
 </script>
+
 </body>
+
 
 
 
