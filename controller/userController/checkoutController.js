@@ -18,8 +18,7 @@ const razorpayInstance = new Razorpay({
 
 const cancelRazorpay = async(req, res) => {
 	try {
-		
-		await OrderSchema.updateOne({ _id: req.query.id }, { paymentStatus: 'Failed' })
+		await OrderSchema.updateOne({ _id: req.query.id }, { orderStatus: "Failed", paymentStatus: 'Failed' })
 		
 		res.redirect(`/`)
 	} catch (error) {
@@ -30,7 +29,7 @@ const cancelRazorpay = async(req, res) => {
 
 const checkout = async (req, res) => {
 	try {
-		
+		 
 		const userId = req.session.user?._id;
 
 		const existingAddressDoc = userId
@@ -40,8 +39,9 @@ const checkout = async (req, res) => {
 		const cart = await CartSchema.findOne({ userId }).populate(
 			'productDetails.productId'
 		);
-		const wallet = await walletSchema.find({})
-		// console.log("36537",wallet.balance);
+		const wallet = await walletSchema.find({user_id:userId	});
+		
+		const coupons = await CouponSchema.find({ status: true });
 		
 
 		if (!cart) {
@@ -57,6 +57,7 @@ const checkout = async (req, res) => {
 		}
 
 		res.render('checkout', {
+			coupons,
 			wallet,
 			existingAddresses: existingAddressDoc ? existingAddressDoc.address : [],
 			cart: cart,
@@ -120,8 +121,6 @@ const addressSave = async (req, res) => {
 				address: [address],
 			});
 			const savedaddres= await addressDoc.save();
-            console.log(21,savedaddres);
-            
 
 			return res.status(201).json({
 				success: true,
@@ -163,7 +162,7 @@ const orders = async (req, res) => {
             userId: req.session.user._id
         });
         
-        const totalPages = Math.ceil(totalOrders / limit);
+        const totalPages = Math.ceil(totalOrders / limit); // Math.ceil for avoiding fraction
         
         // Get paginated orders
         const userOrders = await OrderSchema.find({
@@ -192,6 +191,7 @@ const orders = async (req, res) => {
 const repay = async (req, res) => {
     try {
         const orderId = req.body.orderId; // Get order ID from request body
+		
         const order = await OrderSchema.findById(orderId);
 
         if (!order || order.paymentStatus === 'Success') {
@@ -276,7 +276,7 @@ const placeOrder = async (req, res) => {
 	const totalAmount = orderItems.reduce((sum, item) => sum + item.totalPrice, 0);
 
 	// Restrict COD for orders above ₹1000
-	if (paymentMethod === 'COD' && totalAmount < 1000) {
+	if (paymentMethod === 'COD' && totalAmount > 1000) {
 		return res.status(400).json({ error: 'Cash on Delivery is not available for orders above ₹1000' });
 	}
 
@@ -296,14 +296,26 @@ const placeOrder = async (req, res) => {
 
         // Wallet Payment Handling
         if (paymentMethod === 'Wallet') {
-            const userWallet = await walletSchema.findOne({ userId });
+            const userWallet = await walletSchema.findOne({ user_id:userId });
+			
             if (!userWallet || userWallet.balance < total) {
                 return res.status(400).json({ error: 'Insufficient wallet balance' });
             }
-
-            userWallet.balance -= totalAmount;
-            await userWallet.save();
-        }
+			// Deduct amount and update wallet
+			await walletSchema.updateOne(
+				{ user_id: userId },
+				{ 
+					$inc: { balance: -total },  // Deducting balance
+					$push: { history: { 
+						transaction_id:userWallet.history[0].transaction_id,
+						transaction_type: "Debit",
+						amount: total,
+						description: "Order Payment using Wallet",
+						date: new Date(),
+				  } } // Logging transaction (if applicable)
+				}
+			);
+}
 
         
 		
@@ -401,7 +413,6 @@ const applyCoupon = async (req, res) => {
 			status: true,
 			expireDate: { $gt: new Date() }
 		});
-		console.log(coupon);
 		
 		//checking the coupon exist or not
 		if (!coupon) {
@@ -581,7 +592,6 @@ const placeOrderInvoice = async (req, res) => {
 			return res.redirect('/login');
 		}
 		const userOrders = await OrderSchema.findById(req.query.id);
-		console.log(userOrders);
 
 		res.render('placeOrderInvoice', {
 			orders: userOrders,

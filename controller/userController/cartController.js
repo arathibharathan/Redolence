@@ -1,7 +1,7 @@
 const userSchema = require('../../model/userModel');
 const productSchema = require('../../model/productModel');
 const cartSchema = require('../../model/cartModel');
-const wishlistSchema = require('../../model/wishlistModel'); 
+const wishlistSchema = require('../../model/wishlistModel');
 const { isLogin } = require('../../middleware/userAuth');
 
 
@@ -31,7 +31,7 @@ const cart = async (req, res) => {
       return {
         ...product._doc, // Include all fields of the product
         quantity: matchedDetail?.quantity || 0,
-      };
+      }; 
     });
 
     // Calculate subtotal
@@ -57,22 +57,29 @@ const addcart = async (req, res) => {
         
       }
         const productId = req.body.productId;
+        
+       
+        // const discountPrice = req.body.discountElement;
         const userId = req.session.user._id;
-
         const product = await productSchema.findById(productId);
-        console.log(product);
-     
+        // const acualPrice = product.price
+        // const discounts = await offerSchema.find()
+        // const discountPercentage  = discounts.discount
+        // console.log(discountPercentage);
+        
+        // calculateDiscountPrice(acualPrice,discountPercentage)
+        
         if (!product) {
             return res.status(404).json({ message: 'Product not found' });
         }
 
         let cart = await cartSchema.findOne({ userId: userId });
-
+       
         if (!cart) {
             
             cart = new cartSchema({
                 userId: userId,
-                productDetails: [],
+                productDetails: []
             });
         }
 
@@ -92,11 +99,13 @@ const addcart = async (req, res) => {
         }
 
         await cart.save();
+        
 
         res.status(200).json({
             message: 'Product added to cart',
             cart: cart,
         });
+        
     } catch (error) {
         console.log(error);
         res.status(500).json({ message: 'Error adding product to cart' });
@@ -168,7 +177,7 @@ const addToWishlist = async (req, res) => {
         const { productId } = req.body;
         const userId = req.session.user._id;
 
-        // Find or create a wishlist for the user
+        // create a wishlist for the user
         let wishlist = await wishlistSchema.findOne({ user: userId });
         
         if (!wishlist) {
@@ -202,7 +211,7 @@ const removeProductFromWishlist = async (req, res) => {
     if (!userId) {
       return res.status(401).json({
         success: false,
-        message: 'user not authentciated'
+        message: 'user not authentcated'
       })
     }
 

@@ -115,6 +115,7 @@
                     <th>DATE</th>
                     <th>DESCRIPTION</th>
                     <th>AMOUNT</th>
+                    <th>TRANSACTION TYPE</th>
                 </tr>
             </thead>
             <tbody>
@@ -124,6 +125,7 @@
                         <td><%= history[i].date.toLocaleDateString() %></td>
                         <td><%= history[i].description %></td>
                         <td>₹ <%= history[i].amount %></td>
+                        <td><%= history[i].transaction_type%></td>
                     </tr>
                 <% } %>
             </tbody>

@@ -121,37 +121,7 @@
 <body>
   <div class="page-wrapper">
     <header class="header">
-       <!-- Cancel Order Reason Modal -->
-        <!-- <div class="modal fade" id="cancelOrderModal" tabindex="-1" role="dialog" aria-hidden="true">
-          <div class="modal-dialog modal-dialog-centered" role="document">
-              <div class="modal-content">
-                  <div class="modal-header">
-                      <h5 class="modal-title">Cancel Order</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                          <span aria-hidden="true"><i class="icon-close"></i></span>
-                      </button>
-                  </div>
-                  <div class="modal-body">
-                      <p>Please select a reason for cancelling your order:</p>
-                      <select id="cancelReason" class="form-control">
-                          <option value="">Select a reason</option>
-                          <option value="Changed my mind">Changed my mind</option>
-                          <option value="Found a better price">Found a better price</option>
-                          <option value="Product not as expected">Product not as expected</option>
-                          <option value="Other">Other</option>
-                      </select>
-                  </div>
-                  <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                      <button type="button" class="btn btn-danger" id="confirmCancelOrder">Cancel Order</button>
-                  </div>
-              </div>
-          </div>
-        </div> -->
-
       
-
-
 
       <div class="header-middle sticky-header">
         <div class="container">
@@ -233,26 +203,7 @@
         <div class="dashboard">
           <div class="container">
             <div class="row">
-              <aside class="col-md-4 col-lg-3">
-                <ul class="nav nav-dashboard flex-column mb-3 mb-md-0" role="tablist">
-                  <li class="nav-item">
-                    <a class="nav-link" id="tab-dashboard-link" href="/dashboard">My Account</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link active" id="tab-orders-link" href="/orders">Orders</a>
-                  </li>
-
-                  <li class="nav-item">
-                    <a class="nav-link" id="tab-address-link" href="/address">Adresses</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" id="tab-account-link" href="/editUser">Account Details</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">Sign Out</a>
-                  </li>
-                </ul>
-              </aside><!-- End .col-lg-3 -->
+              
       
       <div class="page-content order-container">
         
@@ -261,15 +212,8 @@
             <div class="order-card" data-order-id="<%= order._id %>">
               <div class="order-card-header">
                 <h4 class="mb-0">Order #<%= order.order_id %></h4>
-                <span class="order-status 
-                  <%= 
-                    order.orderStatus === 'Placed' ? 'status-placed' : 
-                    order.orderStatus === 'Shipped' ? 'status-shipped' : 
-                    order.orderStatus === 'Delivered' ? 'status-delivered' : 
-                    order.paymentStatus === 'Failed' ? 'status-failed' : 
-                    'status-cancelled'
-                  %>">
-                  <%= order.paymentStatus === 'Failed' ? 'Payment Failed' : order.orderStatus %>
+                <span class="order-status">
+                  <%= order.orderStatus %>
                 </span>
               </div>
             
@@ -280,16 +224,15 @@
                   <p><strong>Total Amount:</strong> ₹<%= order.totalAmount.toFixed(2) %></p>
                 </div>
               </div>
-            
               <% if (order.orderStatus === "Cancelled") { %>
                 <!-- Show disabled Cancel button for cancelled orders -->
                 <button class="btn btn-secondary" disabled>Cancelled</button>
                 <button class="btn btn-info" onclick="toggleDetails(this)">View Details</button>
-              <% } else if (order.paymentStatus === "Delivered") { %>
+              <% } else if (order.orderStatus === "Delivered") { %>
                 <!-- Show Return and View Details buttons -->
                 <button class="btn btn-warning" onclick="openReturnOrderModal('<%= order._id %>')">Return</button>
                 <button class="btn btn-info" onclick="toggleDetails(this)">View Details</button>
-              <% } else if (order.paymentStatus === "Failed") { %>
+              <% } else if (order.orderStatus === "Failed") { %>
                 <!-- Show Repay and View Details buttons -->
                 <button class="btn btn-success" onclick="retryPayment('<%= order._id %>')">Repay</button>
                 <button class="btn btn-info" onclick="toggleDetails(this)">View Details</button>
@@ -363,56 +306,7 @@
           </div>
         <% } %>
       </div>
-      <% if (pagination && pagination.totalPages > 1) { %>
-        <nav aria-label="Page navigation" class="d-flex justify-content-center mt-4">
-          <ul class="pagination">
-            <!-- Previous page button -->
-            <li class="page-item <%= pagination.page === 1 ? 'disabled' : '' %>">
-              <a class="page-link" href="/orders?page=<%= pagination.page - 1 %>" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-              </a>
-            </li>
-            
-            <!-- First page button -->
-            <% if (pagination.page > 3) { %>
-              <li class="page-item">
-                <a class="page-link" href="/orders?page=1">1</a>
-              </li>
-              <% if (pagination.page > 4) { %>
-                <li class="page-item disabled">
-                  <a class="page-link">...</a>
-                </li>
-              <% } %>
-            <% } %>
-            
-            <!-- Page numbers -->
-            <% for (let i = Math.max(1, pagination.page - 2); i <= Math.min(pagination.totalPages, pagination.page + 2); i++) { %>
-              <li class="page-item <%= pagination.page === i ? 'active' : '' %>">
-                <a class="page-link" href="/orders?page=<%= i %>"><%= i %></a>
-              </li>
-            <% } %>
-            
-            <!-- Last page button -->
-            <% if (pagination.page < pagination.totalPages - 2) { %>
-              <% if (pagination.page < pagination.totalPages - 3) { %>
-                <li class="page-item disabled">
-                  <a class="page-link">...</a>
-                </li>
-              <% } %>
-              <li class="page-item">
-                <a class="page-link" href="/orders?page=<%= pagination.totalPages %>"><%= pagination.totalPages %></a>
-              </li>
-            <% } %>
-            
-            <!-- Next page button -->
-            <li class="page-item <%= pagination.page === pagination.totalPages ? 'disabled' : '' %>">
-              <a class="page-link" href="/orders?page=<%= pagination.page + 1 %>" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-              </a>
-            </li>
-          </ul>
-        </nav>
-      <% } %>
+      
 
     </main>
 
@@ -501,7 +395,56 @@
         </div>
       </div>
     </div>
-
+    <% if (pagination && pagination.totalPages > 1) { %>
+      <nav aria-label="Page navigation" class="d-flex justify-content-center mt-4">
+          <ul class="pagination">
+              <!-- Previous page button -->
+              <li class="page-item <%= pagination.page === 1 ? 'disabled' : '' %>">
+                  <a class="page-link" href="/orders?page=<%= pagination.page - 1 %>" aria-label="Previous">
+                      <span aria-hidden="true">&laquo;</span>
+                  </a>
+              </li>
+              
+              <!-- First page button -->
+              <% if (pagination.page > 3) { %>
+                  <li class="page-item">
+                      <a class="page-link" href="/orders?page=1">1</a>
+                  </li>
+                  <% if (pagination.page > 4) { %>
+                      <li class="page-item disabled">
+                          <a class="page-link">...</a>
+                      </li>
+                  <% } %>
+              <% } %>
+              
+              <!-- Page numbers -->
+              <% for (let i = Math.max(1, pagination.page - 2); i <= Math.min(pagination.totalPages, pagination.page + 2); i++) { %>
+                  <li class="page-item <%= pagination.page === i ? 'active' : '' %>">
+                      <a class="page-link" href="/orders?page=<%= i %>"><%= i %></a>
+                  </li>
+              <% } %>
+              
+              <!-- Last page button -->
+              <% if (pagination.page < pagination.totalPages - 2) { %>
+                  <% if (pagination.page < pagination.totalPages - 3) { %>
+                      <li class="page-item disabled">
+                          <a class="page-link">...</a>
+                      </li>
+                  <% } %>
+                  <li class="page-item">
+                      <a class="page-link" href="/orders?page=<%= pagination.totalPages %>"><%= pagination.totalPages %></a>
+                  </li>
+              <% } %>
+              
+              <!-- Next page button -->
+              <li class="page-item <%= pagination.page === pagination.totalPages ? 'disabled' : '' %>">
+                  <a class="page-link" href="/orders?page=<%= pagination.page + 1 %>" aria-label="Next">
+                      <span aria-hidden="true">&raquo;</span>
+                  </a>
+              </li>
+          </ul>
+      </nav>
+  <% } %>
     <footer class="footer">
       <div class="footer-middle">
         <div class="container">
@@ -929,7 +872,7 @@
             });
 
             const responseData = await response.json();
-
+            console.log('asd', responseData)
             if (!response.ok) {
                 throw new Error(responseData.message || 'Failed to retry payment');
             }
@@ -942,7 +885,6 @@
                 "name": responseData.name,
                 "order_id": responseData.razorpayOrder.id,
                 "handler": function (response) {
-                    console.log("Payment Success:", response);
                     window.location.href = `/placeOrderInvoice?id=${responseData.id}`;
                 },
                 "theme": {
@@ -953,12 +895,18 @@
             var razorpayObject = new Razorpay(options);
 
             razorpayObject.on('payment.failed', function (response) {
-                console.log("Payment Failed:", response);
-                alert("Payment Failed");
-                window.location.href = `/cancelRazorpay?id=${responseData.id}`;
-            });
+              Swal.fire({
+							icon: 'error',
+							title: "Payment Faileds",
+							text: 'Your order Payment Faileds',
+							confirmButtonText: 'OK',
+						})
+							window.location.href = `/cancelRazorpay?id=${responseData.id}`;
+						});
 
             razorpayObject.open();
+            
+            
 
         } catch (error) {
             console.error('Error retrying payment:', error);

@@ -469,10 +469,10 @@
                 <%= products[i].name %>
               </a>
             </h3>
-            <div class="product-price">
+            <div class="product-price" >
               <% if (products[i].highestDiscount > 0) { %>
                 <span class="original-price"><s>₹<%= products[i].originalPrice.toFixed(2) %></s></span>
-                <span class="discounted-price"> ₹<%= products[i].offerPrice.toFixed(2) %></span>
+                <span class="discountPrice" class="discounted-price"> ₹<%= products[i].offerPrice.toFixed(2) %></span>
               <% } else { %>
                 ₹<%= products[i].originalPrice.toFixed(2) %>
               <% } %>
@@ -967,15 +967,16 @@
   <script src="/js/shop-filters.js"></script>
 
   <script>
+    // selecting all add to cart buttons
     const addToCartButton = document.querySelectorAll('.btn-cart');
-
-
+    //clicking any button the the function will works
     addToCartButton.forEach(button => {
       button.addEventListener('click', async (event) => {
         event.preventDefault();
         const productId = button.getAttribute('data-id');
-
-        console.log("abcdefghijklmnopqrstuvwxyz",productId);
+        // Find the closest product container and get its discount price
+        const productContainer = button.closest('.product'); // Adjust class if needed
+        const discountElement = productContainer?.querySelector('.discountPrice')?.innerHTML
 
         try {
           const response = await fetch("/cart", {
@@ -985,9 +986,14 @@
               
             },
             body: JSON.stringify({
-              productId
+              productId,
+              discountElement
             }),
           });
+          console.log(productId);
+          console.log(discountElement);
+
+          
 
           const data = await response.json();
 

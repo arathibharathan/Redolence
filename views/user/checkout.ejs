@@ -29,6 +29,40 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 	<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
+	<style>
+		.coupon-container {
+		  display: flex;
+		  flex-direction: column;
+		  gap: 15px;
+		}
+		
+		.coupon-item {
+		  display: flex;
+		  align-items: center;
+		  justify-content: space-between;
+		  padding: 10px 15px;
+		  background-color: #f8f9fa;
+		  border-radius: 5px;
+		  border: 1px solid #dee2e6;
+		}
+		
+		.coupon-code {
+		  font-size: 18px;
+		  font-weight: 500;
+		  letter-spacing: 1px;
+		  color: #212529;
+		}
+		
+		.copy-btn {
+		  min-width: 80px;
+		}
+		
+		.no-coupons {
+		  text-align: center;
+		  color: #6c757d;
+		  font-style: italic;
+		}
+	  </style>
 </head>
 
 <body>
@@ -37,56 +71,16 @@
 			<div class="header-top">
 				<div class="container">
 					<div class="header-left">
-						<div class="header-dropdown">
-							<a href="#">Usd</a>
-							<div class="header-menu">
-								<ul>
-									<li><a href="#">Eur</a></li>
-									<li><a href="#">Usd</a></li>
-								</ul>
-							</div>
-							<!-- End .header-menu -->
-						</div>
+					
 						<!-- End .header-dropdown -->
 
 						<div class="header-dropdown">
-							<a href="#">Eng</a>
-							<div class="header-menu">
-								<ul>
-									<li><a href="#">English</a></li>
-									<li><a href="#">French</a></li>
-									<li><a href="#">Spanish</a></li>
-								</ul>
-							</div>
+							
+						
 							<!-- End .header-menu -->
 						</div>
 						<!-- End .header-dropdown -->
 					</div>
-					<!-- End .header-left -->
-
-					<div class="header-right">
-						<ul class="top-menu">
-							<li>
-								<a href="#">Links</a>
-								<ul>
-									<li>
-										<a href="tel:#"><i class="icon-phone"></i>Call: +0123 456 789</a>
-									</li>
-									<li>
-										<a href="wishlist.html"><i class="icon-heart-o"></i>Wishlist
-											<span>(3)</span></a>
-									</li>
-									<li><a href="about.html">About Us</a></li>
-									<li><a href="contact.html">Contact Us</a></li>
-									<li>
-										<a href="#signin-modal" data-toggle="modal"><i class="icon-user"></i>Login</a>
-									</li>
-								</ul>
-							</li>
-						</ul>
-						<!-- End .top-menu -->
-					</div>
-					<!-- End .header-right -->
 				</div>
 				<!-- End .container -->
 			</div>
@@ -112,14 +106,6 @@
 								<li>
 									<a href="/shop" class="">Product</a>
 								</li>
-
-								<li>
-									<a href="/cart" class="">Cart</a>
-								</li>
-
-								<li>
-									<a class="megamenu-container active" href="/checkout" class="">Checkout</a>
-								</li>
 							</ul>
 							<!-- End .menu -->
 						</nav>
@@ -133,54 +119,6 @@
 					</div>
 
 					<div class="header-right">
-						<div class="header-search">
-							<a href="#" class="search-toggle" role="button" title="Search"><i
-									class="icon-search"></i></a>
-							<form action="#" method="get">
-								<div class="header-search-wrapper">
-									<label for="q" class="sr-only">Search</label>
-									<input type="search" class="form-control" name="q" id="q" placeholder="Search in..."
-										required />
-								</div>
-								<!-- End .header-search-wrapper -->
-							</form>
-						</div>
-
-						<!-- End .header-search -->
-						<div class="dropdown compare-dropdown">
-							<a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown"
-								aria-haspopup="true" aria-expanded="false" data-display="static"
-								title="Compare Products" aria-label="Compare Products">
-								<i class="icon-random"></i>
-							</a>
-
-							<div class="dropdown-menu dropdown-menu-right">
-								<ul class="compare-products">
-									<li class="compare-product">
-										<a href="#" class="btn-remove" title="Remove Product"><i
-												class="icon-close"></i></a>
-										<h4 class="compare-product-title">
-											<a href="product.html">Blue Night Dress</a>
-										</h4>
-									</li>
-									<li class="compare-product">
-										<a href="#" class="btn-remove" title="Remove Product"><i
-												class="icon-close"></i></a>
-										<h4 class="compare-product-title">
-											<a href="product.html">White Long Skirt</a>
-										</h4>
-									</li>
-								</ul>
-
-								<div class="compare-actions">
-									<a href="#" class="action-link">Clear All</a>
-									<a href="#" class="btn btn-outline-primary-2"><span>Compare</span><i
-											class="icon-long-arrow-right"></i></a>
-								</div>
-							</div>
-							<!-- End .dropdown-menu -->
-						</div>
-						<!-- End .compare-dropdown -->
 
 						<div class="dropdown cart-dropdown">
 							<a href="cart" class="dropdown-toggle">
@@ -210,9 +148,7 @@
 					<ol class="breadcrumb">
 						<li class="breadcrumb-item"><a href="index.html">Home</a></li>
 						<li class="breadcrumb-item"><a href="#">Shop</a></li>
-						<li class="breadcrumb-item active" aria-current="page">
-							Checkout
-						</li>
+						
 					</ol>
 				</div>
 				<!-- End .container -->
@@ -596,8 +532,8 @@
 														<label for="online">Razorpay</label>
 														<br>
 														<input type="radio" name="paymentMethod" id="wallet"
-															value="<%= wallet[0].balance%>" required />
-														<label for="wallet">wallet</label>
+															value="<%= wallet[0].balance %>" required />
+														<label for="wallet">wallet balance <%= wallet[0].balance %></label>
 													</h2>
 												</div>
 											</div>
@@ -615,6 +551,44 @@
 											placeholder="Enter Coupon Code" required>
 										<button type="submit">Apply Coupon</button>
 									</form>
+
+									<!-- Show Coupons Button -->
+									<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+										Show Coupons
+									  </button>
+
+									  <!-- Bootstrap Modal -->
+									<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"> 
+										<div class="modal-dialog modal-dialog-centered" role="document"> 
+										<div class="modal-content"> 
+											<div class="modal-header">
+											<h5 class="modal-title" id="exampleModalLabel">Coupons</h5> 
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close"> 
+												<span aria-hidden="true">&times;</span> 
+											</button> 
+											</div> 
+											<div class="modal-body"> 
+											<% if (coupons && coupons.length > 0) { %> 
+												<div class="coupon-container">
+												<% coupons.forEach(coupon => { %> 
+													<div class="coupon-item">
+													<div class="coupon-code"><%= coupon.code %></div>
+													<button class="btn btn-primary copy-btn" data-code="<%= coupon.code %>">Copy</button> 
+													</div> 
+												<% }); %> 
+												</div>
+											<% } else { %> 
+												<p class="no-coupons">No active coupons available.</p> 
+											<% } %> 
+											</div>
+											<div class="modal-footer">
+											<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+											</div>
+										</div> 
+										</div> 
+									</div> 
+									
+									
 								</aside>
 								<!-- End .col-lg-3 -->
 							</div>
@@ -628,7 +602,8 @@
 			<!-- End .page-content -->
 		</main>
 		<!-- End .main -->
-
+		
+		
 		<footer class="footer">
 			<div class="footer-middle">
 				<div class="container">
@@ -1151,7 +1126,8 @@
 		</div>
 	</div>
 
-	<!-- //placeOrder Script -->
+
+
 
 	<script>
 		document.addEventListener('DOMContentLoaded', () => {
@@ -1361,6 +1337,57 @@
 			}
 		});
 	</script>
+
+	<!-- show coupon modal script -->
+	<script> 
+		document.addEventListener('DOMContentLoaded', function() {
+		  // Find all copy buttons
+		  const copyButtons = document.querySelectorAll('.copy-btn');
+		  
+		  // Add click event to each button
+		  copyButtons.forEach(button => {
+			button.addEventListener('click', function() {
+			  const code = this.getAttribute('data-code');
+			  
+			  // Copy to clipboard
+			  navigator.clipboard.writeText(code)
+				.then(() => {
+				  // Change button text temporarily
+				  const originalText = this.textContent;
+				  this.textContent = "Copied!";
+				  this.classList.add('btn-success');
+				  this.classList.remove('btn-primary');
+				  
+				  // Reset button after 2 seconds
+				  setTimeout(() => {
+					this.textContent = originalText;
+					this.classList.add('btn-primary');
+					this.classList.remove('btn-success');
+				  }, 2000);
+				})
+				.catch(err => {
+				  console.error("Failed to copy: ", err);
+				  alert("Failed to copy. Please try again.");
+				});
+			});
+		  });
+		  
+		  // Close modal event handling
+		  const closeButtons = document.querySelectorAll('[data-dismiss="modal"]');
+		  closeButtons.forEach(button => {
+			button.addEventListener('click', function() {
+			  const modal = document.getElementById('exampleModal');
+			  const modalInstance = bootstrap.Modal.getInstance(modal);
+			  if (modalInstance) {
+				modalInstance.hide();
+			  } else {
+				// Fallback for older Bootstrap versions
+				$(modal).modal('hide');
+			  }
+			});
+		  });
+		});
+	  </script>
 
 	<!-- modal script -->
 	<script>
@@ -1675,7 +1702,9 @@
 
 				const cod = document.getElementById('cod');
 				const online = document.getElementById('online');
-				const walletBalance = document.getElementById('wallet').value; // Get wallet balance
+				const walletBalance = document.getElementById('wallet').value; 
+				console.log(walletBalance);
+				// Get wallet balance
 
 
 				// Check if a payment option is selected
@@ -1739,7 +1768,6 @@
 							"name": responseData.name,  // Removed quotes
 							"order_id": responseData.razorpayOrder.id, // Ensure orderId is not undefined
 							"handler": function (response) {
-								console.log("Payment Success:", response);
 								window.location.href = `/placeOrderInvoice?id=${responseData.id}`;
 							},
 							"theme": {
@@ -1791,6 +1819,45 @@
 		})
 
 	</script>
+
+	<!-- apply coupon show modal -->
+
+	<script>
+        document.getElementById("showCoupons").addEventListener("click", function() {
+            fetch("/checkout")
+                .then(response => response.json())
+                .then(data => {
+                    let couponList = document.getElementById("couponList");
+                    couponList.innerHTML = "";
+                    
+                    data.forEach(coupon => {
+                        let li = document.createElement("li");
+                        li.textContent = coupon.code;
+
+                        let copyBtn = document.createElement("button");
+                        copyBtn.textContent = "Copy";
+                        copyBtn.classList.add("copy-btn");
+
+                        // Copy functionality
+                        copyBtn.onclick = function() {
+                            navigator.clipboard.writeText(coupon.code);
+                            alert("Copied: " + coupon.code);
+                        };
+
+                        li.appendChild(copyBtn);
+                        couponList.appendChild(li);
+                    });
+
+                    document.getElementById("couponModal").style.display = "block";
+                    document.getElementById("overlay").style.display = "block";
+                });
+        });
+
+        function closeModal() {
+            document.getElementById("couponModal").style.display = "none";
+            document.getElementById("overlay").style.display = "none";
+        }
+    </script>
 
 
 </body>

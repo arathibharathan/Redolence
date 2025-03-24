@@ -44,8 +44,6 @@ userRouter.post("/login", loginController.logincheck);
 
 //shop
 userRouter.get('/shop', shopController.shop);
-
-// userRouter.get('/renderCartByPage/:page',shopController.renderCartByPage)
 userRouter.get('/product', shopController.product);
 
 
@@ -135,8 +133,7 @@ userRouter.put('/update-address/:addressId', checkoutController.updateAddress);
 // wallet
 userRouter.get('/wallet',auth.isLogin,walletController.loadWallet);
 
-// offer
-// userRouter.get('/offer', offerController.offerCheck)
+
 
 
 // logout

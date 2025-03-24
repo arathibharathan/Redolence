@@ -1,5 +1,4 @@
 const userSchema = require('../../model/userModel');
-const walletSchema = require('../../model/walletModel')
 const otpSchema = require('../../model/otpModel');
 const sendOtp = require('../../utils/sendOtp');
 const bcrypt = require('bcrypt');
@@ -129,7 +128,6 @@ const registerCheck = async (req, res) => {
     }
 };
 // OTP
-// the variable email is taking the email, it coming with otp from the otp.ejs page 
 const otpSender = async (req, res) => {
 	const email = req.params.id; //req.params.email
 	res.render('otp', { email });

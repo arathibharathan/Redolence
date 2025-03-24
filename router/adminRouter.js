@@ -3,8 +3,6 @@ const adminRouter = express();
 const upload = require('../middleware/multer');
 const auth = require('../middleware/adminAuth');
 const session = require('express-session');
-const offerSchema = require('../model/offerModel')
-const productSchema = require('../model/productModel')
 
 const adminController = require('../controller/adminController/adminController');
 const categoryController = require('../controller/adminController/categoryController');

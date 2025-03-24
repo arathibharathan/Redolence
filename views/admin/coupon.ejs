@@ -1,58 +1,55 @@
 <!DOCTYPE html>
-<!-- =========================================================
-* Redolence - Bootstrap Material Design Admin Template | v2.0.1
-==============================================================
-
-* Product Page: https://themeselection.com/item/Redolance-bootstrap-html-admin-template/
-* Created by: ThemeSelection
-* License: You must have a valid license purchased in order to legally use the theme for your project.
-* Copyright ThemeSelection (https://themeselection.com)
-
-=========================================================
--->
-
-<html lang="en" class="light-style layout-navbar-fixed layout-menu-fixed layout-compact" dir="ltr" data-theme="theme-default" data-assets-path="../../admin/assets/" data-template="vertical-menu-template" data-style="light">
+<html lang="en" class="light-style layout-navbar-fixed layout-menu-fixed layout-compact" dir="ltr"
+    data-theme="theme-default" data-assets-path="../../admin/assets/" data-template="vertical-menu-template"
+    data-style="light">
 
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
     <title>Order List - Pages | Redolance - Bootstrap Material Design Admin Template</title>
     <meta name="description" content="Start your development with a Dashboard for Bootstrap 5" />
-    <meta name="keywords" content="dashboard, material, material design, bootstrap 5 dashboard, bootstrap 5 design, bootstrap 5">
+    <meta name="keywords"
+        content="dashboard, material, material design, bootstrap 5 dashboard, bootstrap 5 design, bootstrap 5">
     <link rel="canonical" href="https://themeselection.com/item/Redolance-bootstrap-html-admin-template/" />
     <link rel="icon" type="image/x-icon" href="/Redolence logo-01.png" />
-    
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com/" />
     <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
 
     <!-- Icons -->
     <link rel="stylesheet" href="../../admin/assets/vendor/fonts/remixicon/remixicon.css" />
     <link rel="stylesheet" href="../../admin/assets/vendor/fonts/flag-icons.css" />
-    
+
     <!-- Menu waves for no-customizer fix -->
     <link rel="stylesheet" href="../../admin/assets/vendor/libs/node-waves/node-waves.css" />
 
     <!-- Core CSS -->
     <link rel="stylesheet" href="../../admin/assets/vendor/css/rtl/core.css" class="template-customizer-core-css" />
-    <link rel="stylesheet" href="../../admin/assets/vendor/css/rtl/theme-default.css" class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="../../admin/assets/vendor/css/rtl/theme-default.css"
+        class="template-customizer-theme-css" />
     <link rel="stylesheet" href="../../admin/assets/css/demo.css" />
-    
+
     <!-- Vendors CSS -->
     <link rel="stylesheet" href="../../admin/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
-    <link rel="stylesheet" href="../../admin/assets/vendor/libs/typeahead-js/typeahead.css" /> 
+    <link rel="stylesheet" href="../../admin/assets/vendor/libs/typeahead-js/typeahead.css" />
     <link rel="stylesheet" href="../../admin/assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css" />
     <link rel="stylesheet" href="../../admin/assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css" />
     <link rel="stylesheet" href="../../admin/assets/vendor/libs/datatables-buttons-bs5/buttons.bootstrap5.css" />
-    <link rel="stylesheet" href="../../admin/assets/vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.css" />
+    <link rel="stylesheet"
+        href="../../admin/assets/vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.css" />
     <link rel="stylesheet" href="../../admin/assets/vendor/libs/select2/select2.css" />
     <link rel="stylesheet" href="../../admin/assets/vendor/libs/%40form-validation/form-validation.css" />
-    
+
     <!-- Helpers -->
     <script src="../../admin/assets/vendor/js/helpers.js"></script>
     <script src="../../admin/assets/vendor/js/template-customizer.js"></script>
-    <script src="../../admin/assets/js/config.js"></script>
+    <script src="../../admin/assets/js/config.js"></script>1
+    \<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </head>
 
 <body class="container mt-5">
@@ -127,276 +124,298 @@
                                         </a>
                                     </li>
                                 </ul>
-                                <ul class="menu-sub">
+                            <li class="menu-item">
+                                <a href="javascript:void(0);" class="menu-link menu-toggle">
+                                    <div data-i18n="Coupons Management">Coupons Management</div>
+                                </a>
+                                <ul class="menu-sub active">
                                     <li class="menu-item">
-                                      <a href="/admin/orderList" class="menu-link">
-                                        <div data-i18n="Order Details">Order Details</div>
-                                      </a>
+                                        <a href="/admin/coupons" class="menu-link">
+                                            <div data-i18n="Coupons">Coupons</div>
+                                        </a>
                                     </li>
                                 </ul>
-                                <li class="menu-item  active">
-                                    <a href="javascript:void(0);" class="menu-link menu-toggle">
-                                      <div data-i18n="Coupons Management">Coupons Management</div>
-                                    </a>
-                                    <ul class="menu-sub">
-                                      <li class="menu-item  active">
-                                        <a href="#" class="menu-link">
-                                          <div data-i18n="Coupons">Coupons</div>
-                                        </a>
-                                      </li>
-                                    </ul>
-                                    <li class="menu-item">
-                                      <a href="javascript:void(0);" class="menu-link menu-toggle">
-                                        <div data-i18n="Offers Management">Offers</div>
-                                      </a>
-                                      <ul class="menu-sub">
-                                        <li class="menu-item">
-                                            <a href="/admin/productOffers" class="menu-link">
-                                              <div data-i18n="Product Offers">Product Offers</div>
-                                            </a>
-                                          </li>
-                                          <li class="menu-item">
-                                            <a href="/admin/categoryOffers" class="menu-link">
-                                              <div data-i18n="Category Offers">Category Offers</div>
-                                            </a>
-                                          </li>
-                                          <li class="menu-item">
-                                            <a href="/admin/referralOffers" class="menu-link">
-                                              <div data-i18n="Referral Offers">Referral Offers</div>
-                                            </a>
-                                          </li>
-                            </li>
-                        </ul>
-                        <li class="menu-item">
-                            <a href="javascript:void(0);" class="menu-link menu-toggle">
-                              <div data-i18n="Sales">Sales</div>
-                            </a>
-                            <ul class="menu-sub">
-                              <li class="menu-item">
-                                <a href="/admin/salesReport" class="menu-link">
-                                  <div data-i18n="SalesReport">SalesReport</div>
+                            <li class="menu-item">
+                                <a href="javascript:void(0);" class="menu-link menu-toggle">
+                                    <div data-i18n="Offers Management">Offers</div>
                                 </a>
-                              </li>
+                                <ul class="menu-sub">
+                                    <li class="menu-item">
+                                        <a href="/admin/Offers" class="menu-link">
+                                            <div data-i18n="Product Offers">product offers</div>
+                                        </a>
+                                    </li>
+
+                                    <li class="menu-item">
+                                        <a href="/admin/offers/category" class="menu-link">
+                                            <div data-i18n="category Offers">category Offers</div>
+                                        </a>
+                                    </li>
                             </li>
-                    </li>
-                </ul>
+
+                        </ul>
             </aside>
             <!-- / Menu -->
             <div class="layout-page">
                 <div class="container-xxl flex-grow-1 container-p-y">
-                  <div class="app-ecommerce-category">
-                    <h2 class="mb-4">Coupons</h2>
-    
-                    <!-- Add New Coupon Button -->
-                    <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addCouponModal">Add New Coupon</button>
-                
-                    <!-- Coupon List -->
-                    <div class="row">
-                        <% coupons.forEach(coupon => { %>
-                            <div class="col-md-4" id="coupon-<%= coupon._id %>">
-                                <div class="card p-3 mb-3">
-                                    <h3><%= coupon.code %></h3>
-                                    <p><strong>Description:</strong> <%= coupon.description %></p>
-                                    <p><strong>Discount:</strong> <span class="text-danger"><%= coupon.discount %>%</span></p>
-                                    <p><strong>Status:</strong> <%= coupon.status ? "TRUE" : "FALSE" %></p>
-                                    <p><strong>Expire Date:</strong> <%= coupon.expireDate.toISOString().split('T')[0] %></p>
-                                    <p><strong>Max Purchase Amount:</strong> <%= coupon.maxPurchaseAmount %></p>
-                                    <p><strong>Max Amount:</strong> <%= coupon.maxAmount %></p>
-                                    <!-- Delete Button -->
-                                    <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteCouponModal<%= coupon._id %>">Delete</button>
-                                    <!-- Edit Button -->
-                                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#EditCouponModal<%= coupon._id %>">Edit Coupon</button>
+                    <div class="app-ecommerce-category">
+                        <h2 class="mb-4">Coupons</h2>
+
+                        <!-- Add New Coupon Button -->
+                        <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addCouponModal">Add
+                            New Coupon</button>
+
+                        <!-- Coupon List -->
+                        <div class="row">
+                            <% coupons.forEach(coupon=> { %>
+                                <div class="col-md-4" id="coupon-<%= coupon._id %>">
+                                    <div class="card p-3 mb-3">
+                                        <h3>
+                                            <%= coupon.code %>
+                                        </h3>
+                                        <p><strong>Description:</strong>
+                                            <%= coupon.description %>
+                                        </p>
+                                        <p><strong>Discount:</strong> <span class="text-danger">
+                                                <%= coupon.discount %>%
+                                            </span></p>
+                                        <p><strong>Status:</strong>
+                                            <%= coupon.status ? "TRUE" : "FALSE" %>
+                                        </p>
+                                        <p><strong>Expire Date:</strong>
+                                            <%= coupon.expireDate.toISOString().split('T')[0] %>
+                                        </p>
+                                        <p><strong>Max Purchase Amount:</strong>
+                                            <%= coupon.maxPurchaseAmount %>
+                                        </p>
+                                        <p><strong>Max Amount:</strong>
+                                            <%= coupon.maxAmount %>
+                                        </p>
+                                        <!-- Delete Button -->
+                                        <button class="btn btn-danger" data-bs-toggle="modal"
+                                            data-bs-target="#deleteCouponModal<%= coupon._id %>">Delete</button>
+                                        <!-- Edit Button -->
+                                        <button class="btn btn-primary" data-bs-toggle="modal"
+                                            data-bs-target="#EditCouponModal<%= coupon._id %>">Edit Coupon</button>
+                                    </div>
                                 </div>
-                            </div>
-                        <% }); %>
-                    </div>
-                    
-                
-                    <!--Coupon Modal -->
-                    <div class="modal fade" id="addCouponModal" tabindex="-1">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title">Add a New Coupon</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <form action="/admin/coupons" method="POST">
-                                        <label>Coupon Code:</label>
-                                        <input type="text" name="code" class="form-control" required>
+                                <% }); %>
+                        </div>
 
-                                        <label>Description:</label>
-                                        <input type="text" name="description" class="form-control" required>
 
-                                        <label>Discount (%):</label>
-                                        <input type="number" name="discount" class="form-control" required>
+                        <!--Coupon Modal -->
+                        <div class="modal fade" id="addCouponModal" tabindex="-1">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Add a New Coupon</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form action="/admin/coupons" method="POST">
+                                            <label>Coupon Code:</label>
+                                            <input type="text" name="code" class="form-control" required>
 
-                                        <label>Status:</label>
-                                        <select name="status" class="form-control">
-                                            <option value="true">TRUE</option>
-                                            <option value="false">FALSE</option>
-                                        </select>
+                                            <label>Description:</label>
+                                            <input type="text" name="description" class="form-control" required>
 
-                                        <label>Expire Date:</label>
-                                        <input type="date" name="expireDate" class="form-control" required>
+                                            <label>Discount (%):</label>
+                                            <input type="number" name="discount" class="form-control" required>
 
-                                        <label>Max Purchase Amount:</label>
-                                        <input type="number" name="maxPurchaseAmount" class="form-control" required>
+                                            <label>Status:</label>
+                                            <select name="status" class="form-control">
+                                                <option value="true">TRUE</option>
+                                                <option value="false">FALSE</option>
+                                            </select>
 
-                                        <label>Max Amount:</label>
-                                        <input type="number" name="maxAmount" class="form-control" required>
+                                            <label>Expire Date:</label>
+                                            <input type="date" name="expireDate" class="form-control" required>
 
-                                        <button type="submit" class="btn btn-primary mt-3">Add Coupon</button>
-                                    </form>
+                                            <label>Max Purchase Amount:</label>
+                                            <input type="number" name="maxPurchaseAmount" class="form-control" required>
+
+                                            <label>Max Amount:</label>
+                                            <input type="number" name="maxAmount" class="form-control" required>
+
+                                            <button type="submit" class="btn btn-primary mt-3">Add Coupon</button>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                  </div>
-        
-                </div>
-              </div>
 
-    <!-- Delete Confirmation Modal -->
-<% coupons.forEach(coupon => { %>
-    <div class="modal fade" id="deleteCouponModal<%= coupon._id %>" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Confirm Deletion</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <p>Are you sure you want to delete the coupon "<%= coupon.code %>"?</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-danger" onclick="deleteCoupon('<%= coupon._id %>')">Delete</button>
                 </div>
             </div>
-        </div>
-    </div>
-    <% }) %>
 
-    <!-- Edit Coupon Modal -->
-<% coupons.forEach(coupon => { %>
-    <div class="modal fade" id="EditCouponModal<%= coupon._id %>" tabindex="-1" aria-labelledby="EditCouponModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="EditCouponModalLabel">Edit Coupon</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form action="/admin/coupons/edit/<%= coupon._id %>" method="POST">
-                        <label>Coupon Code:</label>
-                        <input type="text" name="code" class="form-control" value="<%= coupon.code %>" required>
-    
-                        <label>Description:</label>
-                        <input type="text" name="description" class="form-control" value="<%= coupon.description %>" required>
-    
-                        <label>Discount (%):</label>
-                        <input type="number" name="discount" class="form-control" value="<%= coupon.discount %>" required>
-    
-                        <label>Status:</label>
-                        <select name="status" class="form-control">
-                            <option value="true" <%= coupon.status ? "selected" : "" %>>TRUE</option>
-                            <option value="false" <%= !coupon.status ? "selected" : "" %>>FALSE</option>
-                        </select>
-    
-                        <label>Expire Date:</label>
-                        <input type="date" name="expireDate" class="form-control" 
-                        value="<%= coupon.expireDate ? coupon.expireDate.toISOString().split('T')[0] : '' %>" required>
-    
-                        <label>Max Purchase Amount:</label>
-                        <input type="number" name="maxPurchaseAmount" class="form-control" value="<%= coupon.maxPurchaseAmount %>" required>
-    
-                        <label>Max Amount:</label>
-                        <input type="number" name="maxAmount" class="form-control" value="<%= coupon.maxAmount %>" required>
-    
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Save Changes</button>
+            <!-- Delete Confirmation Modal -->
+            <% coupons.forEach(coupon=> { %>
+                <div class="modal fade" id="deleteCouponModal<%= coupon._id %>" tabindex="-1">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Confirm Deletion</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Are you sure you want to delete the coupon "<%= coupon.code %>"?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn btn-danger"
+                                    onclick="deleteCoupon('<%= coupon._id %>')">Delete</button>
+                            </div>
                         </div>
-                    </form>
-                    
+                    </div>
                 </div>
-            </div>
+                <% }) %>
+
+                    <!-- Edit Coupon Modal -->
+                    <% coupons.forEach(coupon=> { %>
+                        <div class="modal fade" id="EditCouponModal<%= coupon._id %>" tabindex="-1"
+                            aria-labelledby="EditCouponModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="EditCouponModalLabel">Edit Coupon</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form action="/admin/coupons/edit/<%= coupon._id %>" method="POST">
+                                            <label>Coupon Code:</label>
+                                            <input type="text" name="code" class="form-control"
+                                                value="<%= coupon.code %>" required>
+
+                                            <label>Description:</label>
+                                            <input type="text" name="description" class="form-control"
+                                                value="<%= coupon.description %>" required>
+
+                                            <label>Discount (%):</label>
+                                            <input type="number" name="discount" class="form-control"
+                                                value="<%= coupon.discount %>" required>
+
+                                            <label>Status:</label>
+                                            <select name="status" class="form-control">
+                                                <option value="true" <%=coupon.status ? "selected" : "" %>>TRUE</option>
+                                                <option value="false" <%=!coupon.status ? "selected" : "" %>>FALSE
+                                                </option>
+                                            </select>
+
+                                            <label>Expire Date:</label>
+                                            <input type="date" name="expireDate" class="form-control"
+                                                value="<%= coupon.expireDate ? coupon.expireDate.toISOString().split('T')[0] : '' %>"
+                                                required>
+
+                                            <label>Max Purchase Amount:</label>
+                                            <input type="number" name="maxPurchaseAmount" class="form-control"
+                                                value="<%= coupon.maxPurchaseAmount %>" required>
+
+                                            <label>Max Amount:</label>
+                                            <input type="number" name="maxAmount" class="form-control"
+                                                value="<%= coupon.maxAmount %>" required>
+
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-primary">Save Changes</button>
+                                            </div>
+                                        </form>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <% }) %>
+                            <!-- Overlay -->
+                            <div class="layout-overlay layout-menu-toggle"></div>
+                            <!-- Drag Target Area To SlideIn Menu On Small Screens -->
+                            <div class="drag-target"></div>
         </div>
-    </div>
-    <% }) %>
-    <!-- Overlay -->
-    <div class="layout-overlay layout-menu-toggle"></div>
-    <!-- Drag Target Area To SlideIn Menu On Small Screens -->
-    <div class="drag-target"></div>
-</div>
-<!-- / Layout wrapper -->
+        <!-- / Layout wrapper -->
 
-<!-- Core JS -->
-<script src="../../admin/assets/vendor/libs/jquery/jquery.js"></script>
-<script src="../../admin/assets/vendor/libs/popper/popper.js"></script>
-<script src="../../admin/assets/vendor/js/bootstrap.js"></script>
-<script src="../../admin/assets/vendor/libs/node-waves/node-waves.js"></script>
-<script src="../../admin/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
-<script src="../../admin/assets/vendor/libs/hammer/hammer.js"></script>
-<script src="../../admin/assets/vendor/libs/i18n/i18n.js"></script>
-<script src="../../admin/assets/vendor/libs/typeahead-js/typeahead.js"></script>
-<script src="../../admin/assets/vendor/js/menu.js"></script>
+        <!-- Core JS -->
+        <script src="../../admin/assets/vendor/libs/jquery/jquery.js"></script>
+        <script src="../../admin/assets/vendor/libs/popper/popper.js"></script>
+        <script src="../../admin/assets/vendor/js/bootstrap.js"></script>
+        <script src="../../admin/assets/vendor/libs/node-waves/node-waves.js"></script>
+        <script src="../../admin/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+        <script src="../../admin/assets/vendor/libs/hammer/hammer.js"></script>
+        <script src="../../admin/assets/vendor/libs/i18n/i18n.js"></script>
+        <script src="../../admin/assets/vendor/libs/typeahead-js/typeahead.js"></script>
+        <script src="../../admin/assets/vendor/js/menu.js"></script>
 
-<!-- Vendors JS -->
-<script src="../../admin/assets/vendor/libs/moment/moment.js"></script>
-<script src="../../admin/assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js"></script>
-<script src="../../admin/assets/vendor/libs/select2/select2.js"></script>
-<script src="../../admin/assets/vendor/libs/%40form-validation/popular.js"></script>
-<script src="../../admin/assets/vendor/libs/%40form-validation/bootstrap5.js"></script>
-<script src="../../admin/assets/vendor/libs/%40form-validation/auto-focus.js"></script>
-<script src="../../admin/assets/vendor/libs/cleavejs/cleave.js"></script>
-<script src="../../admin/assets/vendor/libs/cleavejs/cleave-phone.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Vendors JS -->
+        <script src="../../admin/assets/vendor/libs/moment/moment.js"></script>
+        <script src="../../admin/assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js"></script>
+        <script src="../../admin/assets/vendor/libs/select2/select2.js"></script>
+        <script src="../../admin/assets/vendor/libs/%40form-validation/popular.js"></script>
+        <script src="../../admin/assets/vendor/libs/%40form-validation/bootstrap5.js"></script>
+        <script src="../../admin/assets/vendor/libs/%40form-validation/auto-focus.js"></script>
+        <script src="../../admin/assets/vendor/libs/cleavejs/cleave.js"></script>
+        <script src="../../admin/assets/vendor/libs/cleavejs/cleave-phone.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-<!-- Main JS -->
-<script src="../../admin/assets/js/main.js"></script>
+        <!-- Main JS -->
+        <script src="../../admin/assets/js/main.js"></script>
 
-<!-- Page JS -->
-<script src="../../admin/assets/js/app-order-list.js"></script>
+        <!-- Page JS -->
+        <script src="../../admin/assets/js/app-order-list.js"></script>
 
-<!-- for deletion -->
-<script>
-   async function deleteCoupon(couponId) {
-    try {
-        const response = await fetch(`/admin/coupons/${couponId}`, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json'
+        <!-- for deletion -->
+        <script>
+            async function deleteCoupon(couponId) {
+                try {
+                    const response = await fetch(`/admin/coupons/${couponId}`, {
+                        method: 'DELETE',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    });
+
+                    if (response.ok) {
+                        // Remove the coupon from the UI
+                        document.getElementById(`coupon-${couponId}`).remove();
+
+                        // Close the modal
+                        const modal = bootstrap.Modal.getInstance(document.getElementById(`deleteCouponModal${couponId}`));
+                        modal.hide();
+
+                        // Remove the modal backdrop manually
+                        document.querySelectorAll('.modal-backdrop').forEach(backdrop => backdrop.remove());
+
+                        // Remove 'modal-open' class from the body to prevent blur effect
+                        document.body.classList.remove('modal-open');
+
+                        // Show success message
+                        swal.fire({
+                            icon:'success',
+                            title: 'deleted successfully!',
+                            text: 'Coupon deleted successfully!',
+                            confirmButtonText: 'OK'
+                        })
+                    } else {
+                            Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Failed to delete coupon!',
+                            confirmButtonColor: '#d33',
+                            confirmButtonText: 'OK'
+                            });
+
+                    }
+                } catch (error) {
+                    console.error('Error deleting coupon:', error);
+                    Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'An error occurred while deleting the coupon.',
+                });
+                }
             }
-        });
 
-        if (response.ok) {
-            // Remove the coupon from the UI
-            document.getElementById(`coupon-${couponId}`).remove();
-
-            // Close the modal
-            const modal = bootstrap.Modal.getInstance(document.getElementById(`deleteCouponModal${couponId}`));
-            modal.hide();
-
-            // Remove the modal backdrop manually
-            document.querySelectorAll('.modal-backdrop').forEach(backdrop => backdrop.remove());
-
-            // Remove 'modal-open' class from the body to prevent blur effect
-            document.body.classList.remove('modal-open');
-
-            // Show success message
-            alert('Coupon deleted successfully!');
-        } else {
-            alert('Failed to delete coupon.');
-        }
-    } catch (error) {
-        console.error('Error deleting coupon:', error);
-        alert('An error occurred while deleting the coupon.');
-    }
-}
-
-</script>
+        </script>
 
 </body>
+
 </html>

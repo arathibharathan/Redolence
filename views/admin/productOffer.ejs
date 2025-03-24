@@ -252,13 +252,6 @@
                                         </a>
                                     </li>
                                 </ul>
-                                <ul class="menu-sub">
-                                    <li class="menu-item">
-                                        <a href="/admin/orderDetails" class="menu-link">
-                                            <div data-i18n="Order Details">Order Details</div>
-                                        </a>
-                                    </li>
-                                </ul>
                             <li class="menu-item">
                                 <a href="javascript:void(0);" class="menu-link menu-toggle">
                                     <div data-i18n="Coupons Management">Coupons Management</div>
@@ -275,32 +268,20 @@
                                     <div data-i18n="Offers Management">Offers</div>
                                 </a>
                                 <ul class="menu-sub">
-                                    <li class="menu-item  active">
+                                    <li class="menu-item active">
                                         <a href="/admin/Offers" class="menu-link">
                                             <div data-i18n="Product Offers">product offers</div>
                                         </a>
                                     </li>
-                                    <ul>
+
                                     <li class="menu-item">
                                         <a href="/admin/offers/category" class="menu-link">
                                             <div data-i18n="category Offers">category Offers</div>
                                         </a>
                                     </li>
-                                </ul>
                             </li>
 
                         </ul>
-                    <li class="menu-item">
-                        <a href="javascript:void(0);" class="menu-link menu-toggle">
-                            <div data-i18n="Sales">Sales</div>
-                        </a>
-                        <ul class="menu-sub">
-                            <li class="menu-item">
-                                <a href="/admin/salesReport" class="menu-link">
-                                    <div data-i18n="SalesReport">SalesReport</div>
-                                </a>
-                            </li>
-                    </li>
             </aside>
             <!-- / Menu -->
             <!-- Navbar -->
@@ -640,7 +621,7 @@
 
 
 
-                 <!-- Core JS -->
+                <!-- Core JS -->
                 <!-- build:js assets/vendor/js/core.js -->
                 <script src="../../admin/assets/vendor/libs/jquery/jquery.js"></script>
                 <script src="../../admin/assets/vendor/libs/popper/popper.js"></script>
@@ -728,14 +709,14 @@
 
                             let isValid = true;
                             const nameRegex = /[a-zA-Z0-9]+$/;
-                    
+
 
                             if (title === '') {
                                 isValid = false;
                                 setError(document.getElementById('offerTitle'), 'Enter Title');
-                            }else if (!nameRegex.test(title)) {
+                            } else if (!nameRegex.test(title)) {
                                 setError(document.getElementById('offerTitle'), 'Offer Name should only contain letters and numbers');
-                                 isValid = false;
+                                isValid = false;
                             } else if (title.length < 3) {
                                 isValid = false;
                                 setError(document.getElementById('offerTitle'), 'Title should be more than 2 letters');
@@ -866,13 +847,13 @@
                             let isValid = true;
                             const nameRegex = /[a-zA-Z0-9]+$/;
 
-                            
+
                             if (edit_titleValue === '') {
                                 isValid = false;
                                 setError(offerTitle, 'Enter Title');
-                            }else if (!nameRegex.test(edit_titleValue)) {
+                            } else if (!nameRegex.test(edit_titleValue)) {
                                 setError(offerTitle, 'Offer Name should only contain letters and numbers');
-                                 isValid = false;
+                                isValid = false;
                             } else if (edit_titleValue.length < 3) {
                                 isValid = false;
                                 setError(offerTitle, 'Title should be more than 2 letters');

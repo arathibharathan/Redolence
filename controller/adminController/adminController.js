@@ -1,7 +1,4 @@
 const adminSchema = require('../../model/userModel');
-// const adminRouter = require('../../router/adminRouter');
-// const Category = require('../../model/categoryModel');
-// const productSchema = require('../../model/productModel');
 
 const getLoginPage = async (req, res) => {
 	try {

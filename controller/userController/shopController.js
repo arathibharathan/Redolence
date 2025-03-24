@@ -4,16 +4,16 @@ offerSchema = require('../../model/offerModel');
 
 const shop = async (req, res) => {
     try {
-        // Products per page
         const perPage = 9;
         
         // Get query parameters
         const page = parseInt(req.query.page) || 1;
-        const sort = req.query.sort || 'newest';
-        const search = req.query.search || '';
+        const sort = req.query.sort || 'newest'; // show the products depends on the sorting or the newest first
+        const search = req.query.search || ''; 
         const categoryFilter = req.query.category
             ? req.query.category.split(',')
             : [];
+            
 
         // Build filter query
 		let filterQuery = { is_list: true }; // Only show active products
@@ -119,7 +119,7 @@ const shop = async (req, res) => {
             nextPage: page < pages ? page + 1 : pages,
             sort,
             search, // Pass the search parameter to the view
-            categoryFilter,
+            categoryFilter, 
             products: productsWithOffers,
         });
     } catch (error) {

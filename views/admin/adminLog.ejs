@@ -1,19 +1,5 @@
 <!DOCTYPE html>
 
-<!-- =========================================================
-* Materio - Bootstrap Material Design Admin Template | v2.0.1
-==============================================================
-
-* Product Page: https://themeselection.com/item/materio-bootstrap-html-admin-template/
-* Created by: ThemeSelection
-* License: You must have a valid license purchased in order to legally use the theme for your project.
-* Copyright ThemeSelection (https://themeselection.com)
-
-=========================================================
- -->
-<!-- beautify ignore:start -->
-
-
 <html lang="en" class="light-style layout-wide  customizer-hide" dir="ltr" data-theme="theme-default" data-assets-path="../../admin/assets/" data-template="vertical-menu-template" data-style="light">
 
   
@@ -32,11 +18,14 @@
     
     
     <!-- ? PROD Only: Google Tag Manager (Default ThemeSelection: GTM-5DDHKGP, PixInvent: GTM-5J3LMKC) -->
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-      '../../../../www.googletagmanager.com/gtm5445.html?id='+i+dl;f.parentNode.insertBefore(j,f);
-      })(window,document,'script','dataLayer','GTM-5DDHKGP');</script>
+    <script>(function (w, d, s, l, i) {
+        w[l] = w[l] || []; w[l].push({
+          'gtm.start':
+            new Date().getTime(), event: 'gtm.js'
+        }); var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+            '../../../../www.googletagmanager.com/gtm5445.html?id=' + i + dl; f.parentNode.insertBefore(j, f);
+      })(window, document, 'script', 'dataLayer', 'GTM-5DDHKGP');</script>
     <!-- End Google Tag Manager -->
     
     <!-- Favicon -->
@@ -235,13 +224,13 @@
       const form = document.getElementById("formAuthentication");
       form.addEventListener("submit", async function (event) {
         event.preventDefault();                          // Prevent the default form submission
-        
+
         const formData = {
           username: document.getElementById("username").value.trim(),
           password: document.getElementById("password").value.trim()
         };
 
-        const result = await fetch('/admin/loginCheck',{
+        const result = await fetch('/admin/loginCheck', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -249,13 +238,13 @@
           body: JSON.stringify(formData),
         }).then(response => response.json())
         console.log(result.message);
-        if(result.success === true){
+        if (result.success === true) {
           window.location.href = "/admin/dashboard"
-        }else{
+        } else {
           document.getElementById('informationlabel').innerHTML = result.message
         }
-        
-        
+
+
       });
 
     });
@@ -267,4 +256,3 @@
 
 
 </html>
-

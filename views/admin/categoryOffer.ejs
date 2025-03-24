@@ -62,13 +62,14 @@
 
 
     <style>
-          input.error {
+        input.error {
             border-color: red;
         }
 
         label.error {
             color: red;
         }
+
         .select2-container--default .select2-selection--multiple {
             border: none;
             padding: 0.4375rem 0.875rem;
@@ -181,117 +182,105 @@
 
 
 
-          <!-- Menu -->
+            <!-- Menu -->
 
-          <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
-            <div class="menu-inner-shadow"></div>
-            <ul class="menu-inner py-1">
-                <li class="menu-item active open">
-                    <a href="javascript:void(0);" class="menu-link menu-toggle">
-                        <i class='menu-icon tf-icons ri-shopping-bag-3-line'></i>
-                        <div data-i18n="REDOLANCE">REDOLANCE</div>
-                    </a>
-                    <ul class="menu-sub">
-                        <li class="menu-item active">
-                            <a href="/admin/dashboard" class="menu-link">
-                                <div data-i18n="Dashboard">Dashboard</div>
-                            </a>
-                        </li>
-                        <li class="menu-item">
-                            <a href="javascript:void(0);" class="menu-link menu-toggle">
-                                <div data-i18n="Products">Products</div>
-                            </a>
-                            <ul class="menu-sub">
-                                <li class="menu-item">
-                                    <a href="/admin/productList" class="menu-link">
-                                        <div data-i18n="Product List">Product List</div>
-                                    </a>
-                                </li>
-                                <li class="menu-item">
-                                    <a href="/admin/addProduct" class="menu-link">
-                                        <div data-i18n="Add Product">Add Product</div>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="menu-item">
-                            <a href="javascript:void(0);" class="menu-link menu-toggle">
-                                <div data-i18n="Category">Category</div>
-                            </a>
-                            <ul class="menu-sub">
-                                <li class="menu-item">
-                                    <a href="/admin/category" class="menu-link">
-                                        <div data-i18n="List all category">List all category</div>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="menu-item">
-                            <a href="javascript:void(0);" class="menu-link menu-toggle">
-                                <div data-i18n="Users">Users</div>
-                            </a>
-                            <ul class="menu-sub">
-                                <li class="menu-item">
-                                    <a href="/admin/userList" class="menu-link">
-                                        <div data-i18n="Users list">Users list</div>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="menu-item">
-                            <a href="javascript:void(0);" class="menu-link menu-toggle">
-                                <div data-i18n="Orders">Orders</div>
-                            </a>
-                            <ul class="menu-sub">
-                                <li class="menu-item">
-                                    <a href="/admin/orderList" class="menu-link">
-                                        <div data-i18n="Order list">Order list</div>
-                                    </a>
-                                </li>
-                            </ul>
-                        <li class="menu-item">
-                            <a href="javascript:void(0);" class="menu-link menu-toggle">
-                                <div data-i18n="Coupons Management">Coupons Management</div>
-                            </a>
-                            <ul class="menu-sub">
-                                <li class="menu-item">
-                                    <a href="/admin/coupons" class="menu-link">
-                                        <div data-i18n="Coupons">Coupons</div>
-                                    </a>
-                                </li>
-                            </ul>
-                        <li class="menu-item">
-                            <a href="javascript:void(0);" class="menu-link menu-toggle">
-                                <div data-i18n="Offers Management">Offers</div>
-                            </a>
-                            <ul class="menu-sub">
-                                <li class="menu-item">
-                                    <a href="/admin/Offers" class="menu-link">
-                                        <div data-i18n="Product Offers">product offers</div>
-                                    </a>
-                                </li>
+            <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+                <div class="menu-inner-shadow"></div>
+                <ul class="menu-inner py-1">
+                    <li class="menu-item active open">
+                        <a href="javascript:void(0);" class="menu-link menu-toggle">
+                            <i class='menu-icon tf-icons ri-shopping-bag-3-line'></i>
+                            <div data-i18n="REDOLANCE">REDOLANCE</div>
+                        </a>
+                        <ul class="menu-sub">
+                            <li class="menu-item">
+                                <a href="/admin/dashboard" class="menu-link">
+                                    <div data-i18n="Dashboard">Dashboard</div>
+                                </a>
+                            </li>
+                            <li class="menu-item">
+                                <a href="javascript:void(0);" class="menu-link menu-toggle">
+                                    <div data-i18n="Products">Products</div>
+                                </a>
+                                <ul class="menu-sub">
+                                    <li class="menu-item">
+                                        <a href="/admin/productList" class="menu-link">
+                                            <div data-i18n="Product List">Product List</div>
+                                        </a>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a href="/admin/addProduct" class="menu-link">
+                                            <div data-i18n="Add Product">Add Product</div>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="menu-item">
+                                <a href="javascript:void(0);" class="menu-link menu-toggle">
+                                    <div data-i18n="Category">Category</div>
+                                </a>
+                                <ul class="menu-sub">
+                                    <li class="menu-item">
+                                        <a href="/admin/category" class="menu-link">
+                                            <div data-i18n="List all category">List all category</div>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="menu-item">
+                                <a href="javascript:void(0);" class="menu-link menu-toggle">
+                                    <div data-i18n="Users">Users</div>
+                                </a>
+                                <ul class="menu-sub">
+                                    <li class="menu-item">
+                                        <a href="/admin/userList" class="menu-link">
+                                            <div data-i18n="Users list">Users list</div>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="menu-item">
+                                <a href="javascript:void(0);" class="menu-link menu-toggle">
+                                    <div data-i18n="Orders">Orders</div>
+                                </a>
+                                <ul class="menu-sub">
+                                    <li class="menu-item">
+                                        <a href="/admin/orderList" class="menu-link">
+                                            <div data-i18n="Order list">Order list</div>
+                                        </a>
+                                    </li>
+                                </ul>
+                            <li class="menu-item">
+                                <a href="javascript:void(0);" class="menu-link menu-toggle">
+                                    <div data-i18n="Coupons Management">Coupons Management</div>
+                                </a>
+                                <ul class="menu-sub">
+                                    <li class="menu-item">
+                                        <a href="/admin/coupons" class="menu-link">
+                                            <div data-i18n="Coupons">Coupons</div>
+                                        </a>
+                                    </li>
+                                </ul>
+                            <li class="menu-item active">
+                                <a href="javascript:void(0);" class="menu-link menu-toggle">
+                                    <div data-i18n="Offers Management">Offers</div>
+                                </a>
+                                <ul class="menu-sub">
+                                    <li class="menu-item">
+                                        <a href="/admin/Offers" class="menu-link">
+                                            <div data-i18n="Product Offers">product offers</div>
+                                        </a>
+                                    </li>
 
-                                <li class="menu-item">
-                                    <a href="/admin/offers/category" class="menu-link">
-                                        <div data-i18n="category Offers">category Offers</div>
-                                    </a>
-                                </li>
-                        </li>
+                                    <li class="menu-item active">
+                                        <a href="/admin/offers/category" class="menu-link">
+                                            <div data-i18n="category Offers">category Offers</div>
+                                        </a>
+                                    </li>
+                            </li>
 
-                    </ul>
-                <li class="menu-item">
-                    <a href="javascript:void(0);" class="menu-link menu-toggle">
-                        <div data-i18n="Sales">Sales</div>
-                    </a>
-                    <ul class="menu-sub">
-                        <li class="menu-item">
-                            <a href="/admin/salesReport" class="menu-link">
-                                <div data-i18n="SalesReport">SalesReport</div>
-                            </a>
-                        </li>
-                </li>
-        </aside>
-
+                        </ul>
+            </aside>
             <!-- / Menu -->
             <!-- Navbar -->
             <div class="layout-page">
@@ -657,7 +646,7 @@
                 <script src="../../admin/assets/js/app-ecommerce-dashboard.js"></script>
 
 
-                
+
                 <script>
                     document.addEventListener('DOMContentLoaded', function () {
                         $('#productSelect').select2({
@@ -768,7 +757,7 @@
                                 status: document.getElementById('offerStatus').value,
                                 type: 'CATEGORY'
                             };
-                            
+
                             try {
                                 const response = await fetch('/admin/offers/addOffers', {
                                     method: 'POST',
@@ -777,7 +766,7 @@
                                     },
                                     body: JSON.stringify(formData)
                                 })
-                                
+
                                 const data = await response.json();
 
                                 if (data.success) {
@@ -914,8 +903,8 @@
                                     })
                                 });
                                 const data = await response.json();
-                            
-                                
+
+
                                 if (data.success) {
                                     Swal.fire({
                                         title: 'Success!',
@@ -993,7 +982,7 @@
                                 }
                             }
                         }
-        });
+                    });
                 </script>
 
 
